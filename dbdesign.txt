@@ -1,0 +1,33 @@
+#users 
+- user_id 
+- first_name 
+- last_name 
+- email 
+
+# hospitals
+- hospital_id 
+- name 
+- location 
+
+# dept 
+- dept_id
+- hospital_id 
+- name 
+
+# staff 
+- staff_id 
+- hospital_id 
+- name 
+
+# queue 
+- queue_id
+- queue_name 
+- dept_id 
+
+# virtual_queue 
+- queue_id 
+- user_id 
+- jointed_at DATETIME 
+- treated_at DATETIME NULL
+- discharged_at DATETIME NULL
+
