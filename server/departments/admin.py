@@ -1,5 +1,7 @@
 from django.contrib import admin
 
-from .models import Department
+from . import models
 
-admin.site.register(Department)
+
+admin.site.register(models.Department)
+admin.site.register(models.Staff)
