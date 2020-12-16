@@ -15,6 +15,18 @@ class Queue(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
+    @classmethod
+    def get_queue_by_name(cls,name):
+        queue = cls.objects.filter(name=name).first()
+        return queue
+    
+    def get_active_patients(self):
+        virtual_queue = self.virtualqueue_set.all()
+        patients = []
+        for data in virtual_queue:
+            patients.append(data.patient)
+        return patients
 
 class VirtualQueue(models.Model):
     queue = models.ForeignKey(Queue, on_delete=models.CASCADE)

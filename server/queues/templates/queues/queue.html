@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1>{{ queue }}</h1>
+        <div>
+            <table id = "patients-table" class="table">
+
+            </table>
+        </div>
+        <form id = "add-patient">
+            <div class="card">
+                <input id = "first_name" class = "form-control" type="text">
+                <input id = "last" class = "form-control" type="text">
+                <button type="submit"  class="btn btn-primary">Add</button>
+            </div>
+        </form>
+    </div>
+    {{ request.user.username|json_script:"user_username" }}
+    {{ room_name|json_script:"room-name" }}
+    <script>
+        const firstName  = 'keshav';
+        const lastName = 'Mishra';
+        const email = 'keshav.sm@somaiya.edu';
+        const queueId = 1;
+        const user_username = JSON.parse(document.getElementById('user_username').textContent);
+        const roomName = JSON.parse(document.getElementById('room-name').textContent); 
+        const addPatientURL = `/queues/add-patient/${roomName}/`
+        const getPatientsDataURL = "{% url 'queues:get_patients_data' %}";
+    </script>
+{% include 'partials/_scripts.html' %}
+{% endblock content %}
