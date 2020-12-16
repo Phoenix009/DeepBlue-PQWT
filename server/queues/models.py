@@ -15,6 +15,8 @@ class Queue(models.Model):
 class VirtualQueue(models.Model):
     queue = models.ForeignKey(Queue, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    
+
 
     def __str__(self) -> str:
         return f"{self.queue.name} -> {self.patient.email}"
