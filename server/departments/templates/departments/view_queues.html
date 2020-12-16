@@ -3,7 +3,7 @@
 
 {% block content %}
     {% for queue in queues %}
-        {{ queue }}
+        <a href="{% url 'queues:room' queue.name %}">{{ queue }}</a>
     {% endfor %}
 {% endblock %}
 
