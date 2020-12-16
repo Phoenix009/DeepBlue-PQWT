@@ -36,6 +36,7 @@ def add_patient(request,room_name):
     )
     patient.save()
     virtual_queue = VirtualQueue(patient = patient, queue = queue)
+    virtual_queue.save()
     print('here2')
     return JsonResponse({'added':'ok'})
 

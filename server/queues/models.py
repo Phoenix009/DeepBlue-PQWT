@@ -12,6 +12,9 @@ class Queue(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True)
     created_at = models.DateTimeField(default=datetime.now)
 
+    def __str__(self) -> str:
+        return self.name
+
 class VirtualQueue(models.Model):
     queue = models.ForeignKey(Queue, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)

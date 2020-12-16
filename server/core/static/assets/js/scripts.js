@@ -15,7 +15,8 @@ function getCookie(name) {
 }
 const csrftoken = getCookie('csrftoken');
 
-const addPatient = ()=>{
+const addPatient = (event)=>{
+    console.log('add patient')
     const data = {
         'firstName':firstName,
         'lastName': lastName,
@@ -33,10 +34,14 @@ const addPatient = ()=>{
     }
     fetch(addPatientURL,configfetch)
     .then((response)=>response.json())
-    .catch(err =>{
-        console.error(err);
-    })
     .then((message)=>{
         console.log(message);
+        updateQueue();
     });
 }
+
+const addPatientForm = document.getElementById('add-patient');
+addPatientForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    addPatient();
+});

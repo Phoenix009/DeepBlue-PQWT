@@ -17,11 +17,11 @@
                 </form>
             </div>
             <div class="col-12">
-                <form>
+                <form id = "add-patient">
                     <div class="card">
                         <input id = "first_name" class = "form-control" type="text">
                         <input id = "last" class = "form-control" type="text">
-                        <button onclick="addPatient()" class="btn btn-primary">Add</button>
+                        <button type="submit"  class="btn btn-primary">Add</button>
                     </div>
                 </form>
             </div>
@@ -34,5 +34,8 @@
         const lastName = 'Mishra';
         const email = 'keshav.sm@somaiya.edu';
         const queueId = 1;
+        const user_username = JSON.parse(document.getElementById('user_username').textContent);
+        const roomName = JSON.parse(document.getElementById('room-name').textContent); 
+        const addPatientURL = `/queues/add-patient/${roomName}/`
     </script>
 {% endblock content %}
