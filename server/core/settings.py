@@ -40,10 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'hospitals.apps.HospitalsConfig',
     'departments.apps.DepartmentsConfig',
+    'crispy_forms',
+    'widget_tweaks',
     'users.apps.UsersConfig',
     'patients.apps.PatientsConfig',
     'queues.apps.QueuesConfig',
     'channels',
+
 ]
 
 MIDDLEWARE = [
@@ -137,3 +140,7 @@ CHANNEL_LAYERS = {
         "BACKEND" : "channels.layers.InMemoryChannelLayer"
     }
 }
+LOGIN_URL = 'users:login'
+LOGOUT_REDIRECT_URL = 'users:login'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -2,14 +2,16 @@
 <html lang="en">
 <head>
     {% include 'partials/_header.html' %}
-    <title>PQWT</title>
+    <title>
+        {% block title %}{% endblock title %}
+    </title>
 </head>
 
 <body>
     {% include 'partials/_navbar.html' %}
     {% block content %}{% endblock content %}
     {% include 'partials/_footer.html' %}
-    {% include 'partials/_scripts.html' %}
+
 </body>
 
 </html>

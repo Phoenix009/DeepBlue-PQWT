@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %} View Departmental Queues - {{ department }} {% endblock title %}
+
+{% block content %}
+    {% for queue in queues %}
+        {{ queue }}
+    {% endfor %}
+{% endblock %}
+
