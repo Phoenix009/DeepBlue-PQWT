@@ -8,6 +8,7 @@ class Patient(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     email = models.EmailField()
+    otp = models.CharField(max_length=20, default='', null=True,blank=True)
     joined_at = models.DateTimeField(default=datetime.now)
     verified = models.BooleanField(default=False)
     added_by = models.ForeignKey(User, default=None,null=True,blank=True, on_delete=models.CASCADE)

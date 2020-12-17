@@ -1,6 +1,6 @@
 
-
-
+var socket;
+const SOCKET_URL = 'ws://' + window.location.host + '/ws/queues/' + roomName + '/'
 
 // document.querySelector('#submit').onclick = function (e) {
 //     const messageInputDom = document.querySelector('#input');
@@ -11,21 +11,27 @@
 //     }));
 //     messageInputDom.value = '';
 // };
-const chatSocket = new WebSocket(
-    'ws://' +
-    window.location.host +
-    '/ws/queues/' +
-    roomName +
-    '/'
-);
-
-chatSocket.onmessage = function (e) {
+// const chatSocket = new WebSocket(
+    
+// );
+socket = new WebSocket(SOCKET_URL);
+const socketOnMessage = function (e) {
+    const data = JSON.parse(e.data);
+    console.log(data);
     getPatientsData();
 }
 
 const updateQueue = ()=>{
-    chatSocket.send(JSON.stringify({
+    socket.send(JSON.stringify({
         'message': 'Update table',
         'username': 'admin',
     }));
 }
+
+function websocketWaiter(){
+    setTimeout(function(){
+        socket.onmessage = socketOnMessage;
+    }, 1000);
+};
+
+websocketWaiter();
