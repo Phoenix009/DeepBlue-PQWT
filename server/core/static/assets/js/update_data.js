@@ -1,16 +1,16 @@
 const patientsTable = document.getElementById('patients-table');
 
 const updatePatientsTable = data=>{
+    if(data === undefined) return;
     try{
         var tblBody = document.createElement("tbody"); 
         for (const patient of data){
-            console.log(patient);
             var row = document.createElement("tr");
             // id 
             var patientId = document.createElement('td');
             var patientIdText = document.createTextNode(patient.pk);
-            firstName.appendChild(firstNameText);
-            row.appendChild(firstName)
+            patientId.appendChild(patientIdText);
+            row.appendChild(patientId)
 
             //first name 
             var firstName = document.createElement('td');

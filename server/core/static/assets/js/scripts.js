@@ -35,6 +35,7 @@ const getPatientsData = (event)=>{
     fetch(getPatientsDataURL,configfetch)
     .then((response)=>response.json())
     .then((data)=>{
+        console.log('updating data');
         updatePatientsTable(data)
     }).catch((error) => {
         console.error('Error:', error);
@@ -63,12 +64,15 @@ const addPatient = (event)=>{
     .then((response)=>response.json())
     .then((message)=>{
         console.log(message);
-    });
-    
+        updateQueue();
+    })
+    .then(()=>{
+        getPatientsData();
+    })
 }
 const addPatientForm = document.getElementById('add-patient');
 addPatientForm.addEventListener('submit', function(e){
     e.preventDefault();
     addPatient();
-    updateQueue();
+    
 });
