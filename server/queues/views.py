@@ -12,9 +12,10 @@ from patients.models import Patient
 from queues.models import Queue,VirtualQueue
 from patients.forms import PatientRegistrationForm
 
+@login_required
 def index(request):
     context = {}
-    return render(request, 'index.html', context)
+    return render(request, 'queues/index.html', context)
 
 
 def room(request, room_name):

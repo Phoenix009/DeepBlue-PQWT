@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'user_base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
 {% load widget_tweaks %}
@@ -6,32 +6,35 @@
 {% block title %} Login {% endblock title %}
 
 {% block content %}
-<!-- Outer Row -->
-<div class="row justify-content-center">
-
-    <div class="col-xl-10 col-lg-12 col-md-9">
-
-    <div class="card o-hidden border-0 shadow-lg my-5">
-    <div class="card-body p-0">
-        <!-- Nested Row within Card Body -->
-        <div class="row">
-        <div class="col-lg-6">
-            <div class="p-5">
-            <div class="text-center">
-                <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
-            </div>
-            <form class="user" method='POST'>
-                {% csrf_token %}
-                {{ form | crispy }}
-                    <button class="btn btn-primary btn-user btn-block" type='submit'>Login</button>
-            </form>
-            </div>
-        </div>
-        </div>
+<div class="login-box">
+    <div class="login-logo">
+      <b>Predict Queue Wait Time</b>
     </div>
+    <!-- /.login-logo -->
+    <div class="card">
+      <div class="card-body login-card-body">
+        <p class="login-box-msg">Sign in to start your session</p>
+  
+        <form method="post">
+            {% csrf_token %}
+            {{ form | crispy }}
+            <button type="submit" class="btn btn-sm btn-primary btn-block">Sign In</button>
+        </form>
+  
+        <div class="social-auth-links text-center mb-3">
+          <p>- OR -</p>
+          <a href="#" class="btn btn-block btn-danger">
+            <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+          </a>
+        </div>
+        <!-- /.social-auth-links -->
+  
+        <p class="mb-1">
+          <a href="{% url 'password_reset' %}">I forgot my password</a>
+        </p>
+      </div>
+      <!-- /.login-card-body -->
     </div>
-
 </div>
-
-</div>
+<!-- /.login-box -->
 {% endblock content %}

@@ -1,0 +1,17 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    {% include 'partials/_header.html' %}
+    <title>
+        {% block title %}{% endblock title %}
+    </title>
+</head>
+<body class="hold-transition login-page">
+    
+    {% block content %}{% endblock content %}
+    
+    {% include 'partials/_main_scripts.html' %}
+    
+</body>
+</html>
