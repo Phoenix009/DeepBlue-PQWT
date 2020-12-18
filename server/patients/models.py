@@ -13,5 +13,10 @@ class Patient(models.Model):
     verified = models.BooleanField(default=False)
     added_by = models.ForeignKey(User, default=None,null=True,blank=True, on_delete=models.CASCADE)
 
+    @property
+    def get_queue_name(self):
+        self.virtualqueue_set.first().queue.name
+
+
     def __str__(self) -> str:
         return f"{self.email}"

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Verify Patient {% endblock title %}
+{% block content %}
+    <div class="card m-5 p-5">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type='submit' class="btn btn-sm btn-dark">Submit</button>
+        </form>
+    </div>
+{% endblock content %}

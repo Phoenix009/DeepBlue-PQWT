@@ -2,13 +2,15 @@ import json
 
 from django.contrib.auth import login
 from django.http.response import HttpResponse
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse,HttpResponse
 from django.core import serializers
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 from patients.models import Patient
 from queues.models import Queue,VirtualQueue
+from patients.forms import PatientRegistrationForm
 
 def index(request):
     context = {}
@@ -19,31 +21,30 @@ def room(request, room_name):
     queue = Queue.get_queue_by_name(name = room_name)
     if not queue:
         return HttpResponse('does no exist')
-    context = {'room_name':room_name, 'queue':queue}
+    
+    form = PatientRegistrationForm()
+    context = {'room_name':room_name, 'queue':queue, 'form':form}
     return render(request, 'queues/queue.html', context)
 
-
+@login_required
 def add_patient(request,room_name):
-    print('here1')
-    data = json.loads(request.body)
-    queue_id = data['queueId']
-    queue = get_object_or_404(Queue, pk = queue_id)
-    email = data['email']
-    first_name = data['firstName']
-    last_name = data['lastName']
-    verified = True 
-    patient = Patient(
-        first_name = first_name, 
-        last_name = last_name, 
-        email = email, 
-        verified=verified, 
-        added_by = request.user 
-    )
-    patient.save()
-    virtual_queue = VirtualQueue(patient = patient, queue = queue)
-    virtual_queue.save()
-    print('here2')
-    return JsonResponse({'added':'ok'})
+    if request.method == 'POST':
+        form = PatientRegistrationForm(request.POST)
+        if form.is_valid():
+            patient = Patient(
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
+                email=form.cleaned_data['email'],
+                verified=True,
+                added_by = request.user
+            )
+            patient.save()
+            queue = Queue.get_queue_by_name(name=room_name)
+            inqueue = VirtualQueue(patient=patient, queue=queue)
+            inqueue.save()
+            send_update_notification(room_name)
+    return redirect('queues:room', room_name)
+
 
 def get_patients_data(request):
     data = json.loads(request.body)
@@ -58,4 +59,8 @@ def get_patients_data(request):
     }
     return HttpResponse(json_context, content_type='application/json')
     
-    
+def send_update_notification(room_name):
+    group_name = f'chat_{room_name}'
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(group_name, {"type": "update_table"})
+

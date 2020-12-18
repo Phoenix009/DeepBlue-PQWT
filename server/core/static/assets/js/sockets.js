@@ -1,37 +1,40 @@
-
-var socket;
-const SOCKET_URL = 'ws://' + window.location.host + '/ws/queues/' + roomName + '/'
-
-// document.querySelector('#submit').onclick = function (e) {
-//     const messageInputDom = document.querySelector('#input');
-//     const message = messageInputDom.value;
-//     chatSocket.send(JSON.stringify({
-//         'message': message,
-//         'username': user_username,
-//     }));
-//     messageInputDom.value = '';
-// };
-// const chatSocket = new WebSocket(
-    
-// );
-socket = new WebSocket(SOCKET_URL);
-const socketOnMessage = function (e) {
-    const data = JSON.parse(e.data);
-    console.log(data);
-    getPatientsData();
+function waitForSocketConnection(socket, callback){
+    setTimeout(
+        function () {
+            if (socket.readyState === 1) {
+                if (callback != null){
+                    callback();
+                }
+            } else {
+                waitForSocketConnection(socket, callback);
+            }
+        }, 5); // wait 5 milisecond for the connection...
 }
 
-const updateQueue = ()=>{
-    socket.send(JSON.stringify({
-        'message': 'Update table',
-        'username': 'admin',
+const roomName = JSON.parse(document.getElementById('room-name').textContent);
+
+const chatSocket = new WebSocket(
+    'ws://' +
+    window.location.host +
+    '/ws/queues/' +
+    roomName +
+    '/'
+);
+
+waitForSocketConnection(chatSocket, ()=>{
+    chatSocket.send(JSON.stringify({
+        'type': 'UPD',
     }));
+});
+
+chatSocket.onmessage = function (e) {
+    const data = JSON.parse(e.data);
+    switch(data.type){
+        case "MSG": 
+            handleMessage(data.body);
+            break;
+        case "UPD":
+            handleUpdate(data.body);
+            break;
+    }
 }
-
-function websocketWaiter(){
-    setTimeout(function(){
-        socket.onmessage = socketOnMessage;
-    }, 1000);
-};
-
-websocketWaiter();

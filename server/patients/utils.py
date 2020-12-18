@@ -20,6 +20,22 @@ def send_patient_registration_mail(patient):
         fail_silently=False
     )
 
+def send_patient_verification_mail(patient, queue_link):
+    subject = 'Patient Verified'
+    body = f"""
+    You have been verified!
+    Head over to this link to join the queue:
+    {queue_link}
+    """
+    sender = 'stationeymanagerkjsieit@gmail.com'
+    receiver = patient.email 
+    send_mail(
+        subject,
+        body,
+        sender,
+        [receiver,],
+        fail_silently=False
+    )
 
 def generate_otp():
     return "".join(random.choices(string.ascii_uppercase, k=6))

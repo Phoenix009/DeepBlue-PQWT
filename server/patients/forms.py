@@ -7,4 +7,11 @@ class PatientRegistrationForm(forms.Form):
     first_name = forms.CharField(max_length=200)
     last_name = forms.CharField(max_length=200)
     email = forms.EmailField()
-    
+
+class VerificationForm(forms.Form):
+    email = forms.EmailField()
+    otp = forms.CharField()
+
+
+class JoinQueueForm(forms.Form):
+    email = forms.EmailField()
