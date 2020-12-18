@@ -1,17 +1,18 @@
-const user_username = JSON.parse(document.getElementById('user_username').textContent);
-const roomName = JSON.parse(document.getElementById('room-name').textContent); 
+function waitForSocketConnection(socket, callback){
+    setTimeout(
+        function () {
+            if (socket.readyState === 1) {
+                if (callback != null){
+                    callback();
+                }
+            } else {
+                waitForSocketConnection(socket, callback);
+            }
+        }, 5); // wait 5 milisecond for the connection...
+}
 
-const addPatientURL = `/queues/add-patient/${roomName}/`
+const roomName = JSON.parse(document.getElementById('room-name').textContent);
 
-document.querySelector('#submit').onclick = function (e) {
-    const messageInputDom = document.querySelector('#input');
-    const message = messageInputDom.value;
-    chatSocket.send(JSON.stringify({
-        'message': message,
-        'username': user_username,
-    }));
-    messageInputDom.value = '';
-};
 const chatSocket = new WebSocket(
     'ws://' +
     window.location.host +
@@ -20,8 +21,20 @@ const chatSocket = new WebSocket(
     '/'
 );
 
+waitForSocketConnection(chatSocket, ()=>{
+    chatSocket.send(JSON.stringify({
+        'type': 'UPD',
+    }));
+});
+
 chatSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);
-    console.log(data);
-    document.querySelector('#chat-text').value += (data.username + ': ' + data.message + '\n');
+    switch(data.type){
+        case "MSG": 
+            handleMessage(data.body);
+            break;
+        case "UPD":
+            handleUpdate(data.body);
+            break;
+    }
 }

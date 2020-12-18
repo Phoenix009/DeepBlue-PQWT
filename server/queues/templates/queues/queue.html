@@ -2,30 +2,84 @@
 {% load crispy_forms_tags %}
 {% block content %}
     <div class="container">
-        <h1>{{ queue }}</h1>
-        <div>
-            <table class="table">
-                <thead>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Joined At</th>
-                </thead>
-                <tbody id='root'>
-
-                </tbody>
-            </table>
-        </div>
-        <form action="{% url 'queues:add_patient' room_name%}"", method='POST'>
-            <div class="card">
-                {% csrf_token %}
-                {{ form|crispy }}
-                <button class='btn btn-primary' type="submit">Add Patient</button>
+        <h1>Queue Name: {{ queue }}</h1>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">List of patients</h3>
+    
+                        <div class="card-tools">
+                            <ul class="pagination pagination-sm float-right">
+                                <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                            </ul>
+                            <div class="pagination pagination-sm float-right pl-1" style="width: 150px;">
+                                <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#modal-default">
+                                    Add Patient
+                                  </button>
+                            </div>
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                                <div class="input-group-append">
+                                  <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table">
+                            <thead>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Joined At</th>
+                                <th>Remove</th>
+                                <th>Send</th>
+                            </thead>
+                            <tbody id='root'>
+            
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </form>
-
+        </div>
+        
+        
     </div>
     {{ request.user.username|json_script:"user_username" }}
     {{ room_name|json_script:"room-name" }}
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Add Patient</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="{% url 'queues:add_patient' room_name%}" method='POST'>
+                <div class="modal-body">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
 
 {% include 'partials/_scripts.html' %}
 {% endblock content %}

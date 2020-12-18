@@ -15,6 +15,8 @@ handleUpdate = (body)=>{
                 <td>${ queue[i].id }</td>
                 <td>${ queue[i].patient_name }</td>
                 <td>${ queue[i].joined_at }</td>
+                <td><button class = "btn btn-sm btn-danger">Remove</button></td>
+                <td><button class = "btn btn-sm btn-success">Send</button></td>
             </tr>
         `;
     }

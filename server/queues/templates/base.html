@@ -1,4 +1,5 @@
 {% load static %}
+
 <html lang="en">
 <head>
     {% include 'partials/_header.html' %}
@@ -7,10 +8,17 @@
     </title>
 </head>
 
-<body>
-    {% include 'partials/_navbar.html' %}
-    {% block content %}{% endblock content %}
-    {% include 'partials/_footer.html' %}
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+        {% include 'partials/_navbar.html' %}
+        {% include 'partials/_sidebar.html' %}
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            {% block content %}{% endblock content %}
+        </div>
+        {% include 'partials/_footer.html' %}
+        {% include 'partials/_main_scripts.html' %}
+    </div>
 
 </body>
 
