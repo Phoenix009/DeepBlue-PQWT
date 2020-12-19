@@ -62,12 +62,28 @@ handleComplete = (id)=>{
 }
 
 
+updateRoot2Table = ()=>{
+    tbody = document.querySelector('#root2')
+    tbody.innerHTML = '';
+    for(var i = 0; i<queue.length; i++){
+        tbody.innerHTML += `
+            <tr>
+                <td>${ queue[i].id }</td>
+                <td>${ queue[i].patient_name }</td>
+                <td>${ queue[i].joined_at }</td>
+            </tr>
+        `;
+    }
+}
+
 handleUpdate = (body)=>{
     queue = body.queue;
-    for(let i =0; i<queue.length; i++){
-    }
 
     tbody = document.querySelector('#root')
+    if(tbody==undefined){
+        updateRoot2Table(queue);
+        return;
+    }
     tbody.innerHTML = '';
     for(var i = 0; i<queue.length; i++){
         tbody.innerHTML += `
@@ -84,4 +100,5 @@ handleUpdate = (body)=>{
             </tr>
         `;
     }
+    
 }

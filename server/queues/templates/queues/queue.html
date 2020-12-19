@@ -20,11 +20,13 @@
                                 <li class="page-item"><a class="page-link" href="#">3</a></li>
                                 <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
                             </ul>
+                            {% if request.user.is_authenticated %}
                             <div class="pagination pagination-sm float-right pl-1" style="width: 150px;">
                                 <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#modal-default">
                                     Add Patient
                                   </button>
                             </div>
+                            {% endif %}
                             <div class="input-group input-group-sm" style="width: 150px;">
                                 <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
                                 <div class="input-group-append">
@@ -39,12 +41,20 @@
                                 <th>Id</th>
                                 <th>Name</th>
                                 <th>Joined At</th>
+                                {% if request.user.is_authenticated %}
                                 <th>Remove</th>
                                 <th>Send</th>
+                                {% endif %}
                             </thead>
-                            <tbody id='root'>
-            
-                            </tbody>
+                            {%  if request.user.is_authenticated %}
+                                <tbody id='root'>
+                
+                                </tbody>
+                            {% else %}
+                                <tbody id='root2'>
+                    
+                                </tbody>
+                            {% endif %}
                         </table>
                     </div>
                 </div>
@@ -56,33 +66,34 @@
     {{ request.user.username|json_script:"user_username" }}
     {{ room_name|json_script:"room-name" }}
 
-
-    <!-- Modal -->
-    <div class="modal fade" id="modal-default">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Add Patient</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+    {% if request.user.is_authenticated %}
+        <!-- Modal -->
+        <div class="modal fade" id="modal-default">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h4 class="modal-title">Add Patient</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <form action="{% url 'queues:add_patient' room_name%}" method='POST'>
+                    <div class="modal-body">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </form>
             </div>
-            <form action="{% url 'queues:add_patient' room_name%}" method='POST'>
-                <div class="modal-body">
-                        {% csrf_token %}
-                        {{ form|crispy }}
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
-                </div>
-            </form>
-          </div>
-          <!-- /.modal-content -->
+            <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
+        <!-- /.modal -->
+    {% endif %}
 
 {% include 'partials/_scripts.html' %}
 {% endblock content %}
