@@ -62,7 +62,13 @@ handleComplete = (id)=>{
 }
 
 
-updateRoot2Table = ()=>{
+updateRoot2Table = (queue)=>{
+    max_id = 10000;
+    min_id = -1;
+    for(const q of queue){
+        max_id = Math.max(max_id,q.id);
+        min_id = Math.max(min_id, q.id);
+    }
     tbody = document.querySelector('#root2')
     tbody.innerHTML = '';
     for(var i = 0; i<queue.length; i++){
@@ -78,7 +84,7 @@ updateRoot2Table = ()=>{
 
 handleUpdate = (body)=>{
     queue = body.queue;
-
+    
     tbody = document.querySelector('#root')
     if(tbody==undefined){
         updateRoot2Table(queue);
