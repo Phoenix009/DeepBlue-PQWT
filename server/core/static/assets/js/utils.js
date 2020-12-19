@@ -61,14 +61,51 @@ handleComplete = (id)=>{
     });
 }
 
-
-updateRoot2Table = (queue)=>{
-    max_id = 10000;
-    min_id = -1;
-    for(const q of queue){
-        max_id = Math.max(max_id,q.id);
-        min_id = Math.max(min_id, q.id);
+// This displays patients information when patient enters ID
+getPatientsWaitime = ()=>{
+    // getting all elements 
+    const waitTimeInfo = document.getElementById('wait-time-info');
+    const patientIdElement = document.getElementById('patientId');
+    const positionElement = document.getElementById('position');
+    const joinedAtElement = document.getElementById('joinedAt');
+    const spanPatientId = document.getElementById('spanPatientid');
+    const userNameElement = document.getElementById('userName');
+    patientId = parseInt(patientIdElement.value);
+    
+    if(patientId==undefined){
+        console.log('undefined')
+        return;
     }
+    let maxId = -1;
+    let minId = 10000;
+    let joinedAt;
+    let userName;
+    for(const q of queue){
+        console.log(patientId,q.id)
+        if(q.id === patientId){
+            console.log(q.joined_at)
+            joinedAt = q.joined_at;
+            userName = q.patient_name;
+        }
+        maxId = Math.max(q.id,maxId);
+        minId = Math.min(q.id, minId);
+    }
+    if(joinedAt == undefined){
+        patientIdElement.classList.add('is-invalid');
+        spanPatientId.className = 'invalid-feedback';
+        return;
+    }
+    waitTimeInfo.classList.remove('d-none');
+    userNameElement.innerHTML = "Welcome , " + userName;
+    let position = patientId - minId + 1;
+    console.log(position);
+    joinedAtElement.innerHTML = joinedAt;
+    positionElement.innerHTML = position;
+}
+
+
+updateRoot2Table = ()=>{
+    
     tbody = document.querySelector('#root2')
     tbody.innerHTML = '';
     for(var i = 0; i<queue.length; i++){
@@ -87,7 +124,7 @@ handleUpdate = (body)=>{
     
     tbody = document.querySelector('#root')
     if(tbody==undefined){
-        updateRoot2Table(queue);
+        // updateRoot2Table(queue);
         return;
     }
     tbody.innerHTML = '';
@@ -97,6 +134,7 @@ handleUpdate = (body)=>{
                 <td>${ queue[i].id }</td>
                 <td>${ queue[i].patient_name }</td>
                 <td>${ queue[i].joined_at }</td>
+                <td>20min</td>
                 <td>
                     <button onclick="handleRemove(${ queue[i].id })" class="btn btn-sm btn-danger">Remove</button>
                 </td>
