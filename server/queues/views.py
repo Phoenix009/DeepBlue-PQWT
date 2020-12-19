@@ -11,10 +11,13 @@ from asgiref.sync import async_to_sync
 from patients.models import Patient
 from queues.models import Queue,VirtualQueue
 from patients.forms import PatientRegistrationForm
+from departments.models import Department
 
 @login_required
 def index(request):
-    context = {}
+    dept = get_object_or_404(Department, pk=request.user.profile.department.pk)
+    queues = dept.get_queues()
+    context={'queues': queues, 'department': dept}
     return render(request, 'queues/index.html', context)
 
 
@@ -59,7 +62,11 @@ def get_patients_data(request):
         'data' : json_context
     }
     return HttpResponse(json_context, content_type='application/json')
-    
+
+def remove_patient(request):
+    pass 
+
+
 def send_update_notification(room_name):
     group_name = f'chat_{room_name}'
     channel_layer = get_channel_layer()

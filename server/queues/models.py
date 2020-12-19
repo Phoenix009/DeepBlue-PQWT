@@ -22,7 +22,7 @@ class Queue(models.Model):
         return queue
     
     def get_active_patients(self):
-        virtual_queue = self.virtualqueue_set.all()
+        virtual_queue = self.virtualqueue_set.filter(completed_at!=None,removed_at=None).all()
         patients = []
         for data in virtual_queue:
             patients.append(data.patient)
@@ -32,6 +32,8 @@ class VirtualQueue(models.Model):
     queue = models.ForeignKey(Queue, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     joined_at = models.DateTimeField(default=datetime.now)
+    removed_at = models.DateTimeField(default=None,null=True,blank=True)
+    completed_at = models.DateTimeField(default=None,null=True,blank=True)
 
     def __str__(self) -> str:
         return f"{self.queue.name} -> {self.patient.email}"
