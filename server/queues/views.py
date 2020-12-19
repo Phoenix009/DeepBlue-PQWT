@@ -1,7 +1,8 @@
 import json
+from datetime import datetime
 
 from django.contrib.auth import login
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render,get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
@@ -50,21 +51,42 @@ def add_patient(request,room_name):
     return redirect('queues:room', room_name)
 
 
-def get_patients_data(request):
-    data = json.loads(request.body)
-    queue_id = data['queueId']
-    queue = get_object_or_404(Queue, pk = queue_id)
-    patients = queue.get_active_patients()
-    json_context = None 
-    if patients:
-        json_context = serializers.serialize('json', patients) 
-    context = {
-        'data' : json_context
-    }
-    return HttpResponse(json_context, content_type='application/json')
+# def get_patients_data(request):
+#     data = json.loads(request.body)
+#     queue_id = data['queueId']
+#     queue = get_object_or_404(Queue, pk = queue_id)
+#     patients = queue.get_active_patients()
+#     json_context = None 
+#     if patients:
+#         json_context = serializers.serialize('json', patients) 
+#     context = {
+#         'data' : json_context
+#     }
+#     return HttpResponse(json_context, content_type='application/json')
 
+@login_required
 def remove_patient(request):
-    pass 
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        vqueue_id = data['id']
+        room_name = data['room_name']
+        vqueue = get_object_or_404(VirtualQueue, pk = vqueue_id)
+        vqueue.removed_at = datetime.now()
+        vqueue.save()
+        send_update_notification(room_name)
+        return JsonResponse({'status': 'success'})
+
+@login_required
+def complete_patient(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        vqueue_id = data['id']
+        room_name = data['room_name']
+        vqueue = get_object_or_404(VirtualQueue, pk = vqueue_id)
+        vqueue.completed_at = datetime.now()
+        vqueue.save()
+        send_update_notification(room_name)
+        return JsonResponse({'status': 'success'})
 
 
 def send_update_notification(room_name):

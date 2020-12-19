@@ -18,9 +18,10 @@ function getToken(name) {
 }
 
 handleRemove = (id)=>{
-    const URL = '/queues/patients/remove';
+    const URL = '/queues/patients/remove/';
     const data = {
         'id': id,
+        'room_name': roomName,
     }
     const csrftoken = getToken('csrftoken'); 
     const config = {
@@ -38,10 +39,11 @@ handleRemove = (id)=>{
     });
 }
 
-handleRemove = (id)=>{
-    const URL = '/queues/patients/complete';
+handleComplete = (id)=>{
+    const URL = '/queues/patients/complete/';
     const data = {
         'id': id,
+        'room_name': roomName,
     }
     const csrftoken = getToken('csrftoken'); 
     const config = {
@@ -74,12 +76,10 @@ handleUpdate = (body)=>{
                 <td>${ queue[i].patient_name }</td>
                 <td>${ queue[i].joined_at }</td>
                 <td>
-                    <form>
-                        <button onclick="handleRemove(${ queue[i].id })" class="btn btn-sm btn-danger">Remove</button>
-                    </form>
+                    <button onclick="handleRemove(${ queue[i].id })" class="btn btn-sm btn-danger">Remove</button>
                 </td>
                 <td>
-                    <button class = "btn btn-sm btn-success">Complete</button>
+                    <button onclick="handleComplete(${ queue[i].id })" class = "btn btn-sm btn-success">Complete</button>
                 </td>
             </tr>
         `;

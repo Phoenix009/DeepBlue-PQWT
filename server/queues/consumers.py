@@ -70,6 +70,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
     async def update_table(self, event):
 
         patient_queue = await self.get_patients_inqueue()
+        print()
         data = json.dumps({
             'type': 'UPD',
             'body':{
@@ -92,6 +93,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
                 'patient_name': f"{item.patient.first_name} {item.patient.last_name}",
                 'joined_at': f"{item.joined_at.hour}:{item.joined_at.minute}:{item.joined_at.second}",
             }
-        inqueue = VirtualQueue.objects.filter(queue=self.queue).all()
+        inqueue = self.queue.get_active_patients()
         inqueue = list(map(format_model, inqueue))
+        print(inqueue)
         return inqueue

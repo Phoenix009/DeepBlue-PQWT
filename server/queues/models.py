@@ -22,11 +22,8 @@ class Queue(models.Model):
         return queue
     
     def get_active_patients(self):
-        virtual_queue = self.virtualqueue_set.filter(completed_at!=None,removed_at=None).all()
-        patients = []
-        for data in virtual_queue:
-            patients.append(data.patient)
-        return patients
+        return self.virtualqueue_set.filter(completed_at=None, removed_at=None).all()
+
 
 class VirtualQueue(models.Model):
     queue = models.ForeignKey(Queue, on_delete=models.CASCADE)
