@@ -9,5 +9,6 @@ urlpatterns = [
     # path('patients/data/', views.get_patients_data, name = 'get_patients_data'),
     path('patients/complete/', views.complete_patient, name = 'complete_patient'),
     path('patients/remove/', views.remove_patient, name = 'remove_patient'),
+    path('test/page', views.test_ui, name= 'test_ui'),
 
 ]

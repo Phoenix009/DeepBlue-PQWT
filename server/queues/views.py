@@ -94,3 +94,9 @@ def send_update_notification(room_name):
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)(group_name, {"type": "update_table"})
 
+def test_ui(request):
+    context = {}
+    return render(request,'queues/test.html', context)
+
+
+
