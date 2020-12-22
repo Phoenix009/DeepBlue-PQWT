@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}PQWT| {{ queue }}{% endblock title %}
+{% block content %}
+
+<!-- Automatic element centering -->
+<div class="container">
+    <div class="row">
+        <div class="col-12 mt-lg-4">
+            <div class="d-flex justify-content-center">
+                <h1>Queue Name : {{ queue }}</h1>
+            </div>
+        </div>
+        <div  class="col-12">
+            <h4 id = "userName">{{ patient.first_name }} {{ patient.last_name }}</h4>
+            <h4>{{ patient.email }}</h4>
+            <h4>Average Patient Wait Time: 20.00 min</h4>
+            <h4>You Joined at <span id = "joinedAt">{{ patient.get_virtual_queue.joined_at }}</span> PM</h4>
+            <h4>Estimated Wait Time : 17min i.e 12:17:00</h4>
+            <h4 >Your Position in the Queue: <span id="position">4</span></h4>
+            <h5>Time Remaining</h5>
+            <div class="progress mb-3">
+                <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0"
+                     aria-valuemax="100" style="width: 80%">
+                  <span class="sr-only">80% Complete</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{ request.user.username|json_script:"user_username" }}
+{{ queue.name|json_script:"room-name" }}
+{{ patient.id|json_script:"patientId" }}
+
+
+
+
+{% include 'partials/_scripts.html' %}
+{% endblock content %}

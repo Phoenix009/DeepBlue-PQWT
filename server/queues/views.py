@@ -31,6 +31,22 @@ def room(request, room_name):
     context = {'room_name':room_name, 'queue':queue, 'form':form}
     return render(request, 'queues/queue.html', context)
 
+
+def view_wait_time(request,token):
+    print(token)
+    patient = get_object_or_404(Patient, otp = token)
+    patient.verified = True 
+    patient.save()
+    queue = patient.get_current_queue()
+    context = {
+        'patient' : patient,
+        'queue' : queue,
+    }
+    return render(request,'queues/view_wait_time.html', context)
+
+
+
+
 @login_required
 def add_patient(request,room_name):
     if request.method == 'POST':
@@ -87,6 +103,9 @@ def complete_patient(request):
         vqueue.save()
         send_update_notification(room_name)
         return JsonResponse({'status': 'success'})
+
+
+
 
 
 def send_update_notification(room_name):

@@ -23,7 +23,7 @@ def register_patient(request):
                 otp = otp, 
             )
             patient.save()
-            queue = Queue.get_queue_by_name(name='room')
+            queue = Queue.get_queue_by_name(name='new')
             inqueue = VirtualQueue(queue = queue, patient=patient)
             inqueue.save()
             send_patient_registration_mail(patient)

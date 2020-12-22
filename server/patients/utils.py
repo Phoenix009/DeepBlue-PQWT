@@ -6,9 +6,9 @@ def send_patient_registration_mail(patient):
     subject = 'Patient Registraion OTP'
     body = f"""
     You are one step away from getting into the queue 
-    Login using the following credentials
+    Click on the link to enter the queue
     Email : {patient.email}
-    Password : {patient.otp}
+    http://localhost:8000/queues/patients/wait-time/{patient.otp}/
     """
     sender = 'stationeymanagerkjsieit@gmail.com'
     receiver = patient.email 

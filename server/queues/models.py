@@ -1,4 +1,6 @@
 from datetime import datetime
+import random
+import string 
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -34,3 +36,5 @@ class VirtualQueue(models.Model):
 
     def __str__(self) -> str:
         return f"{self.queue.name} -> {self.patient.email}"
+
+    
