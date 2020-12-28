@@ -106,8 +106,6 @@ def complete_patient(request):
 
 
 
-
-
 def send_update_notification(room_name):
     group_name = f'chat_{room_name}'
     channel_layer = get_channel_layer()
