@@ -31,3 +31,6 @@
 - treated_at DATETIME NULL
 - discharged_at DATETIME NULL
 
+
+arrival time, age, gender, #patient,  wait time
+

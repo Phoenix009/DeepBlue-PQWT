@@ -14,6 +14,8 @@ from queues.models import Queue,VirtualQueue
 from patients.forms import PatientRegistrationForm
 from departments.models import Department
 
+from .utils import update_model
+
 @login_required
 def index(request):
     dept = get_object_or_404(Department, pk=request.user.profile.department.pk)
@@ -56,6 +58,8 @@ def add_patient(request,room_name):
                 first_name=form.cleaned_data['first_name'],
                 last_name=form.cleaned_data['last_name'],
                 email=form.cleaned_data['email'],
+                age = form.cleaned_data['age'],
+                gender = form.cleaned_data['gender'],
                 verified=True,
                 added_by = request.user
             )
@@ -101,6 +105,7 @@ def complete_patient(request):
         vqueue = get_object_or_404(VirtualQueue, pk = vqueue_id)
         vqueue.completed_at = datetime.now()
         vqueue.save()
+        update_model(vqueue)
         send_update_notification(room_name)
         return JsonResponse({'status': 'success'})
 

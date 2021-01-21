@@ -25,6 +25,10 @@ class Queue(models.Model):
     
     def get_active_patients(self):
         return self.virtualqueue_set.filter(completed_at=None, removed_at=None).all()
+    
+    def get_active_patients_count(self):
+        return len(self.get_active_patients())
+    
 
 
 class VirtualQueue(models.Model):
@@ -36,5 +40,9 @@ class VirtualQueue(models.Model):
 
     def __str__(self) -> str:
         return f"{self.queue.name} -> {self.patient.email}"
-
     
+    def wait_time(self):
+        if not self.completed_at: return -1
+        else: return (self.completed_at.hour*60 + self.completed_at.minute) - (self.joined_at.hour*60 + self.joined_at.minute)
+
+# TODO: implement a function to calculate the count of persone ahead 

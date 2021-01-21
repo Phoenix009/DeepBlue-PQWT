@@ -5,7 +5,7 @@ from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 from .models import Queue, VirtualQueue
-
+from .utils import predict_waittime
 
 
 class ChatRoomConsumer(AsyncWebsocketConsumer):
@@ -92,7 +92,9 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
                 'id': item.pk,
                 'patient_name': f"{item.patient.first_name} {item.patient.last_name}",
                 'joined_at': f"{item.joined_at.hour}:{item.joined_at.minute}:{item.joined_at.second}",
+                'wait_time': predict_waittime(item)
             }
+        
         inqueue = self.queue.get_active_patients()
         inqueue = list(map(format_model, inqueue))
         print(inqueue)

@@ -15,12 +15,16 @@ def register_patient(request):
             first_name = form.cleaned_data.get('first_name')
             last_name = form.cleaned_data.get('last_name')
             email = form.cleaned_data.get('email')
+            age = form.cleaned_data.get('age')
+            gender = form.cleaned_data.get('gender')
             otp = generate_otp()
             patient = Patient(
                 first_name = first_name,
                 last_name = last_name,
                 email = email,
-                otp = otp, 
+                otp = otp,
+                age = age,
+                gender = gender,
             )
             patient.save()
             queue = Queue.get_queue_by_name(name='new')
