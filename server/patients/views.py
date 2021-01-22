@@ -33,12 +33,19 @@ def register_patient(request, room_name):
             inqueue = VirtualQueue(queue = queue, patient=patient)
             inqueue.save()
             send_patient_registration_mail(patient)
+            return redirect('patients:verification_message')
     else:
         form = PatientRegistrationForm()
     context = {
         'form':form,
     }
     return render(request, 'patients/register_patient.html', context)
+
+def verification_message(request):
+    context = {}
+    return render(request, 'patients/verification_message.html', context)
+
+
 
 # Not being used 
 # registeres the patient after he/she enters the otp sent 
