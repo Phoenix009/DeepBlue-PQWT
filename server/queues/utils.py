@@ -16,7 +16,7 @@ def load_model():
     """
     loads the ml model by deserializing the pickle file 
     """
-    pickle_off = open ("static/models/model.sav", "rb")
+    pickle_off = open ("core/static/models/model.sav", "rb")
     model = pickle.load(pickle_off)
     return model
 
@@ -24,7 +24,7 @@ def save_model(model):
     """
     saves the ml model by serializing the pickle file 
     """
-    with open('static/models/model.sav', 'wb') as fh:
+    with open('core/static/models/model.sav', 'wb') as fh:
         pickle.dump(model, fh)
 
 def update_model(vqueue):
@@ -44,7 +44,7 @@ def get_data(vqueue):
     """
     x = {
         'age': vqueue.patient.age,
-        'arrival_time': vqueue.joined_at.hour*60 + vqueue.joined_at.minute,
+        'actual_arrival_time': vqueue.joined_at.hour*60 + vqueue.joined_at.minute,
         'position': vqueue.get_patients_ahead(),
         'gender': get_gender(vqueue.patient.gender)
     }
@@ -60,10 +60,11 @@ def predict_waittime(vqueue):
     """
     x = {
         'age': vqueue.patient.age,
-        'arrival_time': vqueue.joined_at.hour*60 + vqueue.joined_at.minute,
-        'active_patients': vqueue.queue.get_active_patients_count(),
+        'actual_arrival_time': vqueue.joined_at.hour*60 + vqueue.joined_at.minute,
+        'position': vqueue.queue.get_active_patients_count(),
         'gender': get_gender(vqueue.patient.gender)
     }
+    print(x)
     model = load_model()
     return model.predict_one(x)
 
