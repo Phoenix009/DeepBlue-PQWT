@@ -31,7 +31,9 @@
 {{ request.user.username|json_script:"user_username" }}
 {{ queue.name|json_script:"room-name" }}
 {{ patient.id|json_script:"patientId" }}
-
+<script>
+    let patientId = "{{ patient.id }}"
+</script>
 
 
 

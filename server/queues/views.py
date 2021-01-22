@@ -75,19 +75,6 @@ def add_patient(request,room_name):
     return redirect('queues:room', room_name)
 
 
-# def get_patients_data(request):
-#     data = json.loads(request.body)
-#     queue_id = data['queueId']
-#     queue = get_object_or_404(Queue, pk = queue_id)
-#     patients = queue.get_active_patients()
-#     json_context = None 
-#     if patients:
-#         json_context = serializers.serialize('json', patients) 
-#     context = {
-#         'data' : json_context
-#     }
-#     return HttpResponse(json_context, content_type='application/json')
-
 # removes patients from the queue
 @login_required
 def remove_patient(request):

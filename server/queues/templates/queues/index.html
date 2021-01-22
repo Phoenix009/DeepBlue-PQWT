@@ -31,6 +31,7 @@
                                     <th>Queue Name</th>
                                     <th>Status</th>
                                     <th style="width: 40px">Open</th>
+                                    <th>QRCODE</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,10 +41,15 @@
                                     <td>{{ queue.name }}</td>
                                     <td>
                                         <div class="progress progress-xs">
-                                        <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
+                                            <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
                                         </div>
                                     </td>
-                                    <td><a class="btn btn-sm btn-secondary" href="{% url 'queues:room' queue.name %}">Open</a></td>
+                                    <td>
+                                        <a class="btn btn-sm btn-outline-secondary" href="{% url 'queues:room' queue.name %}">View</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-sm btn-dark"  target="_blank" href="{% url 'queues:open_qrcode' queue.name %}">QRCODE</a>
+                                    </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

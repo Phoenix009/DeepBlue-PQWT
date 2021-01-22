@@ -8,7 +8,9 @@ from .utils import send_patient_registration_mail,generate_otp, send_patient_ver
 import string
 import random
 
-def register_patient(request):
+# displays a  form to register the patient after 
+# scanning the QRCODE
+def register_patient(request, room_name):
     if request.method == 'POST':
         form = PatientRegistrationForm(request.POST)
         if form.is_valid():
@@ -27,7 +29,7 @@ def register_patient(request):
                 gender = gender,
             )
             patient.save()
-            queue = Queue.get_queue_by_name(name='new')
+            queue = Queue.get_queue_by_name(name= room_name)
             inqueue = VirtualQueue(queue = queue, patient=patient)
             inqueue.save()
             send_patient_registration_mail(patient)
@@ -38,7 +40,9 @@ def register_patient(request):
     }
     return render(request, 'patients/register_patient.html', context)
 
-
+# Not being used 
+# registeres the patient after he/she enters the otp sent 
+# in email 
 def verify(request):
     if request.method == 'POST':
         form = VerificationForm(request.POST)

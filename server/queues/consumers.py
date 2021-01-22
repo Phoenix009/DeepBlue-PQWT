@@ -90,6 +90,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         def format_model(item):
             return {
                 'id': item.pk,
+                'patient_id' : item.patient.pk,
                 'patient_name': f"{item.patient.first_name} {item.patient.last_name}",
                 'joined_at': f"{item.joined_at.hour}:{item.joined_at.minute}:{item.joined_at.second}",
                 'wait_time': predict_waittime(item)

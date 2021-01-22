@@ -1,3 +1,5 @@
+let queue;
+
 function waitForSocketConnection(socket, callback){
     setTimeout(
         function () {
@@ -34,6 +36,7 @@ chatSocket.onmessage = function (e) {
             handleMessage(data.body);
             break;
         case "UPD":
+            queue = data.body;
             handleUpdate(data.body);
             break;
     }

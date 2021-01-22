@@ -139,7 +139,7 @@ handleUpdate = (body)=>{
                 <td>${ queue[i].id }</td>
                 <td>${ queue[i].patient_name }</td>
                 <td>${ queue[i].joined_at }</td>
-                <td>20min</td>
+                <td>${ queue[i].wait_time }</td>
                 <td>
                     <button onclick="handleRemove(${ queue[i].id })" class="btn btn-sm btn-danger">Remove</button>
                 </td>
@@ -150,4 +150,19 @@ handleUpdate = (body)=>{
         `;
     }
     
+}
+
+function updatePatientsData(body){
+    queue = body.queue;
+    const waitTimeElement = document.getElementById('estimatedWaitTime');
+    patientId = parseInt(patientId);
+    console.log(patientId)
+    console.log(queue)
+    let waitTime = "Not Predicted"
+    for(const q of queue){
+        if(patientId == q.patient_id){
+            waitTime = q.wait_time
+        }
+    }
+    waitTimeElement.innerHTML = waitTime;
 }
