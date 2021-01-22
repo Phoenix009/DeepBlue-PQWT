@@ -14,6 +14,7 @@ class Queue(models.Model):
     description = models.TextField()
     created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True)
     created_at = models.DateTimeField(default=datetime.now)
+    
 
     def __str__(self) -> str:
         return self.name

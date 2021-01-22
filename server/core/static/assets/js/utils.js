@@ -64,12 +64,14 @@ handleComplete = (id)=>{
 // This displays patients information when patient enters ID
 getPatientsWaitime = ()=>{
     // getting all elements 
+    console.log(queue)
     const waitTimeInfo = document.getElementById('wait-time-info');
     const patientIdElement = document.getElementById('patientId');
     const positionElement = document.getElementById('position');
     const joinedAtElement = document.getElementById('joinedAt');
     const spanPatientId = document.getElementById('spanPatientid');
     const userNameElement = document.getElementById('userName');
+    const waitTimeElement = document.getElementById('waitTime');
     patientId = parseInt(patientIdElement.value);
     
     if(patientId==undefined){
@@ -80,12 +82,14 @@ getPatientsWaitime = ()=>{
     let minId = 10000;
     let joinedAt;
     let userName;
+    let wait_time;
     for(const q of queue){
         console.log(patientId,q.id)
         if(q.id === patientId){
             console.log(q.joined_at)
             joinedAt = q.joined_at;
             userName = q.patient_name;
+            waitTime = q.wait_time;
         }
         maxId = Math.max(q.id,maxId);
         minId = Math.min(q.id, minId);
@@ -95,6 +99,7 @@ getPatientsWaitime = ()=>{
         spanPatientId.className = 'invalid-feedback';
         return;
     }
+    waitTimeElement.innerHTML = waitTime;
     waitTimeInfo.classList.remove('d-none');
     userNameElement.innerHTML = "Welcome , " + userName;
     let position = patientId - minId + 1;

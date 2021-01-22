@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load qr_code %}
+
+<html lang="en">
+<head>
+    {% include 'partials/_header.html' %}
+</head>
+<body>
+    <div class="container mt-2">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex flex-row justify-content-center">
+                   <button class="btn btn-sm btn-dark" onclick="printDiv('qrcode')">Print</button>
+                </div>
+            </div>
+            <div id="qrcode" class="col-12">
+                <div class="d-flex flex-row justify-content-center">
+                    <h3>QRCODE for {{ room_name }}</h3>
+                </div>
+                <div class="d-flex flex-row justify-content-center">
+                    {% qr_from_text qrcode_text options=qrcode_options %}
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <script>
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
+    </script>
+</body>
+</html>

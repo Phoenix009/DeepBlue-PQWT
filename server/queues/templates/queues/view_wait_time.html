@@ -16,7 +16,7 @@
             <h4>{{ patient.email }}</h4>
             <h4>Average Patient Wait Time: 20.00 min</h4>
             <h4>You Joined at <span id = "joinedAt">{{ patient.get_virtual_queue.joined_at }}</span> PM</h4>
-            <h4>Estimated Wait Time : 17min i.e 12:17:00</h4>
+            <h4>Estimated Wait Time : <span id="estimatedWaitTime"></span></h4>
             <h4 >Your Position in the Queue: <span id="position">4</span></h4>
             <h5>Time Remaining</h5>
             <div class="progress mb-3">

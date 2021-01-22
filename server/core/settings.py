@@ -38,15 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'hospitals.apps.HospitalsConfig',
-    'departments.apps.DepartmentsConfig',
     'crispy_forms',
     'widget_tweaks',
+    'qr_code',
+    'channels',
     'users.apps.UsersConfig',
     'patients.apps.PatientsConfig',
     'queues.apps.QueuesConfig',
-    'channels',
-
+    'hospitals.apps.HospitalsConfig',
+    'departments.apps.DepartmentsConfig',
 ]
 
 MIDDLEWARE = [
@@ -122,6 +122,13 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+
+# Media 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
+
 
 
 # Static files (CSS, JavaScript, Images)
