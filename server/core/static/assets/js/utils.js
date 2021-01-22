@@ -155,14 +155,17 @@ handleUpdate = (body)=>{
 function updatePatientsData(body){
     queue = body.queue;
     const waitTimeElement = document.getElementById('estimatedWaitTime');
+    const positionElement =  document.getElementById('position');
     patientId = parseInt(patientId);
     console.log(patientId)
     console.log(queue)
     let waitTime = "Not Predicted"
     for(const q of queue){
         if(patientId == q.patient_id){
-            waitTime = q.wait_time
+            waitTimeElement.innerHTML =  q.wait_time;
+            position.innerHTML = q.position;
+            break;
         }
     }
-    waitTimeElement.innerHTML = waitTime;
+    
 }
