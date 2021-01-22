@@ -45,7 +45,7 @@ def get_data(vqueue):
     x = {
         'age': vqueue.patient.age,
         'arrival_time': vqueue.joined_at.hour*60 + vqueue.joined_at.minute,
-        'active_patients': vqueue.queue.get_active_patients_count(),
+        'position': vqueue.get_patients_ahead(),
         'gender': get_gender(vqueue.patient.gender)
     }
 

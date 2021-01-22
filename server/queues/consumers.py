@@ -93,8 +93,9 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
                 'patient_id' : item.patient.pk,
                 'patient_name': f"{item.patient.first_name} {item.patient.last_name}",
                 'joined_at': f"{item.joined_at.hour}:{item.joined_at.minute}:{item.joined_at.second}",
-                'wait_time': predict_waittime(item)
-            }
+                'wait_time': predict_waittime(item),
+                'position': item.get_patients_ahead(),
+                }
         
         inqueue = self.queue.get_active_patients()
         inqueue = list(map(format_model, inqueue))
