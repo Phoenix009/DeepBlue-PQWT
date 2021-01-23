@@ -88,15 +88,18 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def get_patients_inqueue(self):
         def format_model(item):
+            nonlocal completion
+            wait_time, completion = predict_waittime(item, completion)
             return {
                 'id': item.pk,
                 'patient_id' : item.patient.pk,
                 'patient_name': f"{item.patient.first_name} {item.patient.last_name}",
                 'joined_at': f"{item.joined_at.hour}:{item.joined_at.minute}:{item.joined_at.second}",
-                'wait_time': predict_waittime(item),
+                'wait_time': wait_time,
                 'position': item.get_patients_ahead(),
                 }
         
+        completion = 12
         inqueue = self.queue.get_active_patients()
         inqueue = list(map(format_model, inqueue))
         print(inqueue)

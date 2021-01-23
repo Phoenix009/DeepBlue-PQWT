@@ -54,17 +54,23 @@ def get_data(vqueue):
     print(x, y)
     return x, y
 
-def predict_waittime(vqueue):
+def predict_waittime(vqueue, completion):
     """
     predicts the wait time 
     """
+    
+    actual_arrival_time = vqueue.joined_at.hour*60 + vqueue.joined_at.minute
     x = {
         'age': vqueue.patient.age,
-        'actual_arrival_time': vqueue.joined_at.hour*60 + vqueue.joined_at.minute,
+        'actual_arrival_time': actual_arrival_time,
         'position': vqueue.queue.get_active_patients_count(),
         'gender': get_gender(vqueue.patient.gender)
     }
-    print(x)
+    print('completion:', completion)
     model = load_model()
-    return model.predict_one(x)
+    service_time = model.predict_one(x)
+    enter_service = max(actual_arrival_time, completion)
+    completion = enter_service + service_time
+    wait_time = enter_service - actual_arrival_time
+    return wait_time, completion
 
