@@ -90,11 +90,15 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         def format_model(item):
             nonlocal completion
             wait_time, completion = predict_waittime(item, completion)
+            completed_at = item.completed_at 
+            if completed_at:
+                completed_at = True 
             return {
                 'id': item.pk,
                 'patient_id' : item.patient.pk,
                 'patient_name': f"{item.patient.first_name} {item.patient.last_name}",
                 'joined_at': f"{item.joined_at.hour}:{item.joined_at.minute}:{item.joined_at.second}",
+                'completed_at' : completed_at , 
                 'wait_time': wait_time,
                 'position': item.get_patients_ahead(),
                 }

@@ -25,7 +25,7 @@ class Queue(models.Model):
         return queue
     
     def get_active_patients(self):
-        return self.virtualqueue_set.filter(completed_at=None, removed_at=None).all()
+        return self.virtualqueue_set.filter(treatment_completed_at = None, removed_at=None).all()
     
     def get_active_patients_count(self):
         return len(self.get_active_patients())
@@ -37,6 +37,7 @@ class VirtualQueue(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     joined_at = models.DateTimeField(default=datetime.now)
     removed_at = models.DateTimeField(default=None,null=True,blank=True)
+    treatment_completed_at = models.DateTimeField(default = None, null=True,blank=True)
     completed_at = models.DateTimeField(default=None,null=True,blank=True)
 
     def __str__(self) -> str:

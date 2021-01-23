@@ -17,6 +17,9 @@ from departments.models import Department
 
 from .utils import update_model
 
+
+
+
 # displays all the queues in a particular department
 @login_required
 def index(request):
@@ -91,12 +94,18 @@ def remove_patient(request):
 # removes patients from the queue for treatment
 @login_required
 def complete_patient(request):
+    OUT_OF_QUEUE = 'OUT_OF_QUEUE'
+    OUT_OF_SYSTEM = 'OUT_OF_SYSTEM'
     if request.method == 'POST':
         data = json.loads(request.body)
         vqueue_id = data['id']
         room_name = data['room_name']
+        type_ = data['type']
         vqueue = get_object_or_404(VirtualQueue, pk = vqueue_id)
-        vqueue.completed_at = datetime.now()
+        if type_ == OUT_OF_QUEUE:
+            vqueue.completed_at = datetime.now()
+        elif type_ == OUT_OF_SYSTEM:
+            vqueue.treatment_completed_at = datetime.now()
         vqueue.save()
         update_model(vqueue)
         send_update_notification(room_name)

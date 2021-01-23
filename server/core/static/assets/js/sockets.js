@@ -38,7 +38,12 @@ chatSocket.onmessage = function (e) {
         case "UPD":
             queue = data.body;
             handleUpdate(data.body);
-            updatePatientsData(data.body);
+            try{
+                updatePatientsData(data.body);
+            } 
+            catch(error){
+                console.error(error)
+            }
             break;
     }
 }

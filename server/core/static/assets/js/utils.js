@@ -1,3 +1,5 @@
+OUT_OF_QUEUE = 'OUT_OF_QUEUE';
+OUT_OF_SYSTEM = 'OUT_OF_SYSTEM';
 handleMessage = (body) => {
     document.querySelector('#chat-text').value += (body.username + ': ' + body.message + '\n')
 }
@@ -39,11 +41,12 @@ handleRemove = (id)=>{
     });
 }
 
-handleComplete = (id)=>{
+handleComplete = (id,type)=>{
     const URL = '/queues/patients/complete/';
     const data = {
         'id': id,
         'room_name': roomName,
+        'type' : type
     }
     const csrftoken = getToken('csrftoken'); 
     const config = {
@@ -134,17 +137,36 @@ handleUpdate = (body)=>{
     }
     tbody.innerHTML = '';
     for(var i = 0; i<queue.length; i++){
+        if(queue[i].completed_at) continue;
         tbody.innerHTML += `
             <tr>
                 <td>${ queue[i].id }</td>
                 <td>${ queue[i].patient_name }</td>
                 <td>${ queue[i].joined_at }</td>
-                <td>${ queue[i].wait_time }</td>
+                <td>${ parseInt(queue[i].wait_time) }</td>
                 <td>
-                    <button onclick="handleRemove(${ queue[i].id })" class="btn btn-sm btn-danger">Remove</button>
+                    <button onclick="handleRemove(${ queue[i].id})" class="btn btn-sm btn-danger">Remove</button>
                 </td>
                 <td>
-                    <button onclick="handleComplete(${ queue[i].id })" class = "btn btn-sm btn-success">Complete</button>
+                    <button onclick="handleComplete(${ queue[i].id }, ${ OUT_OF_QUEUE })" class = "btn btn-sm btn-success">Complete</button>
+                </td>
+            </tr>
+        `;
+    }
+    tbody = document.querySelector("#inservice");
+    if(tbody==undefined){
+        // updateRoot2Table(queue);
+        return;
+    }
+    tbody.innerHTML = '';
+    for(var i = 0; i<queue.length; i++){
+        if(!queue[i].completed_at) continue;
+        tbody.innerHTML += `
+            <tr>
+                <td>${ queue[i].id }</td>
+                <td>${ queue[i].patient_name }</td>
+                <td>
+                    <button onclick="handleComplete(${ queue[i].id }, ${ OUT_OF_SYSTEM })" class = "btn btn-sm btn-success">Complete</button>
                 </td>
             </tr>
         `;
@@ -156,6 +178,7 @@ function updatePatientsData(body){
     queue = body.queue;
     const waitTimeElement = document.getElementById('estimatedWaitTime');
     const positionElement =  document.getElementById('position');
+    //if(!patientId) return;
     patientId = parseInt(patientId);
     console.log(patientId)
     console.log(queue)
