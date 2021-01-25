@@ -1,9 +1,11 @@
 from django.contrib import admin
 from django.urls import path , include
 from django.contrib.auth import views as auth_views
+from .views import landingpage
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', landingpage, name="landingpage"),
     path('queues/', include('queues.urls')),
     path('users/', include('users.urls')),
     path('departments/', include('departments.urls')),

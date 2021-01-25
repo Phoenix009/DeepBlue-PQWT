@@ -23,7 +23,10 @@ from .utils import update_model
 # displays all the queues in a particular department
 @login_required
 def index(request):
-    dept = get_object_or_404(Department, pk=request.user.profile.department.pk)
+    try:
+        dept = get_object_or_404(Department, pk = request.user.profile.department.pk)
+    except:
+        return HttpResponse('You are not assigned to any departments')
     queues = dept.get_queues()
     context={'queues': queues, 'department': dept}
     return render(request, 'queues/index.html', context)

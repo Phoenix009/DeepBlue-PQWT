@@ -129,7 +129,7 @@ updateRoot2Table = ()=>{
 
 handleUpdate = (body)=>{
     queue = body.queue;
-    
+    console.log(queue)
     tbody = document.querySelector('#root')
     if(tbody==undefined){
         // updateRoot2Table(queue);
