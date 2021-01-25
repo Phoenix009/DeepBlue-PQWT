@@ -149,7 +149,7 @@ CHANNEL_LAYERS = {
 }
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'queues:index'
-LOGOUT_REDIRECT_URL = 'users:login'
+LOGOUT_REDIRECT_URL = 'landingpage'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

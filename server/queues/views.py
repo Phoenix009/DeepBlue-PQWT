@@ -33,6 +33,7 @@ def index(request):
 
 # can be viewed by the queue receptionist 
 # displays all the verified patients in the queue 
+@login_required
 def room(request, room_name):
     queue = Queue.get_queue_by_name(name = room_name)
     if not queue:
@@ -115,6 +116,7 @@ def complete_patient(request):
         return JsonResponse({'status': 'success'})
 
 # Generates and opens qrcode
+@login_required
 def open_qrcode(request, room_name):
     qrcode_options = QRCodeOptions(size='H', border=1, error_correction='L')
     context = {

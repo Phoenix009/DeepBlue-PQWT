@@ -6,13 +6,8 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Bikin Bootstrap Template - Index</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+  <title>PredictQ</title>
 
-  <!-- Favicons -->
-  <link href="{% static 'landingpage/assets/img/favicon.png' %}" rel="icon">
-  <link href="{% static 'landingpage/assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Krub:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -42,20 +37,20 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo mr-auto"><a href="index.html">PredictQ</a></h1>
+      <h1 class="logo mr-auto">PredictQ</h1>
       
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav class="nav-menu d-none d-lg-block">
         <ul>
-          <li class="active"><a href="index.html">Home</a></li>
+          <li><a href="#">Home</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav><!-- .nav-menu -->
 
-      <a href="#about" class="get-started-btn scrollto">Get Started</a>
+      <a href="{% url 'users:login' %}" class="get-started-btn scrollto">Get Started</a>
 
     </div>
   </header><!-- End Header -->
@@ -68,7 +63,7 @@
       <div class="mt-lg-5 d-lg-block"></div>
       <h1 class="mt-5 pt-5">Nothing consoles and comforts like certainty does </h1>
       <h2>Certainty plays a big role in life, PredictQ helps to make your waiting certain !!!</h2>
-      <a href="#about" class="btn-get-started scrollto">Get Started</a>
+      <a href="{% url 'users:login' %}" class="btn-get-started scrollto">Get Started</a>
       <img src="{% static 'landingpage/assets/img/queue2.png' %}" height="40%" class="img-fluid hero-img" alt="" data-aos="zoom-in" data-aos-delay="150">
       
     </div>
@@ -297,7 +292,7 @@
       <div class="container">
         <div class="row">
 
-          <div class="col-lg-3 col-md-6 footer-contact">
+          <div class="col-lg-4 col-md-6 footer-contact">
             <h3>PredictQ</h3>
             <p>
               KJ Somaiya Institute Of Engineering and IT <br>
@@ -306,7 +301,7 @@
             </p>
           </div>
 
-          <div class="col-lg-2 col-md-6 footer-links">
+          <div class="col-lg-4 col-md-6 footer-links">
             <h4>Useful Links</h4>
             <ul>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
@@ -317,7 +312,7 @@
             </ul>
           </div>
 
-          <div class="col-lg-3 col-md-6 footer-links">
+          <div class="col-lg-4 col-md-6 footer-links">
             <h4>Team</h4>
             <ul>
               <li><a href="#">Keshav Mishra</a></li>
