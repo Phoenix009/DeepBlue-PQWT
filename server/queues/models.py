@@ -10,10 +10,12 @@ from patients.models import Patient
 
 class Queue(models.Model):
     name = models.CharField(max_length=500)
-    department = models.ForeignKey(Department, on_delete=models.DO_NOTHING,blank=True, null=True)
+    department = models.ForeignKey(Department, on_delete=models.SET_NULL,blank=True, null=True)
     description = models.TextField()
-    created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(default=datetime.now)
+
+
     
 
     def __str__(self) -> str:

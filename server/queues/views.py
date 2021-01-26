@@ -27,6 +27,7 @@ def index(request):
         dept = get_object_or_404(Department, pk = request.user.profile.department.pk)
     except:
         return HttpResponse('You are not assigned to any departments')
+        
     queues = dept.get_queues()
     context={'queues': queues, 'department': dept}
     return render(request, 'queues/index.html', context)
@@ -110,6 +111,14 @@ def complete_patient(request):
             vqueue.completed_at = datetime.now()
         elif type_ == OUT_OF_SYSTEM:
             vqueue.treatment_completed_at = datetime.now()
+            hospital = vqueue.queue.department.hospital 
+            department_order = vqueue.queue.department.order
+            next_order = department_order + 1
+            department = hospital.department_set.filter(order = next_order).first()
+            if department:
+                queue = department.queue_set.first()
+                new_vqueue = VirtualQueue(queue = queue, patient = vqueue.patient)
+                new_vqueue.save()
         vqueue.save()
         update_model(vqueue)
         send_update_notification(room_name)
