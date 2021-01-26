@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 {% block title %}PQWT| {{ queue }}{% endblock title %}
 {% block content %}
 
@@ -36,6 +37,6 @@
 </script>
 
 
-
+<link href="{% static 'assets/template/plugins/toastr/toastr.min.js' %}" rel="stylesheet"/>
 {% include 'partials/_scripts.html' %}
 {% endblock content %}
