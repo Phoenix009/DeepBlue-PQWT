@@ -14,9 +14,8 @@ class Queue(models.Model):
     description = models.TextField()
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(default=datetime.now)
+    model = models.FileField(upload_to='models/', default='models/default.sav')
 
-
-    
 
     def __str__(self) -> str:
         return self.name

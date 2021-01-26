@@ -3,6 +3,7 @@ from river import metrics
 from river import linear_model
 import pickle
 
+
 def get_gender(gender):
     """
     Gets the gender of the patients in numerical form 
@@ -12,19 +13,23 @@ def get_gender(gender):
     elif gender=='FEMALE': return 2
     else: return 3
 
-def load_model():
+def load_model(vqueue):
     """
     loads the ml model by deserializing the pickle file 
     """
-    pickle_off = open ("core/static/models/model.sav", "rb")
+    model_path = vqueue.queue.model
+
+    pickle_off = open('media/' + str(model_path), "rb")
     model = pickle.load(pickle_off)
     return model
 
-def save_model(model):
+def save_model(vqueue, model):
     """
     saves the ml model by serializing the pickle file 
     """
-    with open('core/static/models/model.sav', 'wb') as fh:
+    model_path = vqueue.queue.model
+    
+    with open('media/' + str(model_path), 'wb') as fh:
         pickle.dump(model, fh)
 
 def update_model(vqueue):
@@ -32,10 +37,9 @@ def update_model(vqueue):
     updates the ml model 
     """
     x, y = get_data(vqueue)
-    model = load_model()
+    model = load_model(vqueue)
     model.learn_one(x, y)
-    save_model(model)
-
+    save_model(vqueue, model)
 
 def get_data(vqueue):
     """
@@ -51,7 +55,6 @@ def get_data(vqueue):
 
     y = vqueue.wait_time()
 
-    print(x, y)
     return x, y
 
 def predict_waittime(vqueue, completion):
@@ -66,8 +69,7 @@ def predict_waittime(vqueue, completion):
         'position': vqueue.queue.get_active_patients_count(),
         'gender': get_gender(vqueue.patient.gender)
     }
-    print('completion:', completion)
-    model = load_model()
+    model = load_model(vqueue)
     service_time = model.predict_one(x)
     enter_service = max(actual_arrival_time, completion)
     completion = enter_service + service_time
