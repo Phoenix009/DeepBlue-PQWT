@@ -38,6 +38,7 @@ def register_patient(request, room_name):
         form = PatientRegistrationForm()
     context = {
         'form':form,
+        'room_name' : room_name
     }
     return render(request, 'patients/register_patient.html', context)
 

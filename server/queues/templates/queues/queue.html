@@ -5,16 +5,20 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            
             <div class="col-12 mb-2 mt-2">
-                <h1>Queue Name: {{ queue }}</h1>
+                <h1> {{ queue }} queue | {{ request.user.first_name }} {{ request.user.last_name }}</h1>
             </div>
             <div class="col-12">
                             <!-- DIRECT CHAT -->
             <div class="card direct-chat direct-chat-primary">
                 <div class="card-header">
                   <h3 class="card-title m-1">Direct Chat</h3>
-  
+                  <div class="pagination pagination-sm float-left ml-lg-4" style="width: 150px;">
+                    <a type="button" class="btn btn-sm btn-dark" target="_blank" href="{% url 'queues:open_qrcode'  queue %}">
+                        QRCODE
+                    </a>
+                  </div>
+                  
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool m-1" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
@@ -74,7 +78,7 @@
                         </h3>
                     </div>
                     <div class="card-body p-0">
-                        <table class="table">
+                        <table class="table table-responsive">
                             <thead>
                                 <th>Id</th>
                                 <th>Name</th>
@@ -95,38 +99,20 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">List of patients in Queue</h3>
-    
-                        <div class="card-tools">
-                            <!-- <ul class="pagination pagination-sm float-right">
-                                <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                            </ul> -->
-                            {% if request.user.is_authenticated %}
-                            <div class="pagination pagination-sm float-right pl-1" style="width: 150px;">
-                                <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#modal-default">
-                                    Add Patient
-                                  </button>
-                            </div>
-                            <div class="pagination pagination-sm float-right pl-1" style="width: 150px;">
-                                <a type="button" class="btn btn-sm btn-dark" target="_blank" href="{% url 'queues:open_qrcode'  queue %}">
-                                    QRCODE
-                                </a>
-                            </div>
-                            {% endif %}
-                            <!-- <div class="input-group input-group-sm" style="width: 150px;">
-                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-                                <div class="input-group-append">
-                                  <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                                </div>
-                            </div> -->
-                        </div>
+                        <h3 class="card-title">Patients in Queue</h3>
+
+                        {% if request.user.is_authenticated %}
+                          <div class="float-right pl-1" style="width: 150px;">
+                              <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#modal-default">
+                                  Add Patient
+                                </button>
+                          </div>
+
+                        {% endif %}
                     </div>
                     <div class="card-body p-0">
-                        <table class="table">
+                      
+                        <table class="table table-responsive">
                             <thead>
                                 <th>Id</th>
                                 <th>Name</th>

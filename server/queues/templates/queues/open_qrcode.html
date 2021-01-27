@@ -1,5 +1,10 @@
 <!DOCTYPE html>
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% load qr_code %}
+{% load static %}
+{% block title %}PQWT| {{ room_name }}{% endblock title %}
+{% block content %}
 
 <html lang="en">
 <head>
@@ -9,16 +14,22 @@
     <div class="container mt-2">
         <div class="row">
             <div class="col-12">
-                <div class="d-flex flex-row justify-content-center">
-                   <button class="btn btn-sm btn-dark" onclick="printDiv('qrcode')">Print</button>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title m-1">QRCODE for queue {{ room_name }}</h3>
+                        <button class="btn btn-sm btn-dark float-right" onclick="printDiv('qrcode')">Print QRCODE</button>
+                    </div>
+                    <div class="card-body d-flex flex-row justify-content-center">
+                        <div id="qrcode" class="text-center">
+                            <p>Scan QRCODE or goto link <a target="_blank" href="{{ qrcode_text }}"><u><b>{{ qrcode_text }}</b></u></a></p>
+                            {% qr_from_text qrcode_text options=qrcode_options %}
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div id="qrcode" class="col-12">
+            <div class="col-12 mb-5">
                 <div class="d-flex flex-row justify-content-center">
-                    <h3>QRCODE for {{ room_name }}</h3>
-                </div>
-                <div class="d-flex flex-row justify-content-center">
-                    {% qr_from_text qrcode_text options=qrcode_options %}
+                   
                 </div>
             </div>
         </div>
@@ -36,5 +47,5 @@
             document.body.innerHTML = originalContents;
         }
     </script>
-</body>
+{% endblock content %}
 </html>
