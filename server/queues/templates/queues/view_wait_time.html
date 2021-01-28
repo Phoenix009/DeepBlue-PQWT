@@ -4,31 +4,298 @@
 {% block title %}PQWT| {{ queue }}{% endblock title %}
 {% block content %}
 
-<!-- Automatic element centering -->
-<div class="container">
-    <div class="row">
-        <div class="col-12 mt-lg-4">
-            <div class="d-flex justify-content-center">
-                <h1>Queue Name : {{ queue }}</h1>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <style>
+        * {
+            overflow-x: hidden;
+            overflow-y: hidden;
+        }
+        .progresss {
+            height: 30px;
+            background-color: lightgray;
+            display: flex;
+            border-radius: 20px;
+        }
+        
+        .progresss-done {
+            height: 100%;
+            width: 0;
+            opacity: 0;
+            background: linear-gradient(to left, #f2709c, #ff9472);
+            color: #fff;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 1s ease;
+        }
+        
+        .fas {
+            height: 50px !important;
+            width: 50px !important;
+            left: 9px !important;
+            font-size: 25px !important;
+            line-height: 50px !important;
+        }
+        
+        .mobileOnly {
+            visibility: hidden;
+            height: 0px;
+        }
+        
+        .fa-envelop {
+            top: 5px;
+        }
+        
+        .spacedIcon {
+            margin-top: 50px;
+        }
+        
+        .timeline-item {
+            margin-left: 70px !important;
+            margin-top: 5px !important;
+            background: #282828 !important;
+        }
+        
+        .timeline-header {
+            color: rgba(255, 255, 255, .8) !important;
+        }
+        
+        @media (max-width: 801px) {
+            .main-sidebar {
+                visibility: hidden;
+                display: none;
+            }
+            .content {
+                margin-left: 0px !important;
+            }
+            .mobileOnly {
+                visibility: visible;
+                display: inline;
+                height: auto;
+            }
+            .brand-image {
+                margin-left: 0 !important;
+            }
+            .col-sm-6 {
+                padding-left: 0 !important;
+            }
+            * {
+                overflow-y: auto;
+            }
+        }
+        
+        @media (prefers-color-scheme: light) {
+            .site-title a:link,
+            .site-title a:visited,
+            .header-social-icons .social-icons-menu li a {
+                color: #373737;
+            }
+            .h1change {
+                color: #373737;
+                margin: 0px;
+            }
+            .card {
+                background: #fff;
+            }
+            .site-content,
+            body {
+                background: #f9f9f9;
+            }
+            .site-header {
+                background: #fff;
+            }
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .site-title a:link,
+            .site-title a:visited,
+            .header-social-icons .social-icons-menu li a {
+                color: #fff;
+            }
+            .h1change {
+                color: #b3b3b3;
+                margin: 0px;
+            }
+            .card {
+                background: #282828;
+            }
+            .site-content,
+            body {
+                background: #141414;
+            }
+            .site-header {
+                background: #141414;
+            }
+        }
+    </style>
+     <div class="wrapper">
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="index3.html" class="brand-link">
+                <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light">PredictQ</span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="timeline">
+                    <!-- timeline time label -->
+                    <div class="spacedIcon">
+                        <i class="fas fa-user-plus bg-blue" aria-hidden="true"></i>
+                        <div class="timeline-item">
+                            <h3 class="timeline-header">Registration</h3>
+                        </div>
+                    </div>
+
+                    <div class="spacedIcon">
+                        <i class="fas fa-briefcase-medical bg-orange"></i>
+                        <div class="timeline-item">
+                            <h3 class="timeline-header">Consultation</h3>
+                        </div>
+                    </div>
+                    <div class="spacedIcon">
+                        <i class="fas fa-receipt bg-red"></i>
+                        <div class="timeline-item">
+                            <h3 class="timeline-header">Billing</h3>
+                        </div>
+                    </div>
+                    <div class="spacedIcon">
+                        <i class="fas fa-file-prescription bg-yellow"></i>
+                        <div class="timeline-item">
+                            <h3 class="timeline-header">Prescription</h3>
+                        </div>
+                    </div>
+                    <div class="spacedIcon">
+                        <i class="fas fa-check bg-green"></i>
+                        <div class="timeline-item">
+                            <h3 class="timeline-header">Estimated Time</h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.sidebar -->
+        </aside>
+        <section class="content" style="margin-left: 250px;">
+            <div class="mobileOnly">
+                <a href="index3.html" class="brand-link" style="text-decoration: none;">
+                    <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                    <span class="brand-text font-weight-light" style="text-decoration: none; color: #b3b3b3;">PredictQ</span>
+                </a>
             </div>
-        </div>
-        <div  class="col-12">
-            <h4 id = "userName">{{ patient.first_name }} {{ patient.last_name }}</h4>
-            <h4>{{ patient.email }}</h4>
-            <h4>Average Patient Wait Time: 20.00 min</h4>
-            <h4>You Joined at <span id = "joinedAt">{{ patient.get_virtual_queue.joined_at }}</span> PM</h4>
-            <h4>Estimated Wait Time : <span id="estimatedWaitTime"></span></h4>
-            <h4 >Your Position in the Queue: <span id="position">4</span></h4>
-            <h5>Time Remaining</h5>
-            <div class="progress mb-3">
-                <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0"
-                     aria-valuemax="100" style="width: 80%">
-                  <span class="sr-only">80% Complete</span>
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="h1change">Queue Name</h1>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
+            <div class="card" style="margin: 8px;">
+                <div class="card-header h1change">Time Remaining</div>
+                <div class="progress-group" style="margin-right: 12px; margin-left: 12px;">
+                    <div class="progresss">
+                        <div class="progresss-done" data-done="60">
+                            60%
+                        </div>
+                    </div>
+                    <span class="float-left" style="margin-left: 5px; margin-top: 5px;"><b class="h1change">1 hr 5 mins</b></span>
+                </div>
+            </div>
+            <div class="card" style="margin: 8px;">
+                <div class="card-header h1change">Greetings, {{ patient.first_name }} {{ patient.last_name }}! You'll find our queue position below.</div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 mt-2">
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3>{{ patient.joined_at }}</h3>
+
+                                    <p>You Joined At</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-bag"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h3><span id="estimatedWaitTime"></span> min</h3>
+
+                                    <p>Estimated Wait Time</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3><span id="position"></span></h3>
+                                    <p>Your Position in Queue</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person-add"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    <h3>100</h3>
+
+                                    <p>Total Wait Time</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="timeline-wrap">
+                <div id="timelineLine"></div>
+
+            </div>
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="timeline">
+                    <!-- timeline time label -->
+                    <div class="spacedIcon">
+                        <i class="fas fa-user-plus bg-blue" aria-hidden="true"></i>
+                    </div>
+                    <div class="spacedIcon">
+                        <i class="fas fa-briefcase-medical bg-orange"></i>
+                    </div>
+                    <div class="spacedIcon">
+                        <i class="fas fa-receipt bg-red"></i>
+                    </div>
+                    <div class="spacedIcon">
+                        <i class="fas fa-file-prescription bg-yellow"></i>
+                    </div>
+                    <div class="spacedIcon">
+                        <i class="fas fa-check bg-green"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+            const progress = document.querySelector('.progresss-done');
+
+            setTimeout(() => {
+                progress.style.opacity = 1;
+                progress.style.width = progress.getAttribute('data-done') + '%';
+            }, 500)
+        </script>
+
+
+
+
 {{ request.user.username|json_script:"user_username" }}
 {{ queue.name|json_script:"room-name" }}
 {{ patient.id|json_script:"patientId" }}

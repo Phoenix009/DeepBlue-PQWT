@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from .utils import generate_otp
 
 
+
 class Patient(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
@@ -31,3 +32,7 @@ class Patient(models.Model):
 
     def __str__(self) -> str:
         return f"{self.email}"
+    
+    # @classmethod
+    # def total_number_of_patients_today(cls):
+    #     return len(cls.objects.filter(jointed_at__gte=datetime.date.today()))

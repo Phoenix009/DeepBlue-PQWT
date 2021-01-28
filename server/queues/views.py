@@ -29,7 +29,12 @@ def index(request):
         return HttpResponse('You are not assigned to any departments')
         
     queues = dept.get_queues()
-    context={'queues': queues, 'department': dept}
+    # patients_visited_today = Patient.total_number_of_patients_today()
+    context={
+        'queues': queues, 
+        'department': dept,
+        # 'patients_visited_today' : patients_visited_today,
+        }
     return render(request, 'queues/index.html', context)
 
 # can be viewed by the queue receptionist 
