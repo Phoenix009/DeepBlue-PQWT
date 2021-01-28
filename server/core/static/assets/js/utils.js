@@ -9,10 +9,10 @@ parseMessage = (body) => {
         <!-- Message to the right -->
         <div class="direct-chat-msg left">
           <!-- /.direct-chat-infos -->
-          <img class="direct-chat-img" src="{% static 'assets/img/admin.jpg' %}" alt="message user image">
+          <img class="direct-chat-img" src="http://localhost:8000/static/assets/img/admin.jpg" alt="message user image">
           <!-- /.direct-chat-img -->
           <div class="direct-chat-text">
-            ${body.username}: ${body.message}
+            ${body.message}
           </div>
           <!-- /.direct-chat-text -->
         </div>

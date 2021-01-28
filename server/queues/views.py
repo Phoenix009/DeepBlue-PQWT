@@ -60,6 +60,9 @@ def room(request, room_name):
 def view_wait_time(request,token):
     print(token)
     patient = get_object_or_404(Patient, otp = token)
+    depts = Department.objects.all()
+    # queues = Queue.objects.all()
+    # queues.sort( key =lambda x : x.department.order)
     patient.verified = True 
     patient.save()
     queue = patient.get_current_queue()

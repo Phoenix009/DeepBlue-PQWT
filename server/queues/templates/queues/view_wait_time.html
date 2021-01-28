@@ -9,6 +9,9 @@
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <style>
+        body {
+            overflow-x: hidden;
+        }
         .progresss {
             height: 30px;
             background-color: lightgray;
@@ -236,7 +239,6 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link">
-                <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">PredictQ | {{ queue }}</span>
             </a>
             <!-- Sidebar -->
@@ -279,94 +281,138 @@
                 <!-- /.sidebar -->
         </aside>
         <section class="content" style="margin-left: 250px;">
-            <div class="mobileOnly">
-                <div class="card" style="margin: 8px;">
-                    <div class="card-header h1change">You're at {{ queue }} Queue</div>
-                    <div id="timeline-wrap">
-                        <div id="timelineLine"></div>
-                        <div class="marker mfirst timeline-icon one">
-                            <i class="fa fa-user-plus"></i>
+           <div class="row m-1">
+               <div class="col-12">
+                   <div class="mobileOnly">
+                       <div class="card">
+                           <div class="card-header h1change">You're at {{ queue }} Queue</div>
+                           <div id="timeline-wrap">
+                               <div id="timelineLine"></div>
+                               <div class="marker mfirst timeline-icon one">
+                                   <i class="fa fa-user-plus"></i>
+                               </div>
+                               <div class="marker m2 timeline-icon two">
+                                   <i class="fa fa-briefcase-medical"></i>
+                               </div>
+                               <div class="marker m3 timeline-icon three">
+                                   <i class="fa fa-receipt"></i>
+                               </div>
+                               <div class="marker m4 timeline-icon four">
+                                   <i class="fa fa-file-prescription"></i>
+                               </div>
+                               <div class="marker mlast timeline-icon four">
+                                   <i class="fa fa-check"></i>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-12">
+                <!-- DIRECT CHAT -->
+                <div class="card direct-chat direct-chat-primary">
+                    <div class="card-header">
+                    <h3 class="card-title m-1">Direct Chat</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-sm btn-tool m-1" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                    <!-- Conversations are loaded here -->
+                    <div id='chat-text' class="direct-chat-messages">
+
+                    </div>
+                    <!--/.direct-chat-messages-->
+                    <!-- /.direct-chat-pane -->
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!--/.direct-chat -->
+
+                </div>
+                <!-- END COL -->
+               <div class="col-12">
+                    <div id="reload" class="card d-none" style="margin: 8px;">
+                        <div class="card-header">
+                            Click
                         </div>
-                        <div class="marker m2 timeline-icon two">
-                            <i class="fa fa-briefcase-medical"></i>
-                        </div>
-                        <div class="marker m3 timeline-icon three">
-                            <i class="fa fa-receipt"></i>
-                        </div>
-                        <div class="marker m4 timeline-icon four">
-                            <i class="fa fa-file-prescription"></i>
-                        </div>
-                        <div class="marker mlast timeline-icon four">
-                            <i class="fa fa-check"></i>
+                    </div>
+               </div>
+               
+               <div class="col-12">
+                   <div class="card">
+                       <div class="card-header h1change">Time Remaining</div>
+                       <div class="progress-group" style="margin-right: 12px; margin-left: 12px;">
+                           <div class="progresss">
+                               <div class="progresss-done" data-done="60">
+                                   60%
+                               </div>
+                           </div>
+                           <span class="float-left" style="margin-left: 5px; margin-top: 5px;"><b class="h1change">1 hr 5 mins</b></span>
+                       </div>
+                   </div>
+               </div>
+               <div class="col-12">
+                <div class="card">
+                    <div class="card-header h1change">Greetings, {{ patient.first_name }} {{ patient.last_name }}!  You'll find our queue position below.</div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6" style="margin-top: 15px;">
+                                <div class="small-box bg-info">
+                                    <div class="inner">
+                                        <h3>{{ patient.joined_at }}</h3>
+    
+                                        <p>You Joined At</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-bag"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="margin-top: 15px;">
+                                <div class="small-box bg-success">
+                                    <div class="inner">
+                                        <h3><span id="estimatedWaitTime"></span> min</h3>
+    
+                                        <p>Average Patient Wait Time</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-stats-bars"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="margin-top: 15px;">
+                                <div class="small-box bg-warning">
+                                    <div class="inner">
+                                        <h3><span id="position"></span></h3>
+                                        <p>Your Position in Queue</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-person-add"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="margin-top: 15px;">
+                                <div class="small-box bg-danger">
+                                    <div class="inner">
+                                        <h3>1 hr 5 mins</h3>
+    
+                                        <p>Estimated Wait Time</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-pie-graph"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card" style="margin: 8px;">
-                <div class="card-header h1change">Time Remaining</div>
-                <div class="progress-group" style="margin-right: 12px; margin-left: 12px;">
-                    <div class="progresss">
-                        <div class="progresss-done" data-done="60">
-                            60%
-                        </div>
-                    </div>
-                    <span class="float-left" style="margin-left: 5px; margin-top: 5px;"><b class="h1change">1 hr 5 mins</b></span>
-                </div>
-            </div>
-            <div class="card" style="margin: 8px;">
-                <div class="card-header h1change">Greetings, {{ patient.first_name }} {{ patient.last_name }}!  You'll find our queue position below.</div>
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-6" style="margin-top: 15px;">
-                            <div class="small-box bg-info">
-                                <div class="inner">
-                                    <h3>4:00 PM</h3>
+               </div>
+           </div> 
 
-                                    <p>You Joined At</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-bag"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6" style="margin-top: 15px;">
-                            <div class="small-box bg-success">
-                                <div class="inner">
-                                    <h3>20 mins</h3>
-
-                                    <p>Average Patient Wait Time</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-stats-bars"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6" style="margin-top: 15px;">
-                            <div class="small-box bg-warning">
-                                <div class="inner">
-                                    <h3>4</h3>
-                                    <p>Your Position in Queue</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-person-add"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6" style="margin-top: 15px;">
-                            <div class="small-box bg-danger">
-                                <div class="inner">
-                                    <h3>1 hr 5 mins</h3>
-
-                                    <p>Estimated Wait Time</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-pie-graph"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      
         </section>
         <script>
             const progress = document.querySelector('.progresss-done');
@@ -376,6 +422,14 @@
                 progress.style.width = progress.getAttribute('data-done') + '%';
             }, 500)
         </script>
+    {{ request.user.username|json_script:"user_username" }}
+    {{ queue.name|json_script:"room-name" }}
+    {{ patient.id|json_script:"patientId" }}
+    {{ next_queue.name|json_script:"next_queue" }}
+    <script>
+        let patientId = "{{ patient.id }}"
+    </script>
+    {% include 'partials/_scripts.html' %}
     {% include 'partials/_main_scripts.html' %}
 </body>
 </html>

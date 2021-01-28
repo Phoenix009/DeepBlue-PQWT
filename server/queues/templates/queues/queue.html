@@ -77,7 +77,7 @@
                 </div>
             </div>
             <!-- END COL -->
-            <div class="col-3">
+            <div class="col-md-3">
                           <!-- DIRECT CHAT -->
             <div class="card direct-chat direct-chat-primary">
               <div class="card-header">
@@ -99,26 +99,6 @@
                 <!-- Conversations are loaded here -->
                 <div id='chat-text' class="direct-chat-messages">
 
-
-
-                  <!-- Message to the right -->
-                  <div class="direct-chat-msg right">
-                    <div class="direct-chat-infos clearfix">
-                      <span class="direct-chat-name float-right">{{ request.user.first_name }} {{ request.user.last_name }} </span>
-                      <!-- <span class="direct-chat-timestamp float-left"></span> -->
-                    </div>
-                    <!-- /.direct-chat-infos -->
-                    <img class="direct-chat-img" src="{% static 'assets/img/admin.jpg' %}" alt="message user image">
-                    <!-- /.direct-chat-img -->
-                    <div class="direct-chat-text">
-                      I would love to.
-                    </div>
-                    <!-- /.direct-chat-text -->
-                  </div>
-                  <!-- /.direct-chat-msg -->
-
-
-
                 </div>
                 <!--/.direct-chat-messages-->
                 <!-- /.direct-chat-pane -->
@@ -139,6 +119,8 @@
                     </button> -->
                   </div>
                 </form>
+                <button class="btn btn-sm btn-dark">Next Patient</button>
+                <button class="btn btn-sm btn-dark">Lunch Time</button>
               </div>
               <!-- /.card-footer-->
             </div>
