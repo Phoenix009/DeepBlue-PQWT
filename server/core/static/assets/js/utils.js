@@ -1,7 +1,8 @@
 const OUT_OF_QUEUE = 'OUT_OF_QUEUE';
 const OUT_OF_SYSTEM = 'OUT_OF_SYSTEM';
 
-
+//TODO: nextMessage parse function
+//TODO: lunchtime parse function
 
 parseMessage = (body) => {
     return `
