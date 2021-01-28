@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 {% block title %}PQWT| {{ queue }}{% endblock title %}
 {% block content %}
+
 <body class="hold-transition sidebar-mini layout-fixed">
     <style>
         .progresss {
@@ -53,6 +55,112 @@
         
         .timeline-header {
             color: rgba(255, 255, 255, .8) !important;
+        }
+        
+        #timeline-wrap {
+            margin: 10% 10%;
+            top: 100;
+            position: relative;
+        }
+        
+        #timelineLine {
+            height: 1px;
+            width: 100%;
+            background-color: #aabbc4;
+            position: relative;
+        }
+        
+        .marker {
+            z-index: 1000;
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            font-size: 1.4em;
+            text-align: center;
+            position: absolute;
+            margin-left: -25px;
+            background-color: #999999;
+            border-radius: 50%;
+        }
+        
+        .marker:hover {
+            -moz-transform: scale(1.2);
+            -webkit-transform: scale(1.2);
+            -o-transform: scale(1.2);
+            -ms-transform: scale(1.2);
+            transform: scale(1.2);
+            -webkit-transition: all 300ms ease;
+            -moz-transition: all 300ms ease;
+            -ms-transition: all 300ms ease;
+            -o-transition: all 300ms ease;
+            transition: all 300ms ease;
+        }
+        
+        .timeline-icon.one {
+            background-color: #3e4f88 !important;
+        }
+        
+        .timeline-icon.two {
+            background-color: #536295 !important;
+        }
+        
+        .timeline-icon.three {
+            background-color: #6976a2 !important;
+        }
+        
+        .timeline-icon.four {
+            background-color: #7e8aaf !important;
+        }
+        
+        .mfirst {
+            top: -25px;
+        }
+        
+        .m2 {
+            top: -25px;
+            left: 25%
+        }
+        
+        .m3 {
+            top: -25px;
+            left: 50%
+        }
+        
+        .m4 {
+            top: -25px;
+            left: 75%
+        }
+        
+        .mlast {
+            top: -25px;
+            left: 100%
+        }
+        
+        .timeline-panel {
+            margin-top: 20%;
+            width: 500px;
+            height: 200px;
+            background-color: #cbd0df;
+            border-radius: 2px;
+            position: relative;
+            text-align: left;
+            padding: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 20px;
+            float: left;
+        }
+        
+        .timeline-panel:after {
+            content: '';
+            position: absolute;
+            margin-top: -12%;
+            left: 10%;
+            width: 0;
+            height: 0;
+            border: 12px solid transparent;
+            border-bottom: 15px solid #cbd0df;
         }
         
         @media (max-width: 801px) {
@@ -120,7 +228,7 @@
             }
         }
     </style>
-     <div class="wrapper">
+    <div class="wrapper">
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
@@ -180,6 +288,29 @@
                     <div class="row mb-2">
                         <div class="col-sm-6">
                             <h1 class="h1change">Queue Name</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mobileOnly">
+                <div class="card" style="margin: 8px;">
+                    <div class="card-header h1change">You're at</div>
+                    <div id="timeline-wrap">
+                        <div id="timelineLine"></div>
+                        <div class="marker mfirst timeline-icon one">
+                            <i class="fa fa-user-plus"></i>
+                        </div>
+                        <div class="marker m2 timeline-icon two">
+                            <i class="fa fa-briefcase-medical"></i>
+                        </div>
+                        <div class="marker m3 timeline-icon three">
+                            <i class="fa fa-receipt"></i>
+                        </div>
+                        <div class="marker m4 timeline-icon four">
+                            <i class="fa fa-file-prescription"></i>
+                        </div>
+                        <div class="marker mlast timeline-icon four">
+                            <i class="fa fa-check"></i>
                         </div>
                     </div>
                 </div>
@@ -249,31 +380,6 @@
                     </div>
                 </div>
             </div>
-            <div id="timeline-wrap">
-                <div id="timelineLine"></div>
-
-            </div>
-            <div class="sidebar">
-                <!-- Sidebar user panel (optional) -->
-                <div class="timeline">
-                    <!-- timeline time label -->
-                    <div class="spacedIcon">
-                        <i class="fas fa-user-plus bg-blue" aria-hidden="true"></i>
-                    </div>
-                    <div class="spacedIcon">
-                        <i class="fas fa-briefcase-medical bg-orange"></i>
-                    </div>
-                    <div class="spacedIcon">
-                        <i class="fas fa-receipt bg-red"></i>
-                    </div>
-                    <div class="spacedIcon">
-                        <i class="fas fa-file-prescription bg-yellow"></i>
-                    </div>
-                    <div class="spacedIcon">
-                        <i class="fas fa-check bg-green"></i>
-                    </div>
-                </div>
-            </div>
         </section>
         <script>
             const progress = document.querySelector('.progresss-done');
@@ -283,4 +389,17 @@
                 progress.style.width = progress.getAttribute('data-done') + '%';
             }, 500)
         </script>
+
+
+{{ request.user.username|json_script:"user_username" }}
+{{ queue.name|json_script:"room-name" }}
+{{ patient.id|json_script:"patientId" }}
+{{ next_queue.name|json_script:"next_queue" }}
+<script>
+    let patientId = "{{ patient.id }}"
+</script>
+
+
+<link href="{% static 'assets/template/plugins/toastr/toastr.min.js' %}" rel="stylesheet"/>
+{% include 'partials/_scripts.html' %}
 {% endblock content %}

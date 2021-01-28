@@ -21,7 +21,7 @@
       <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
         <li class="nav-item">
           {% if  request.user.is_authenticated %}
-            <a class="btn btn-outline-danger"  href="{% url 'users:logout' %}" >
+            <a class="btn btn-sm btn-outline-dark"  href="{% url 'users:logout' %}" >
               Logout
             </a>
           {% else %}

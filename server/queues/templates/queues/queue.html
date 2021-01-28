@@ -8,74 +8,7 @@
             <div class="col-12 mb-2 mt-2">
                 <h1> {{ queue }} queue | {{ request.user.first_name }} {{ request.user.last_name }}</h1>
             </div>
-            <div class="col-12">
-                            <!-- DIRECT CHAT -->
-            <div class="card direct-chat direct-chat-primary">
-                <div class="card-header">
-                  <h3 class="card-title m-1">Direct Chat</h3>
-                  <div class="pagination pagination-sm float-left ml-lg-4" style="width: 150px;">
-                    <a type="button" class="btn btn-sm btn-dark" target="_blank" href="{% url 'queues:open_qrcode'  queue %}">
-                        QRCODE
-                    </a>
-                  </div>
-                  
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool m-1" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <!-- Conversations are loaded here -->
-                  <div id='chat-text' class="direct-chat-messages">
-
-
-
-                    <!-- Message to the right -->
-                    <div class="direct-chat-msg right">
-                      <div class="direct-chat-infos clearfix">
-                        <span class="direct-chat-name float-right">{{ request.user.first_name }} {{ request.user.last_name }} </span>
-                        <!-- <span class="direct-chat-timestamp float-left"></span> -->
-                      </div>
-                      <!-- /.direct-chat-infos -->
-                      <img class="direct-chat-img" src="{% static 'assets/img/admin.jpg' %}" alt="message user image">
-                      <!-- /.direct-chat-img -->
-                      <div class="direct-chat-text">
-                        I would love to.
-                      </div>
-                      <!-- /.direct-chat-text -->
-                    </div>
-                    <!-- /.direct-chat-msg -->
-
-
-
-                  </div>
-                  <!--/.direct-chat-messages-->
-                  <!-- /.direct-chat-pane -->
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                  <form action="#" method="post">
-                    <div class="input-group">
-                      <input id='message' type="text" name="message" placeholder="Type Message ..." class="form-control">
-                      <span class="input-group-append">
-                          <button type="button" class="btn btn-primary" onclick="sendMessage()">Send</button>
-                      </span>
-                      <button class="btn btn-dark ml-1 mr-1">
-                        Next Patient
-                      </button>
-                      <button class="btn btn-dark ml-1 mr-1">
-                        Lunch Time
-                      </button>
-                    </div>
-                  </form>
-                </div>
-                <!-- /.card-footer-->
-              </div>
-              <!--/.direct-chat -->
-            </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
@@ -101,7 +34,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Patients in Queue</h3>
@@ -143,6 +76,75 @@
                     </div>
                 </div>
             </div>
+            <!-- END COL -->
+            <div class="col-3">
+                          <!-- DIRECT CHAT -->
+            <div class="card direct-chat direct-chat-primary">
+              <div class="card-header">
+                <h3 class="card-title m-1">Direct Chat</h3>
+                <div class="pagination pagination-sm float-left" style="width: 150px;">
+                  <a type="button" class="btn btn-sm btn-dark" target="_blank" href="{% url 'queues:open_qrcode'  queue %}">
+                      QRCODE
+                  </a>
+                </div>
+                
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool m-1" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <!-- Conversations are loaded here -->
+                <div id='chat-text' class="direct-chat-messages">
+
+
+
+                  <!-- Message to the right -->
+                  <div class="direct-chat-msg right">
+                    <div class="direct-chat-infos clearfix">
+                      <span class="direct-chat-name float-right">{{ request.user.first_name }} {{ request.user.last_name }} </span>
+                      <!-- <span class="direct-chat-timestamp float-left"></span> -->
+                    </div>
+                    <!-- /.direct-chat-infos -->
+                    <img class="direct-chat-img" src="{% static 'assets/img/admin.jpg' %}" alt="message user image">
+                    <!-- /.direct-chat-img -->
+                    <div class="direct-chat-text">
+                      I would love to.
+                    </div>
+                    <!-- /.direct-chat-text -->
+                  </div>
+                  <!-- /.direct-chat-msg -->
+
+
+
+                </div>
+                <!--/.direct-chat-messages-->
+                <!-- /.direct-chat-pane -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer">
+                <form action="#" method="post">
+                  <div class="input-group">
+                    <input id='message' type="text" name="message" placeholder="Type Message ..." class="form-control">
+                    <span class="input-group-append">
+                        <button type="button" class="btn btn-primary" onclick="sendMessage()">Send</button>
+                    </span>
+                    <!-- <button class="btn btn-dark ml-1 mr-1">
+                      Next Patient
+                    </button>
+                    <button class="btn btn-dark ml-1 mr-1">
+                      Lunch Time
+                    </button> -->
+                  </div>
+                </form>
+              </div>
+              <!-- /.card-footer-->
+            </div>
+            <!--/.direct-chat -->
+        </div>
+        <!-- END COL -->
         </div>
     </div>
 
