@@ -6,10 +6,7 @@
 
 <body class="hold-transition sidebar-mini layout-fixed">
     <style>
-        * {
-            overflow-x: hidden;
-            overflow-y: hidden;
-        }
+
         .progresss {
             height: 30px;
             background-color: lightgray;
@@ -83,6 +80,9 @@
             * {
                 overflow-y: auto;
             }
+
+
+        
         }
         
         @media (prefers-color-scheme: light) {
@@ -128,15 +128,12 @@
                 background: #141414;
             }
         }
+        
     </style>
      <div class="wrapper">
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
-                <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">PredictQ</span>
-            </a>
 
             <!-- Sidebar -->
             <div class="sidebar">
@@ -151,25 +148,25 @@
                     </div>
 
                     <div class="spacedIcon">
-                        <i class="fas fa-briefcase-medical bg-orange"></i>
+                        <i class="fas fa-briefcase-medical bg-secondary"></i>
                         <div class="timeline-item">
                             <h3 class="timeline-header">Consultation</h3>
                         </div>
                     </div>
                     <div class="spacedIcon">
-                        <i class="fas fa-receipt bg-red"></i>
+                        <i class="fas fa-receipt bg-secondary"></i>
                         <div class="timeline-item">
                             <h3 class="timeline-header">Billing</h3>
                         </div>
                     </div>
                     <div class="spacedIcon">
-                        <i class="fas fa-file-prescription bg-yellow"></i>
+                        <i class="fas fa-file-prescription bg-secondary"></i>
                         <div class="timeline-item">
                             <h3 class="timeline-header">Prescription</h3>
                         </div>
                     </div>
                     <div class="spacedIcon">
-                        <i class="fas fa-check bg-green"></i>
+                        <i class="fas fa-check bg-secondary"></i>
                         <div class="timeline-item">
                             <h3 class="timeline-header">Estimated Time</h3>
                         </div>
@@ -179,18 +176,23 @@
         </aside>
         <section class="content" style="margin-left: 250px;">
             <div class="mobileOnly">
-                <a href="index3.html" class="brand-link" style="text-decoration: none;">
-                    <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                    <span class="brand-text font-weight-light" style="text-decoration: none; color: #b3b3b3;">PredictQ</span>
-                </a>
             </div>
             <div class="content-header">
-                <div class="container-fluid">
+                <!-- <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="h1change">Queue Name</h1>
+                            <div class="d-flex flex-row justify-content-center">
+                                <div >
+                                    <h1 class="h1change float-left">You are in {{ queue }} queue</h1>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                </div> -->
+            </div>
+            <div id="reload" class="card bg-info ml-1 mr-1 d-none">
+                <div class="card-body">
+                    <p>Looks like you have been added to the next queue or You finished with the queues</p>
                 </div>
             </div>
             <div class="card" style="margin: 8px;">
@@ -299,6 +301,7 @@
 {{ request.user.username|json_script:"user_username" }}
 {{ queue.name|json_script:"room-name" }}
 {{ patient.id|json_script:"patientId" }}
+{{ next_queue.name|json_script:"next_queue" }}
 <script>
     let patientId = "{{ patient.id }}"
 </script>

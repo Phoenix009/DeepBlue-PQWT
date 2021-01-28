@@ -143,6 +143,7 @@
 
     {{ request.user.username|json_script:"user_username" }}
     {{ room_name|json_script:"room-name" }}
+    {{ previous_queue.name|json_script:"previous_room" }}
 
     {% if request.user.is_authenticated %}
         <!-- Modal -->

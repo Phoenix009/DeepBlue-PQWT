@@ -99,6 +99,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
                 'patient_name': f"{item.patient.first_name} {item.patient.last_name}",
                 'joined_at': f"{item.joined_at.hour}:{item.joined_at.minute}:{item.joined_at.second}",
                 'completed_at' : completed_at , 
+                'treatment_completed_at' : item.treatment_completed_at,
                 'wait_time': wait_time,
                 'position': item.get_patients_ahead(),
                 }

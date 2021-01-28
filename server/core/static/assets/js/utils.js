@@ -1,5 +1,5 @@
-OUT_OF_QUEUE = 'OUT_OF_QUEUE';
-OUT_OF_SYSTEM = 'OUT_OF_SYSTEM';
+const OUT_OF_QUEUE = 'OUT_OF_QUEUE';
+const OUT_OF_SYSTEM = 'OUT_OF_SYSTEM';
 handleMessage = (body) => {
     document.querySelector('#chat-text').value += (body.username + ': ' + body.message + '\n')
 }
@@ -18,7 +18,14 @@ function getToken(name) {
     }
     return cookieValue;
 }
-
+try{
+    reloadElement = document.getElementById('reload');
+    reloadElement.addEventListener('click', ()=>{
+        window.location.reload();
+    })
+} catch(err){
+    console.log(err)
+}
 handleRemove = (id)=>{
     const URL = '/queues/patients/remove/';
     const data = {
@@ -184,11 +191,20 @@ function updatePatientsData(body){
     console.log(queue)
     let waitTime = "Not Predicted"
     for(const q of queue){
-        if(patientId == q.patient_id){
-            waitTimeElement.innerHTML =  q.wait_time;
+        if(patientId == q.patient_id ){
+            if(q.treatment_completed_at) {
+                window.location.reload();
+                return;
+            }
+            if(q.completed_at){
+                waitTimeElement.innerHTML = 0;
+                position.innerHTML = "In Service";
+                return;
+            }
+            waitTimeElement.innerHTML =  parseInt(q.wait_time);
             position.innerHTML = q.position;
-            break;
+            return;
         }
     }
-    
+    reloadElement.classList.toggle('d-none');
 }

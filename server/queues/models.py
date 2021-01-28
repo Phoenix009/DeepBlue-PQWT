@@ -25,6 +25,20 @@ class Queue(models.Model):
         queue = cls.objects.filter(name=name).first()
         return queue
     
+    def get_previous_queue(self):
+        previous_order = self.department.order -1 
+        if previous_order >= 1:
+            dept = Department.objects.filter(order = previous_order).first()
+            return Queue.objects.filter(department = dept).first().name 
+    
+    def get_next_queue(self):
+        next_queue = self.department.order + 1 
+        dept = Department.objects.filter(order = next_queue).first()
+        if dept:
+            return Queue.objects.filter(department = dept).first()
+        
+        
+    
     def get_active_patients(self):
         return self.virtualqueue_set.filter(treatment_completed_at = None, removed_at=None).all()
     

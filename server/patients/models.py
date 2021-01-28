@@ -26,7 +26,10 @@ class Patient(models.Model):
         return self.virtualqueue_set.first()
     
     def get_current_queue(self):
-        return self.virtualqueue_set.first().queue
+        vqueue =  self.virtualqueue_set.filter(treatment_completed_at=None).first()
+        if vqueue:
+            return vqueue.queue 
+        return None 
 
 
 
