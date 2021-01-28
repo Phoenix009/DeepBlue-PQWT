@@ -1,8 +1,43 @@
 const OUT_OF_QUEUE = 'OUT_OF_QUEUE';
 const OUT_OF_SYSTEM = 'OUT_OF_SYSTEM';
-handleMessage = (body) => {
-    document.querySelector('#chat-text').value += (body.username + ': ' + body.message + '\n')
+
+
+
+parseMessage = (body) => {
+    return `
+        <!-- Message to the right -->
+        <div class="direct-chat-msg left">
+          <!-- /.direct-chat-infos -->
+          <img class="direct-chat-img" src="{% static 'assets/img/admin.jpg' %}" alt="message user image">
+          <!-- /.direct-chat-img -->
+          <div class="direct-chat-text">
+            ${body.username}: ${body.message}
+          </div>
+          <!-- /.direct-chat-text -->
+        </div>
+        <!-- /.direct-chat-msg -->
+    `;
 }
+
+handleMessage = (body) => {
+    console.log(body)
+    document.querySelector('#chat-text').innerHTML += parseMessage(body);
+}
+
+sendMessage = () => {
+    message = document.querySelector('#message').value;
+    data = {
+        'type': 'MSG',
+        'body': {
+            'message': message,
+            'username': user_username.innerText
+        }
+    };
+    chatSocket.send(JSON.stringify(data));
+}
+
+
+
 function getToken(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -26,6 +61,8 @@ try{
 } catch(err){
     console.log(err)
 }
+
+
 handleRemove = (id)=>{
     const URL = '/queues/patients/remove/';
     const data = {
