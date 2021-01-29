@@ -247,34 +247,50 @@
                 <div class="timeline">
                     <!-- timeline time label -->
                     <div class="spacedIcon">
-                        <i class="fas fa-user-plus bg-blue" aria-hidden="true"></i>
+                        {% if queue.name == 'registration' %}
+                            <i class="fas fa-user-plus bg-blue" aria-hidden="true"></i>
+                        {% else %}
+                            <i class="fas fa-user-plus bg-secondary" aria-hidden="true"></i>
+                        {% endif %}
                         <div class="timeline-item">
                             <h3 class="timeline-header">Registration</h3>
                         </div>
                     </div>
 
                     <div class="spacedIcon">
-                        <i class="fas fa-briefcase-medical bg-orange"></i>
+                        {% if queue.name == 'consultancy' %}
+                            <i class="fas fa-briefcase-medical bg-orange"></i>
+                        {% else %}
+                            <i class="fas fa-briefcase-medical bg-secondary"></i>
+                        {% endif %}
                         <div class="timeline-item">
                             <h3 class="timeline-header">Consultation</h3>
                         </div>
                     </div>
                     <div class="spacedIcon">
-                        <i class="fas fa-receipt bg-red"></i>
+                        {% if queue.name == 'billing' %}
+                            <i class="fas fa-receipt bg-red"></i>
+                        {% else %}
+                            <i class="fas fa-receipt bg-secondary"></i>
+                        {% endif %}
                         <div class="timeline-item">
                             <h3 class="timeline-header">Billing</h3>
                         </div>
                     </div>
-                    <div class="spacedIcon">
+                    <!-- <div class="spacedIcon">
                         <i class="fas fa-file-prescription bg-yellow"></i>
                         <div class="timeline-item">
                             <h3 class="timeline-header">Prescription</h3>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="spacedIcon">
-                        <i class="fas fa-check bg-green"></i>
+                        {% if queue.name == 'medicine' %}
+                            <i class="fas fa-check bg-green"></i>
+                        {% else %}
+                            <i class="fas fa-check bg-secondary"></i>
+                        {% endif %}
                         <div class="timeline-item">
-                            <h3 class="timeline-header">Estimated Time</h3>
+                            <h3 class="timeline-header"> Medicine</h3>
                         </div>
                     </div>
                 </div>
@@ -311,7 +327,7 @@
                 <!-- DIRECT CHAT -->
                 <div class="card direct-chat direct-chat-primary">
                     <div class="card-header">
-                    <h3 class="card-title m-1">Direct Chat</h3>
+                    <h3 class="card-title m-1">Notifications</h3>
                     <div class="card-tools">
                         <button type="button" class="btn btn-sm btn-tool m-1" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -335,8 +351,8 @@
                 <!-- END COL -->
                <div class="col-12">
                     <div id="reload" class="card d-none" style="margin: 8px;">
-                        <div class="card-header">
-                            Click
+                        <div class="card-header bg-yellow">
+                            Click Here to get to the next Queue
                         </div>
                     </div>
                </div>
@@ -376,7 +392,7 @@
                                     <div class="inner">
                                         <h3><span id="estimatedWaitTime"></span> min</h3>
     
-                                        <p>Average Patient Wait Time</p>
+                                        <p>Estimated Patient Wait Time</p>
                                     </div>
                                     <div class="icon">
                                         <i class="ion ion-stats-bars"></i>
@@ -397,9 +413,9 @@
                             <div class="col-md-6" style="margin-top: 15px;">
                                 <div class="small-box bg-danger">
                                     <div class="inner">
-                                        <h3>1 hr 5 mins</h3>
+                                        <h3>90min</h3>
     
-                                        <p>Estimated Wait Time</p>
+                                        <p>Average Wait Time</p>
                                     </div>
                                     <div class="icon">
                                         <i class="ion ion-pie-graph"></i>

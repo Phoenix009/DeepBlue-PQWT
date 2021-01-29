@@ -29,6 +29,7 @@ def index(request):
         return HttpResponse('You are not assigned to any departments')
         
     queues = dept.get_queues()
+    queues = Queue.objects.all()
     # patients_visited_today = Patient.total_number_of_patients_today()
     context={
         'queues': queues, 
