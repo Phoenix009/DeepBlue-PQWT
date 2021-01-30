@@ -188,7 +188,7 @@ handleUpdate = (body)=>{
                 <td>${ queue[i].id }</td>
                 <td>${ queue[i].patient_name }</td>
                 <td>${ queue[i].joined_at }</td>
-                <td>${ parseInt(queue[i].wait_time) }</td>
+                <td>${ parseInt(queue[i].wait_time) } minute(s) </td>
                 <td>
                     <button onclick="handleRemove(${ queue[i].id})" class="btn btn-sm btn-danger">Remove</button>
                 </td>
