@@ -36,9 +36,14 @@ class Queue(models.Model):
         dept = Department.objects.filter(order = next_queue).first()
         if dept:
             return Queue.objects.filter(department = dept).first()
-        
-        
     
+    def get_waittime(self):
+        vqueue = list(self.virtualqueue_set.exclude(treatment_completed_at=None).all())
+        vqueue = vqueue[-10:]
+        total_waittime = sum(map(lambda x: (x.completed_at - x.joined_at).seconds//60, vqueue ))
+        return total_waittime // len(vqueue)
+
+
     def get_active_patients(self):
         return self.virtualqueue_set.filter(treatment_completed_at = None, removed_at=None).all()
     

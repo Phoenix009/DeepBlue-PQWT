@@ -3,6 +3,7 @@ from river import metrics
 from river import linear_model
 import pickle
 
+from departments.models import Department
 
 def get_gender(gender):
     """
@@ -75,4 +76,13 @@ def predict_waittime(vqueue, completion):
     completion = enter_service + service_time
     wait_time = enter_service - actual_arrival_time
     return wait_time, completion
+
+def predict_total_waittime(vqueue):
+    curr_order = vqueue.queue.department.order
+    hospital = vqueue.queue.department.hospital
+    depts = hospital.department_set.filter(order__gt = curr_order)
+    total_waittime = 0
+    for dept in depts:
+        total_waittime += dept.queue_set.first().get_waittime()
+    return total_waittime
 

@@ -225,12 +225,13 @@ handleUpdate = (body)=>{
 function updatePatientsData(body){
     queue = body.queue;
     const waitTimeElement = document.getElementById('estimatedWaitTime');
+    const totalWaitTimeElement = document.getElementById('totalWaitTime');
     const positionElement =  document.getElementById('position');
-    //if(!patientId) return;
     patientId = parseInt(patientId);
     console.log(patientId)
     console.log(queue)
     let waitTime = "Not Predicted"
+    console.log(body)
     for(const q of queue){
         if(patientId == q.patient_id ){
             if(q.treatment_completed_at) {
@@ -243,6 +244,7 @@ function updatePatientsData(body){
                 return;
             }
             waitTimeElement.innerHTML =  parseInt(q.wait_time);
+            totalWaitTimeElement.innerHTML =  parseInt(q.total_wait_time);
             position.innerHTML = q.position;
             return;
         }
