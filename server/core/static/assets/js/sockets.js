@@ -14,12 +14,7 @@ function waitForSocketConnection(socket, callback){
 }
 
 const roomName = JSON.parse(document.getElementById('room-name').textContent);
-let previousRoomName;
-try{
-    previousRoomName = JSON.parse(document.getElementById('previous_room').textContent);
-} catch(err){
-    console.log(err);
-}
+
 
 const chatSocket = new WebSocket(
     'ws://' +
@@ -28,16 +23,6 @@ const chatSocket = new WebSocket(
     roomName +
     '/'
 );
-let previousChatSocket;
-if(previousRoomName){
-     previousChatSocket = new WebSocket(
-        'ws://' +
-        window.location.host +
-        '/ws/queues/' +
-        previousRoomName +
-        '/'
-    );
-}
 
 
 waitForSocketConnection(chatSocket, ()=>{
@@ -64,16 +49,4 @@ chatSocket.onmessage = function (e) {
             break;
     }
 }
-if(previousChatSocket){
-    previousChatSocket.onmessage = function(e) {
-        const data = JSON.parse(e.data);
-        switch(data.type){
-            case "UPD":
-                chatSocket.send(JSON.stringify({
-                    'type': 'UPD',
-                }));
-                break;
 
-        }
-    }
-}
