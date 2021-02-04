@@ -134,6 +134,7 @@ def complete_patient(request):
                 queue = department.queue_set.first()
                 new_vqueue = VirtualQueue(queue = queue, patient = vqueue.patient)
                 new_vqueue.save()
+                send_update_notification(queue.name)
         vqueue.save()
         update_model(vqueue)
         send_update_notification(room_name)
