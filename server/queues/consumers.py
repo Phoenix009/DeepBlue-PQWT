@@ -30,17 +30,22 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        if text_data_json['type'] == 'MSG':
+        if (
+            text_data_json['type'] == 'MSG' or 
+            text_data_json['type'] == 'NPMSG' or 
+            text_data_json['type'] == 'LTMSG'
+        ):
             body = text_data_json['body']
             message = body['message']
             username = body['username']
-
+            type_ = text_data_json['type']
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     'type': 'chatroom_message',
                     'message': message,
                     'username': username,
+                    'type_' : type_
                 }
             )
 
@@ -57,9 +62,9 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
     async def chatroom_message(self, event):
         message = event['message']
         username = event['username']
-
+        type_ = event['type_']
         await self.send(text_data=json.dumps({
-            'type': 'MSG',
+            'type': type_,
             'body':{
                 'message': message,
                 'username': username,

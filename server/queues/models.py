@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime , date
 import random
 import string 
 
@@ -49,6 +49,7 @@ class Queue(models.Model):
     
     def get_active_patients_count(self):
         return len(self.get_active_patients())
+    
 
 
 
@@ -80,4 +81,15 @@ class VirtualQueue(models.Model):
             count += 1
         else:
             return -1
+
+    @classmethod
+    def get_active_patients(cls):
+        return len(cls.objects.filter(treatment_completed_at=None, removed_at = None).all())
+    
+    @classmethod
+    def get_bounce_rate(cls):
+        vqueue  = cls.objects.filter(joined_at__startswith=date.today())
+        total_serviced = len(vqueue.filter(removed_at = None))
+        total_in_queue = len(vqueue)
+        return round(((total_in_queue - total_serviced)/total_in_queue)*100, 2) 
 

@@ -19,11 +19,57 @@ parseMessage = (body) => {
         <!-- /.direct-chat-msg -->
     `;
 }
+parseNextPatientMessage = (body) => {
+    return `
+    <!-- Message to the left -->
+    <div class="direct-chat-msg left">
+        <!-- /.direct-chat-infos -->
+        <img class="direct-chat-img" src="http://localhost:8000/static/assets/template/img/admin.png" alt="message user image">
+        <!-- /.direct-chat-img -->
+        <div class="direct-chat-text bg-green">
+            <h5>Next Patient</h5>
+            <h3>ID : ${body.message}</h3>
+        </div>
+        <!-- /.direct-chat-text -->
+    </div>
+    <!-- /.direct-chat-msg -->
+    `;
+}
+parseLunchTimeMessage = (body) => {
+    return `
+    <!-- Message to the left -->
+    <div class="direct-chat-msg left">
+        <!-- /.direct-chat-infos -->
+        <img class="direct-chat-img" src="http://localhost:8000/static/assets/template/img/admin.png" alt="message user image">
+        <!-- /.direct-chat-img -->
+        <div class="direct-chat-text bg-red">
+            <h5>Luch Time</h5>
+            <p>
+                Hey, the doctor is currently on a small lunch break.<br>
+                Hang in there, we will start the queue after the lunch time.
+            </p>
+            <p>
+                ${body.message}
+            <p>
+        </div>
+        <!-- /.direct-chat-text -->
+    </div>
+    <!-- /.direct-chat-msg -->
+    `;
+}
 
 handleMessage = (body) => {
     console.log(body)
     document.querySelector('#chat-text').innerHTML += parseMessage(body);
 }
+function handleNextPatientMessage (body){
+    document.querySelector('#chat-text').innerHTML += parseNextPatientMessage(body);
+}
+function handleLunchTimeMessage (body){
+    document.querySelector('#chat-text').innerHTML += parseLunchTimeMessage(body);
+}
+
+
 
 sendMessage = () => {
     message = document.querySelector('#message').value;
@@ -220,6 +266,35 @@ handleUpdate = (body)=>{
         `;
     }
     
+}
+function sendLunchTimeMessage ()  {
+    message = document.querySelector('#message').value;
+    data = {
+        'type': 'LTMSG',
+        'body': {
+            'message': message,
+            'username': user_username.innerText
+        }
+    };
+    chatSocket.send(JSON.stringify(data));
+    document.querySelector('#message').value = "";
+}
+function nextPatientClicked(){
+    console.log(queue);
+    console.log(nextPatient)
+    if(!nextPatient){
+        alert('There are no patients in the queue');
+    }else{
+        message = String(nextPatient);
+        data = {
+            'type': 'NPMSG',
+            'body': {
+                'message': message,
+                'username': user_username.innerText
+            }
+        };
+        chatSocket.send(JSON.stringify(data));
+    }
 }
 
 function updatePatientsData(body){

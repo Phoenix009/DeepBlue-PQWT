@@ -1,4 +1,5 @@
 let queue;
+let nextPatient;
 
 function waitForSocketConnection(socket, callback){
     setTimeout(
@@ -37,8 +38,20 @@ chatSocket.onmessage = function (e) {
         case "MSG": 
             handleMessage(data.body);
             break;
+        case "NPMSG": 
+            handleNextPatientMessage(data.body);
+            break;
+        case "LTMSG": 
+            handleLunchTimeMessage(data.body);
+            break;
         case "UPD":
-            queue = data.body;
+            queue = data.body.queue;
+            console.log(queue);
+            try{
+                nextPatient = queue[0].id;
+            }catch(err){
+                console.log(err);
+            }
             handleUpdate(data.body);
             try{
                 updatePatientsData(data.body);
@@ -48,5 +61,13 @@ chatSocket.onmessage = function (e) {
             }
             break;
     }
+    scrollToBottom();
 }
 
+
+
+function scrollToBottom(){
+    console.log('here')
+    var objDiv = document.getElementById("chat-text");
+    objDiv.scrollTop = objDiv.scrollHeight - objDiv.clientHeight;
+}

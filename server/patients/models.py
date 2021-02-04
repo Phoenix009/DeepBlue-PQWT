@@ -30,6 +30,10 @@ class Patient(models.Model):
         if vqueue:
             return vqueue.queue 
         return None 
+    
+    @classmethod
+    def get_total_number_of_patients(cls):
+        return len(cls.objects.all())
 
 
 
