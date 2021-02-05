@@ -326,3 +326,18 @@ function updatePatientsData(body){
     }
     reloadElement.classList.toggle('d-none');
 }
+
+
+setInterval(
+    function(){ 
+        const waitTimeElement = document.getElementById('estimatedWaitTime');
+        const totalWaitTimeElement = document.getElementById('totalWaitTime');
+        waitTime = parseInt(waitTimeElement.innerHTML);
+        totalWaitTime = parseInt(totalWaitTimeElement.innerHTML);
+        waitTime = Math.max(waitTime - 1, 0);
+        totalWaitTime = Math.max(totalWaitTime-1,0);
+        totalWaitTimeElement.innerHTML = totalWaitTime;
+        waitTimeElement.innerHTML = waitTime;
+    }, 
+    60000
+);

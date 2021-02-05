@@ -31,6 +31,9 @@ class Patient(models.Model):
             return vqueue.queue 
         return None 
     
+    def get_current_queue_id(self):
+        return self.virtualqueue_set.filter(treatment_completed_at=None, removed_at = None).first().id 
+    
     @classmethod
     def get_total_number_of_patients(cls):
         return len(cls.objects.all())

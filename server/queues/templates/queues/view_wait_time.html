@@ -304,12 +304,21 @@
                            <div class="card-header h1change">You're at {{ queue }} Queue</div>
                            <div id="timeline-wrap">
                                <div id="timelineLine"></div>
-                               <div class="marker mfirst timeline-icon one">
-                                   <i class="fa fa-user-plus"></i>
-                               </div>
-                               <div class="marker m2 timeline-icon two">
-                                   <i class="fa fa-briefcase-medical"></i>
-                               </div>
+                               {% if queue.name == 'registration' %}
+                                    <div class="marker mfirst timeline-icon one">
+                                        <i class="fa fa-user-plus"></i>
+                                    </div>
+                               {% else %}
+                                    <div class="marker mfirst timeline-icon one">
+                                        <i class="fa fa-user-plus"></i>
+                                    </div>
+                               {% endif %}
+                               {% if queue.name == 'registration' %}
+                                <div class="marker m2 timeline-icon two">
+                                    <i class="fa fa-briefcase-medical"></i>
+                                </div>
+                               {% else %}
+                               {% endif %}
                                <div class="marker m3 timeline-icon three">
                                    <i class="fa fa-receipt"></i>
                                </div>
@@ -398,16 +407,17 @@
                    </div>
                </div>
                <div class="col-12">
+
                 <div class="card">
-                    <div class="card-header h1change">Greetings, {{ patient.first_name }} {{ patient.last_name }}!  You'll find our queue position below.</div>
+                    <div class="card-header h1change">Greetings,<b> {{ patient.first_name }} {{ patient.last_name }}!| ID:  {{ vqueue_patient_id }}</b> You'll find our queue position below.</div>
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-6" style="margin-top: 15px;">
                                 <div class="small-box bg-info">
                                     <div class="inner">
-                                        <h3>{{ patient.joined_at }}</h3>
+                                        <h3>ID: {{ vqueue_patient_id }}</h3>
     
-                                        <p>You Joined At</p>
+                                        <p>You Joined At {{ patient.joined_at|date:'H:i' }}</p>
                                     </div>
                                     <div class="icon">
                                         <i class="ion ion-bag"></i>
@@ -449,6 +459,7 @@
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>

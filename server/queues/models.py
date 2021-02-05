@@ -91,5 +91,7 @@ class VirtualQueue(models.Model):
         vqueue  = cls.objects.filter(joined_at__startswith=date.today())
         total_serviced = len(vqueue.filter(removed_at = None))
         total_in_queue = len(vqueue)
+        if not total_in_queue:
+            return 0 
         return round(((total_in_queue - total_serviced)/total_in_queue)*100, 2) 
 

@@ -79,6 +79,7 @@ def view_wait_time(request,token):
     context = {
         'patient' : patient,
         'queue' : queue,
+        'vqueue_patient_id' : patient.get_current_queue_id(),
     }
     return render(request,'queues/view_wait_time.html', context)
 
