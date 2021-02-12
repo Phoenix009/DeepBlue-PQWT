@@ -145,10 +145,8 @@
     <div class="container-fluid">
       <div class="card shadow-sm bg-white-rounded">
         <div class="card-header">
-          <p class="h3">{{ queue|title }} Queue</p>
-          <div>
-            Hello, {{ patient.first_name }} {{ patient.last_name }}!
-          </div>
+          <p class="h3">Queue Name</p>
+          
         </div>
         <div class="card-body">
           <div class="text-center d-flex justify-content-center">
@@ -157,7 +155,6 @@
               <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab"><i class="fas fa-comment-dots"></i> Notifications</a></li>
             </ul>
           </div>
-          
         </div>
       </div>
       <div class="row">
@@ -198,7 +195,6 @@
                           </div>
                       </div>
                   </div>
-                  
               </div><!-- /.card-header -->
               <div class="card-body">
                 <div class="tab-content">
@@ -209,7 +205,7 @@
                         <div class="text-center">
                           <div class="card shadow-lg p-2 bg-darkblue" >
                               <div>
-                                <h1><span id="estimatedWaitTime"></span> min</h1> 
+                                <h1>8min</h1> 
                                 <p>Wait-Time</p>
                               </div>
                           </div>
@@ -221,7 +217,7 @@
                         <div class="text-center">
                           <div class="card shadow-lg bg-dark p-2">
                               <div>
-                                <h1>{{ patient.id }}</h1> 
+                                <h1>19</h1> 
                                 <p>Your Id</p>
                               </div>
                           </div>
@@ -233,7 +229,7 @@
                         <div class="text-center">
                           <div class="card shadow-lg bg-lightgreen p-2">
                               <div>
-                                <h1><span id="totalWaitTime"></span> min</h1> 
+                                <h1>8min</h1> 
                                 <p>Total Wait Time</p>
                               </div>
                           </div>
@@ -251,7 +247,22 @@
                   </div>
                   <!-- /.tab-pane -->
                   <div class="tab-pane" id="tab_2">
-                    <div id="chat-text"  class="direct-chat-messages shadow-lg text-left">
+                    <div class="direct-chat-messages shadow-lg">
+                      <!-- Message. Default to the left -->
+                      <div class="direct-chat-msg">
+                        <div class="direct-chat-infos clearfix">
+                          <span class="direct-chat-name float-left">Alexander Pierce</span>
+                          <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
+                        </div>
+                        <!-- /.direct-chat-infos -->
+                        <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image">
+                        <!-- /.direct-chat-img -->
+                        <div class="direct-chat-text">
+                          Hey!
+                        </div>
+                        <!-- /.direct-chat-text -->
+                      </div>
+                      <!-- /.direct-chat-msg -->
                     </div>
                   </div>
                   <!-- /.tab-pane -->
@@ -272,24 +283,47 @@
       
     </div>
     <!-- ./wrapper -->
-    {{ request.user.username|json_script:"user_username" }}
-    {{ queue.name|json_script:"room-name" }}
-    {{ patient.id|json_script:"patientId" }}
-    {{ next_queue.name|json_script:"next_queue" }}
-    <script>
-        let patientId = "{{ patient.id }}"
-    </script>
-    <!-- REQUIRED SCRIPTS -->
-    <script src="{% static 'assets/js/progress.js' %}"></script>
-    <script src="{% static 'assets/js/view_wait_time.js' %}"></script>
-    {% include 'partials/_main_scripts.html' %}
-    {% include 'partials/_scripts.html' %}
-    <script>
-        $(function () {
-    $('[data-toggle="popover"]').popover({placement:'top'})
-    })
-    </script>
     
+    <!-- REQUIRED SCRIPTS -->
+    {% include 'partials/_main_scripts.html' %}
+
+    <script src="{% static 'assets/js/progress.js' %}"></script>
+    <script>
+        
+        $(function () {
+        $('[data-toggle="popover"]').popover({placement:'top'})
+        })
+        
+        // progressbar.js@1.0.0 version is used
+        // Docs: http://progressbarjs.readthedocs.org/en/1.0.0/
+        
+        var bar = new ProgressBar.Circle(container, {
+        color: '#aaa',
+        // This has to be the same size as the maximum width to
+        // prevent clipping
+        strokeWidth: 4,
+        trailWidth: 1,
+        easing: 'easeInOut',
+        duration: 1400,
+        text: {
+            autoStyleContainer: false
+        },
+        from: { color: '#aaa', width: 1 },
+        to: { color: '#333', width: 4 },
+        // Set default step function for all animate calls
+        step: function(state, circle) {
+            circle.path.setAttribute('stroke', state.color);
+            circle.path.setAttribute('stroke-width', state.width);
+            circle.setText("19");
+        
+        
+        }
+        });
+        bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+        bar.text.style.fontSize = '2rem';
+        
+        bar.animate(0.5);  // Number from 0.0 to 1.0
+    </script>
 </body>
 </html>
     

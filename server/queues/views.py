@@ -170,7 +170,7 @@ def send_update_notification(room_name):
 # demo view to test ui
 def test_ui(request):
     context = {}
-    return render(request,'queues/test.html', context)
+    return render(request,'queues/view_wait.html', context)
 
 
 

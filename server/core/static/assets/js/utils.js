@@ -1,6 +1,9 @@
 const OUT_OF_QUEUE = 'OUT_OF_QUEUE';
 const OUT_OF_SYSTEM = 'OUT_OF_SYSTEM';
 
+
+
+
 //TODO: nextMessage parse function
 //TODO: lunchtime parse function
 
@@ -320,11 +323,12 @@ function updatePatientsData(body){
             }
             waitTimeElement.innerHTML =  parseInt(q.wait_time);
             totalWaitTimeElement.innerHTML =  parseInt(q.total_wait_time);
-            position.innerHTML = q.position;
+            console.log('11');
+            console.log(bar.text);
             return;
         }
     }
-    reloadElement.classList.toggle('d-none');
+    // reloadElement.classList.toggle('d-none');
 }
 
 
@@ -341,3 +345,6 @@ setInterval(
     }, 
     60000
 );
+
+
+
