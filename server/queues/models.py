@@ -15,7 +15,7 @@ class Queue(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(default=datetime.now)
     model = models.FileField(upload_to='models/', default='models/default.sav')
-    max_limit = models.IntegerField(null=True,blank=True)
+    max_limit = models.IntegerField(default=20,null=True,blank=True)
 
 
     def __str__(self) -> str:
