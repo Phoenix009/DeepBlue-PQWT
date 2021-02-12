@@ -318,13 +318,11 @@ function updatePatientsData(body){
             }
             if(q.completed_at){
                 waitTimeElement.innerHTML = 0;
-                position.innerHTML = "In Service";
                 return;
             }
             waitTimeElement.innerHTML =  parseInt(q.wait_time);
             totalWaitTimeElement.innerHTML =  parseInt(q.total_wait_time);
-            console.log('11');
-            console.log(bar.text);
+            updateProgressBar(q.position, q.position/20, container);
             return;
         }
     }
