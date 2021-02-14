@@ -276,6 +276,7 @@
     {{ queue.name|json_script:"room-name" }}
     {{ patient.id|json_script:"patientId" }}
     {{ next_queue.name|json_script:"next_queue" }}
+    {{ queue.department.group|json_script:"dept_group" }}
     <script>
         let patientId = "{{ patient.id }}"
     </script>

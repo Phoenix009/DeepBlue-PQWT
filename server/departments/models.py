@@ -10,6 +10,7 @@ class Department(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True,blank=True)
     hospital = models.ForeignKey(Hospital,on_delete=models.CASCADE)
     order = models.IntegerField(null=True, blank=True)
+    group = models.CharField(max_length=255 ,null=True, blank=True)
 
     def get_queues(self):
         return self.queue_set.all()

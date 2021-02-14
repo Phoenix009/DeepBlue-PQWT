@@ -6,6 +6,9 @@
 
 container = document.querySelector('#container');
 function updateProgressBar(value, percent, container) {
+    try{
+        if(bar) bar.destroy();
+    }catch(err){ console.log(err); }
 
     container.innerHTML = '';
     let bar = new ProgressBar.Circle(container, {

@@ -4,9 +4,6 @@ const OUT_OF_SYSTEM = 'OUT_OF_SYSTEM';
 
 
 
-//TODO: nextMessage parse function
-//TODO: lunchtime parse function
-
 parseMessage = (body) => {
     return `
         <!-- Message to the right -->
@@ -344,5 +341,18 @@ setInterval(
     60000
 );
 
+getDepartmentIcon = department => {
+    switch(department){
+        case 'casualty':
+            return '';
+        case 'consultancy':
+            return '';
+        case 'billing':
+            return '';
+        case 'medicine':
+            return '';
+        default: return '';
+    }
+}
 
 
