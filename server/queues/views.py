@@ -76,10 +76,15 @@ def view_wait_time(request,token):
     patient.verified = True 
     patient.save()
     queue = patient.get_current_queue()
+    prev_queues = queue.get_previous_queues()
+    next_queues = queue.get_next_queues()
+
     context = {
         'patient' : patient,
         'queue' : queue,
         'vqueue_patient_id' : patient.get_current_queue_id(),
+        'prev_queues': prev_queues,
+        'next_queues': next_queues,
     }
     return render(request,'queues/view_wait_time.html', context)
 

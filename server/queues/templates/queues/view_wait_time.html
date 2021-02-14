@@ -177,25 +177,57 @@
               <div class="card-header">
                   <div id="timeline-wrap">
                     <div id="timelineLine"></div>
-                          
-    
-                          <div class="marker mfirst bg-dark" data-toggle="popover" data-content="Registration Queue">
+                          {% if prev_queues|length <= 0 %}
+                            <div class="marker mfirst bg-dark" data-toggle="popover" data-content="{{ queue }} Queue">
+                                1
+                            </div>
+                            <div class="marker m2"  data-toggle="popover" data-content="{{ next_queues.0 }} Queues"> 
+                                2
+                            </div>
+                            
+                            <div class="marker m3"  data-toggle="popover" data-content="{{ next_queues.1 }} Queue">
+                                3
+                            </div>
+                            <div class="marker m4"  data-toggle="popover" data-content="{{ next_queues.2 }} Queue">
+                                4
+                            </div>
+                            <div class="marker mlast">
                               ...
-                          </div>
-                          <div class="marker m2"  data-toggle="popover" data-content="Consultancy Queue"> 
-                              2
-                          </div>
-                          
-                          <div class="marker m3"  data-toggle="popover" data-content="Billing Queue">
-                              3
-                          </div>
-                          <div class="marker m4"  data-toggle="popover" data-content="Medicine Queue">
-                            4
-                          </div>
-                        
-                          <div class="marker mlast">
+                            </div>
+                          {% elif next_queues|length <= 0 %}
+                            <div class="marker mfirst bg-dark" data-toggle="popover" data-content="Registration Queue">
                               ...
-                          </div>
+                            </div>
+                            <div class="marker m2 bg-dark"  data-toggle="popover" data-content="{{ prev_queues.0 }} Queue"> 
+                                2
+                            </div>
+                            
+                            <div class="marker m3 bg-dark"  data-toggle="popover" data-content="{{ prev_queues.1 }} Queues">
+                                3
+                            </div>
+                            <div class="marker m4 bg-dark"  data-toggle="popover" data-content="{{ prev_queues.2 }} Queues">
+                              4
+                            </div>
+                            <div class="marker mlast bgdark" data-content="{{ queue }} Queue">
+                              4
+                            </div>
+                          {% else %}
+                            <div class="marker mfirst bg-dark" data-toggle="popover" data-content="Registration Queue">
+                              ...
+                            </div>
+                            <div class="marker m2 bg-dark"  data-toggle="popover" data-content="{{ prev_queues.0 }} Queue"> 
+                                2
+                            </div>
+                            <div class="marker m3 bg-dark"  data-toggle="popover" data-content="{{ queue }} Queue">
+                                1
+                            </div>
+                            <div class="marker m4 "  data-toggle="popover" data-content="{{ next_queues.0 }} Queue">
+                              4
+                            </div>
+                            <div class="marker mlast">
+                              ...
+                            </div>
+                          {% endif %}
                       </div>
                   </div>
                   

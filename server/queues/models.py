@@ -51,7 +51,18 @@ class Queue(models.Model):
     def get_active_patients_count(self):
         return len(self.get_active_patients())
     
+    def get_previous_queues(self):
+        dept = self.department
+        dept_list = list(Department.objects.filter(order__lt = dept.order))[:3]
+        queues = list(map(lambda dept: dept.queue_set.first(), dept_list))
+        return queues
 
+    def get_next_queues(self):
+        dept = self.department
+        dept_list =  list(Department.objects.filter(order__gt = dept.order))[:3]
+        queues = list(map(lambda dept: dept.queue_set.first(), dept_list))
+        return queues
+    
 
 
 class VirtualQueue(models.Model):
