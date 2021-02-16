@@ -42,7 +42,7 @@ class Queue(models.Model):
         vqueue = list(self.virtualqueue_set.exclude(treatment_completed_at=None).all())
         vqueue = vqueue[-10:]
         total_waittime = sum(map(lambda x: (x.completed_at - x.joined_at).seconds//60, vqueue ))
-        return total_waittime // len(vqueue)
+        return total_waittime // max(1, len(vqueue))
 
 
     def get_active_patients(self):
@@ -50,6 +50,10 @@ class Queue(models.Model):
     
     def get_active_patients_count(self):
         return len(self.get_active_patients())
+
+    @property
+    def get_progress_bar_status(self):
+        return min(100, int(self.get_active_patients_count() / self.max_limit * 100))
     
     def get_previous_queues(self):
         dept = self.department

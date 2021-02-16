@@ -14,6 +14,18 @@ class PatientRegistrationForm(forms.Form):
         ('TRANS', 'TRANS'),
     ])
 
+class AdminPatientRegistrationForm(forms.Form):
+    first_name = forms.CharField(max_length=200)
+    last_name = forms.CharField(max_length=200)
+    email = forms.EmailField(required=False)
+    phone_number = forms.IntegerField(required=False)
+    age = forms.IntegerField()
+    gender = forms.ChoiceField(choices=[
+        ('MALE', 'MALE'),
+        ('FEMALE', 'FEMALE'),
+        ('TRANS', 'TRANS'),
+    ])
+
 class VerificationForm(forms.Form):
     email = forms.EmailField()
     otp = forms.CharField()
