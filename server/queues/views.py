@@ -29,16 +29,20 @@ def index(request):
         return HttpResponse('You are not assigned to any departments')
         
     queues = dept.get_queues()
-    queues = Queue.objects.all()
+    qs = Queue.objects.all()
     # patients_visited_today = Patient.total_number_of_patients_today()
-    average_wait_time = dept.queue_set.first().get_waittime()
+    #average_wait_time = dept.queue_set.first().get_waittime()
     active_patients = VirtualQueue.get_active_patients()
     bounce_rate = VirtualQueue.get_bounce_rate()
     unique_patients = Patient.get_total_number_of_patients()
+    queues = []
+    for queue in qs:
+        max_limit = queue.max_limit
+        queues.append((queue, int((queue.get_active_patients_count() / max_limit) * 100)))
     context={
         'queues': queues, 
         'department': dept,
-        'average_wait_time' : average_wait_time,
+        #'average_wait_time' : average_wait_time,
         'active_patients' : active_patients,
         'unique_patients' : unique_patients,
         'bounce_rate' : bounce_rate,
