@@ -3,9 +3,11 @@
 
 {% block content %}
     <div class="container">
+        
         <div class="row">
             <div class="col-12">
-                <div class="h1">{{ department.name }}|Department's Dashboard</div>
+                <br>
+                <div class="h1">Hospitals's Dashboard</div>
             </div>
             <div class="col-lg-3 col-6">
             <!-- small box -->
@@ -99,7 +101,7 @@
                                 {% for queue in queues %}
                                 <tr>
                                     <td>{{ queue.pk }}.</td>
-                                    <td>{{ queue.name }}</td>
+                                    <td>{{ queue.name|capfirst }}</td>
                                     <td>
                                         <div class="progress progress-xs">
                                             <div class="progress-bar progress-bar-danger" style="width: {{ queue.get_progress_bar_status }}%"></div>
