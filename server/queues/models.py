@@ -19,7 +19,7 @@ class Queue(models.Model):
 
 
     def __str__(self) -> str:
-        return self.name
+        return f"{self.name} -> {self.department.hospital} "
     
     @classmethod
     def get_queue_by_name(cls,name):
@@ -66,9 +66,16 @@ class Queue(models.Model):
         dept_list =  list(Department.objects.filter(order__gt = dept.order))[:3]
         queues = list(map(lambda dept: dept.queue_set.first(), dept_list))
         return queues
-    
 
+    @classmethod
+    def get_all_queues_of_hospital(cls,hospital):
+        departments = hospital.department_set.all().order_by('order')
+        queues = []
+        for dept in departments:
+            queues.extend([ queue for queue in dept.queue_set.all() ])
+        return queues 
 
+        
 class VirtualQueue(models.Model):
     queue = models.ForeignKey(Queue, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)

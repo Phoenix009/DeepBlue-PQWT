@@ -1,7 +1,7 @@
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
     <div class="container">
-      <h2 class="mr-auto"> PredictQ
+      <a class="navbar-brand" href="#">PredictQ</a>
       </h2>
       <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -10,12 +10,12 @@
       <div class="collapse navbar-collapse order-3" id="navbarCollapse">
         <!-- Left navbar links -->
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <a href="{% url 'queues:index' %}" class="nav-link active ml-auto">Home</a>
+          <li class="nav-item active">
+            <a href="{% url 'queues:index' %}" class="nav-link">Home</a>
           </li>
           {% if request.user.profile.is_superuser %}
             <li class="nav-item">
-              <a href="{% url 'admin:index' %}" class="nav-link">Admin</a>
+              <a href="{% url 'admin:index' %}" class="nav-link">Admin Panel</a>
             </li>
           {% endif %}
         </ul>
@@ -26,13 +26,9 @@
       <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
         <li class="nav-item">
           {% if  request.user.is_authenticated %}
-            <a class="btn btn-sm btn-outline-dark"  href="{% url 'users:logout' %}" >
-              Logout
+            <a href="{% url 'users:logout' %}" >
+              <i class="fas fa-sign-out-alt"></i> Logout
             </a>
-          {% else %}
-          <a class="btn btn-outline-dark"  href="{% url 'users:login' %}" >
-            Login
-          </a>
           {% endif %}
         </li>
       </ul>
