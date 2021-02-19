@@ -40,7 +40,7 @@
                         <h3 class="card-title">Patients in Queue</h3>
 
                         {% if request.user.is_authenticated %}
-                          <div class="float-right pl-1" style="width: 150px;">
+                          <div class="float-right pl-1">
                               <button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#modal-default">
                                   Add Patient
                                 </button>
@@ -118,8 +118,8 @@
                       Lunch Time
                     </button> -->
                   </div>
-                <button class="btn btn-sm btn-dark" onclick="nextPatientClicked()">Next Patient</button>
-                <button class="btn btn-sm btn-dark" onclick="sendLunchTimeMessage()">Lunch Time</button>
+                <button class="btn btn-sm btn-dark mt-2" onclick="nextPatientClicked()">Next Patient</button>
+                <button class="btn btn-sm btn-dark mt-2" onclick="sendLunchTimeMessage()">Lunch Time</button>
               </div>
               <!-- /.card-footer-->
             </div>
