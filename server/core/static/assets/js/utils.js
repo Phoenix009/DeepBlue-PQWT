@@ -323,7 +323,7 @@ function updatePatientsData(body){
             return;
         }
     }
-    // reloadElement.classList.toggle('d-none');
+    window.location.reload();
 }
 
 

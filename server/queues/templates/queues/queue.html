@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% load static %}
-{% block title %}PQWT| {{ queue }}{% endblock title %}
+{% block title %}PQWT| {{ queue.name|capfirst }}{% endblock title %}
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-12 mb-2 mt-2">
-                <h1> {{ queue|capfirst }} queue | {{ request.user.first_name }} {{ request.user.last_name }}</h1>
+                <h1> {{ queue.name |capfirst }} Queue | {{ request.user.first_name }} {{ request.user.last_name }}</h1>
             </div>
             <div class="col-md-3">
                 <div class="card">
@@ -109,7 +109,7 @@
                   <div id = "chatbox" class="input-group">
                     <input id='message' type="text" name="message" placeholder="Type Message ..." class="form-control">
                     <span class="input-group-append">
-                        <button type="button" class="btn btn-primary" onclick="sendMessage()">Send</button>
+                        <button type="button" class="btn btn-primary" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
                     </span>
                     <!-- <button class="btn btn-dark ml-1 mr-1">
                       Next Patient
@@ -119,7 +119,7 @@
                     </button> -->
                   </div>
                 <button class="btn btn-sm btn-dark mt-2" onclick="nextPatientClicked()">Next Patient</button>
-                <button class="btn btn-sm btn-dark mt-2" onclick="sendLunchTimeMessage()">Lunch Time</button>
+                <button class="btn btn-sm btn-dark mt-2" onclick="sendLunchTimeMessage()">Lunch Time </button>
               </div>
               <!-- /.card-footer-->
             </div>

@@ -70,6 +70,13 @@ def room(request, room_name):
 def view_wait_time(request,token):
     print(token)
     patient = get_object_or_404(Patient, otp = token)
+    queues = patient.virtualqueue_set.filter(treatment_completed_at=None,completed_at=None,removed_at=None)
+    print(queues)
+    if not len(queues):
+        context = {
+            'patient' : patient,
+        }
+        return render(request,'queues/out_of_queue.html', context)
     depts = Department.objects.all()
     # queues = Queue.objects.all()
     # queues.sort( key =lambda x : x.department.order)
@@ -78,7 +85,6 @@ def view_wait_time(request,token):
     queue = patient.get_current_queue()
     prev_queues = queue.get_previous_queues()
     next_queues = queue.get_next_queues()
-
     context = {
         'patient' : patient,
         'queue' : queue,
@@ -94,7 +100,7 @@ def view_wait_time(request,token):
 @login_required
 def add_patient(request,room_name):
     if request.method == 'POST':
-        form = PatientRegistrationForm(request.POST)
+        form = AdminPatientRegistrationForm(request.POST)
         if form.is_valid():
             patient = Patient(
                 first_name=form.cleaned_data['first_name'],

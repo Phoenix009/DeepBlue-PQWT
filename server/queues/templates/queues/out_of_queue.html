@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'partials/_header.html' %}
+    <title>Thank You</title>
+</head>
+
+  <body >
+    <div class="container-fluid">
+      <div class="card shadow-sm bg-white-rounded">
+        <div class="card-header">
+          <p class="h3"></p>
+          <div>
+            Hello, {{ patient.first_name }} {{ patient.last_name }}!
+          </div>
+        </div>
+        
+      </div>
+      
+          <div class="text-center m-lg-5">
+                <h1 class="display-4">Thank You, {{ patient.first_name }} {{ patient.last_name }}</h1>
+                <p>We were happy to serve you<br>
+                    we wish you all the health and good luck. 
+                </p>
+          </div>
+      
+    </div>
+
+    {% include 'partials/_scripts.html' %}
+    
+    
+</body>
+</html>
+    

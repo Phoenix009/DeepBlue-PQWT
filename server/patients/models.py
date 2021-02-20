@@ -42,7 +42,7 @@ class Patient(models.Model):
 
 
     def __str__(self) -> str:
-        return f"{self.email}"
+        return f"{self.id} {self.first_name} {self.last_name}"
     
     # @classmethod
     # def total_number_of_patients_today(cls):
