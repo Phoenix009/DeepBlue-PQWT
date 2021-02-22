@@ -3,5 +3,6 @@ from . import views
 
 app_name='departments'
 urlpatterns = [
-    path('view_queues/', views.view_queues, name='view_queues')
+    path('', views.view_departments, name='view_departments'),
+    path('reorder', views.reorder_departments, name='reorder_departments'),
 ]

@@ -83,6 +83,9 @@
                           <li class="page-item"><a class="page-link" href="#">3</a></li>
                           <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
                         </ul> -->
+                        <a href = "{% url 'departments:view_departments' %}" class="btn btn-dark btn-sm">
+                            <i class="fas fa-edit"></i>
+                        </a>
                       </div>
                     </div>
                     <!-- /.card-header -->
@@ -100,7 +103,7 @@
                             <tbody>
                                 {% for queue in queues %}
                                 <tr>
-                                    <td>{{ queue.pk }}.</td>
+                                    <td>{{ queue.department.order }}.</td>
                                     <td>{{ queue.name|capfirst }}</td>
                                     <td>
                                         <div class="progress progress-xs">

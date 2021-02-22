@@ -15,5 +15,10 @@ class Department(models.Model):
     def get_queues(self):
         return self.queue_set.all()
 
+    def get_all_department_in_hospital(self):
+        hospital = self.hospital
+        departments = hospital.department_set.all().order_by('order')
+        return departments
+
     def __str__(self) -> str:
         return f"{self.hospital.name} - > {self.name}"

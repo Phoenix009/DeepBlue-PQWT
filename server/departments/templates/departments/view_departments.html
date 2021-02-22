@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} View Departmental Queues - {{ department }} {% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <br>
+    <br>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+            <i class="ion ion-clipboard mr-1"></i>
+            List Of All Departments
+            </h3>
+            <div class="class-tools">
+                <button class="btn btn-sm btn-dark float-right">
+                    Add Department
+                </button>
+            </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <ul id = "department_list" class="todo-list" data-widget="todo-list">
+            {% for dept in departments %}
+                <li id = "{{ dept.pk }}" >
+                    <!-- drag handle -->
+                    <span class="handle">
+                    <i class="fas fa-ellipsis-v"></i>
+                    <i class="fas fa-ellipsis-v"></i>
+                    </span>
+                    <!-- checkbox -->
+                    <!-- todo text -->
+                    <span class="text">{{ dept.order }}. {{ dept.name|capfirst }}</span>
+                    <!-- General tools such as edit or delete-->
+                    <div class="tools">
+                    <i class="fas fa-edit"></i>
+                    <i class="fas fa-trash-o"></i>
+                    </div>
+                </li>
+            {% endfor %}
+            
+            </ul>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer clearfix">
+            <button id = "save-department-order" type="button" class="btn btn-danger float-right">
+                Save
+            </button>
+        </div>
+        </div>
+        <!-- /.card -->
+</div>
+{% endblock %}
+
+{% block extrascripts %}
+<script src="{% static 'assets/js/departments.js' %}" ></script>
+{% endblock extrascripts %}
