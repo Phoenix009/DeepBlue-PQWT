@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Token Visualizer</title>
+  <meta content="" name="description">
+
+  <meta content="" name="keywords">
+{% comment %} 
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon"> 
+{% endcomment %}
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="{% static 'landingpage/assets/vendor/adminlte.min.css' %}" rel="stylesheet">
+  <link href="{% static 'landingpage/assets/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+  <link href="{% static 'landingpage/assets/vendor/overlayScrollbars/css/OverlayScrollbars.min.css' %}" rel="stylesheet">
+  <link href="{% static 'landingpage/assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'landingpage/assets/vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+  <link href="{% static 'landingpage/assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'landingpage/assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'landingpage/assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  <link href="{% static 'landingpage/assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'landingpage/assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/template/css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+  
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="{% static 'landingpage/assets/img/logo.png' %}" alt="">
+        <span>PredictQ</span>
+      </a>
+
+      <nav id="navbar" class="navbar">
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center" style="background:url({% static 'landingpage/assets/img/hero-bg.png' %})">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 d-flex flex-column justify-content-center">
+          <h1 data-aos="fade-up">Currently Serving</h1>
+          <div data-aos="fade-up" class="col-md-4 mt-2">
+            <!-- Info Boxes Style 2 -->
+            <div class="info-box mb-3 bg-success" style="width:200%;">
+              <span class="info-box-icon"><i class="fas fa-users fa-lg"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-number" style="font-size:xx-large;">5</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+            <div class="info-box mb-3 bg-gray" style="min-height:40px; width:120%;">
+            <span class="info-box-icon"><i class="fas fa-users fa-sm"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-number" style="font-weight:300;">6</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <div class="info-box mb-3 bg-gray" style="min-height:40px; width:120%;">
+            <span class="info-box-icon"><i class="fas fa-users fa-sm"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-number" style="font-weight:300;">7<span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+          </div>
+          <h2 data-aos="fade-up" data-aos-delay="400">Visit the link sent on mail to know more details like estimated wait time.</h2>
+        </div>
+        <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
+          <img src="{% static 'landingpage/assets/img/queue2.png' %}" class="img-fluid" alt="">
+        </div>
+      </div>
+    </div>
+
+  </section><!-- End Hero -->
+  <script src="{% static 'landingpage/assets/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'landingpage/assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'landingpage/assets/vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'landingpage/assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'landingpage/assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'landingpage/assets/vendor/owl.carousel/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'landingpage/assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'landingpage/assets/vendor/venobox/venobox.min.js' %}"></script>
+  <script src="{% static 'landingpage/assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'landingpage/assets/js/main.js' %}"></script>
+
+</body>
+
+</html>

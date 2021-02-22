@@ -67,6 +67,7 @@ def room(request, room_name):
 
 # shows the wait-time for a patient after he/she clicks on 
 # the link sent in email and also verifies the patient 
+
 def view_wait_time(request,token):
     print(token)
     patient = get_object_or_404(Patient, otp = token)
@@ -182,6 +183,9 @@ def send_update_notification(room_name):
 def test_ui(request):
     context = {}
     return render(request,'queues/view_wait.html', context)
+
+def token_visualizer(request):
+    return render(request, 'queues/token_visualizer.html')
 
 
 
