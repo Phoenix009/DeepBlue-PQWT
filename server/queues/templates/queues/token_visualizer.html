@@ -37,7 +37,7 @@
   <header id="header" class="header fixed-top">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="{% url 'queues:index' %}" class="logo d-flex align-items-center">
         <img src="{% static 'landingpage/assets/img/logo.png' %}" alt="">
         <span>PredictQ</span>
       </a>
@@ -55,14 +55,14 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6 d-flex flex-column justify-content-center">
-          <h1 data-aos="fade-up">Currently Serving</h1>
+          <h1 data-aos="fade-up">Next Patient</h1>
           <div data-aos="fade-up" class="col-md-4 mt-2">
             <!-- Info Boxes Style 2 -->
             <div class="info-box mb-3 bg-success" style="width:200%;">
               <span class="info-box-icon"><i class="fas fa-users fa-lg"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-number" style="font-size:xx-large;">5</span>
+                <span class="info-box-number" style="font-size:xx-large;" id = "current_patient" >5</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -70,14 +70,14 @@
             <div class="info-box mb-3 bg-gray" style="min-height:40px; width:120%;">
             <span class="info-box-icon"><i class="fas fa-users fa-sm"></i></span>
               <div class="info-box-content">
-                <span class="info-box-number" style="font-weight:300;">6</span>
+                <span class="info-box-number" style="font-weight:300;"  id = "next_patient_1" >No Patients</span>
               </div>
               <!-- /.info-box-content -->
             </div>
             <div class="info-box mb-3 bg-gray" style="min-height:40px; width:120%;">
             <span class="info-box-icon"><i class="fas fa-users fa-sm"></i></span>
               <div class="info-box-content">
-                <span class="info-box-number" style="font-weight:300;">7<span>
+                <span class="info-box-number" style="font-weight:300;" id="next_patient_2">No Patients<span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -89,19 +89,19 @@
         </div>
       </div>
     </div>
-
+    {{ room_name|json_script:"room-name" }}
   </section><!-- End Hero -->
+
+
   <script src="{% static 'landingpage/assets/vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'landingpage/assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'landingpage/assets/vendor/php-email-form/validate.js' %}"></script>
   <script src="{% static 'landingpage/assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
   <script src="{% static 'landingpage/assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
   <script src="{% static 'landingpage/assets/vendor/owl.carousel/owl.carousel.min.js' %}"></script>
-  <script src="{% static 'landingpage/assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
   <script src="{% static 'landingpage/assets/vendor/venobox/venobox.min.js' %}"></script>
   <script src="{% static 'landingpage/assets/vendor/aos/aos.js' %}"></script>
   <script src="{% static 'landingpage/assets/js/main.js' %}"></script>
-
+  {% include 'partials/_scripts.html' %}
 </body>
 
 </html>

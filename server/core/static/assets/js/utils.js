@@ -234,7 +234,7 @@ handleUpdate = (body)=>{
         if(queue[i].completed_at) continue;
         tbody.innerHTML += `
             <tr>
-                <td>${ queue[i].id }</td>
+                <td>${ queue[i].patient_id }</td>
                 <td>${ queue[i].patient_name }</td>
                 <td>${ queue[i].joined_at }</td>
                 <td>${ parseInt(queue[i].wait_time) } minute(s) </td>
@@ -329,14 +329,18 @@ function updatePatientsData(body){
 
 setInterval(
     function(){ 
-        const waitTimeElement = document.getElementById('estimatedWaitTime');
-        const totalWaitTimeElement = document.getElementById('totalWaitTime');
-        waitTime = parseInt(waitTimeElement.innerHTML);
-        totalWaitTime = parseInt(totalWaitTimeElement.innerHTML);
-        waitTime = Math.max(waitTime - 1, 0);
-        totalWaitTime = Math.max(totalWaitTime-1,0);
-        totalWaitTimeElement.innerHTML = totalWaitTime;
-        waitTimeElement.innerHTML = waitTime;
+        try{
+            const waitTimeElement = document.getElementById('estimatedWaitTime');
+            const totalWaitTimeElement = document.getElementById('totalWaitTime');
+            waitTime = parseInt(waitTimeElement.innerHTML);
+            totalWaitTime = parseInt(totalWaitTimeElement.innerHTML);
+            waitTime = Math.max(waitTime - 1, 0);
+            totalWaitTime = Math.max(totalWaitTime-1,0);
+            totalWaitTimeElement.innerHTML = totalWaitTime;
+            waitTimeElement.innerHTML = waitTime;
+        }catch(err){
+            console.log(err)
+        }
     }, 
     60000
 );
@@ -354,5 +358,29 @@ getDepartmentIcon = department => {
         default: return '';
     }
 }
+function nextPatientIDVisualizer(queue){
+    const nextPatient = document.getElementById('current_patient');
+    const nextPatient1 = document.getElementById('next_patient_1');
+    const nextPatient2 = document.getElementById('next_patient_2');
+    console.log(nextPatient)
+    console.log(queue)
+    try{
+        nextPatient.innerText = queue[0].patient_id;
+    }catch(err){
+        nextPatient.innerText = "No Patient";
+        console.log(err);
+    }
 
+    try{
+        nextPatient1.innerText = queue[1].patient_id;
+    }catch(err){
+        nextPatient1.innerText = "No Patient";
+        console.log(err);
+    }
+    try{
+        nextPatient2.innerText = "No Patient";
+    }catch(err){
+        console.log(err);
+    }
+}
 

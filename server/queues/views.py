@@ -184,8 +184,11 @@ def test_ui(request):
     context = {}
     return render(request,'queues/view_wait.html', context)
 
-def token_visualizer(request):
-    return render(request, 'queues/token_visualizer.html')
+def token_visualizer(request, room_name):
+    context = {
+        'room_name' : room_name
+    }
+    return render(request, 'queues/token_visualizer.html', context)
 
 
 

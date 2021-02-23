@@ -46,6 +46,7 @@ chatSocket.onmessage = function (e) {
             break;
         case "UPD":
             queue = data.body.queue;
+            nextPatientIDVisualizer(queue);
             console.log(queue);
             try{
                 nextPatient = queue[0].id;
@@ -67,7 +68,13 @@ chatSocket.onmessage = function (e) {
 
 
 function scrollToBottom(){
-    console.log('here')
-    var objDiv = document.getElementById("chat-text");
-    objDiv.scrollTop = objDiv.scrollHeight - objDiv.clientHeight;
+    try{
+        var objDiv = document.getElementById("chat-text");
+        objDiv.scrollTop = objDiv.scrollHeight - objDiv.clientHeight;
+    }
+    catch(err){
+        console.log(err);
+    }
 }
+
+
