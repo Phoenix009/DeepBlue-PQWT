@@ -19,7 +19,7 @@ class Queue(models.Model):
 
 
     def __str__(self) -> str:
-        return f"{self.name} -> {self.department.hospital} "
+        return f"{self.name} -> {self.department.hospital}"
     
     @classmethod
     def get_queue_by_name(cls,name):

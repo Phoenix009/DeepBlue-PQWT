@@ -359,22 +359,23 @@ getDepartmentIcon = department => {
     }
 }
 function nextPatientIDVisualizer(queue){
-    const nextPatient = document.getElementById('current_patient');
-    const nextPatient1 = document.getElementById('next_patient_1');
-    const nextPatient2 = document.getElementById('next_patient_2');
-    console.log(nextPatient)
-    console.log(queue)
+    try{
+        const nextPatient = document.getElementById('current_patient');
+        const nextPatient1 = document.getElementById('next_patient_1');
+        const nextPatient2 = document.getElementById('next_patient_2');
+    }catch(err){console.log(err);}
+
     try{
         nextPatient.innerText = queue[0].patient_id;
     }catch(err){
-        nextPatient.innerText = "No Patient";
+        // nextPatient.innerText = "No Patient";
         console.log(err);
     }
 
     try{
         nextPatient1.innerText = queue[1].patient_id;
     }catch(err){
-        nextPatient1.innerText = "No Patient";
+        // nextPatient1.innerText = "No Patient";
         console.log(err);
     }
     try{

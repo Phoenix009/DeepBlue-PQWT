@@ -1,8 +1,11 @@
-import json 
+import json
+from .forms import DepartmentCreationForm 
 
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http.response import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.db.models import Max
+from django.contrib import messages
 
 from departments.models import Department
 
@@ -37,3 +40,28 @@ def reorder_departments(request):
         print(e)
         JsonResponse({'reorderd':'false'})
     return JsonResponse({'reorderd':'ok'})
+
+
+@login_required
+def create_department(request):
+    form = DepartmentCreationForm()
+    if request.method == 'POST':
+        form = DepartmentCreationForm(request.POST)
+        if form.is_valid():
+            hospital = request.user.profile.department.hospital
+            max_order_dept = hospital.department_set.all().aggregate(Max('order'))
+            print(max_order_dept)
+            new_order = 1 if not max_order_dept else max_order_dept['order__max'] + 1
+            department = Department(
+                name=form.cleaned_data.get('name'),
+                description=form.cleaned_data.get('description'),
+                order=new_order,
+                hospital=hospital,
+                created_by=request.user
+            )
+            department.save()
+            messages.success(request, "Department Created Successfully!")
+            return redirect('departments:view_departments')
+        else:
+            messages.danger(request, "Form Details Invalid")
+    return render(request, "departments/department_creation.html", {"form": form})

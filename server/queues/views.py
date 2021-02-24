@@ -54,14 +54,14 @@ def room(request, room_name):
     queue = Queue.get_queue_by_name(name = room_name)
     if not queue:
         return HttpResponse('does no exist')
-    previous_queue = queue.get_previous_queue()
-    print(previous_queue)
+    # previous_queue = queue.get_previous_queue()
+    
     form = AdminPatientRegistrationForm()
     context = {
         'room_name':room_name, 
         'queue':queue, 
         'form':form,
-        'previous_queue':previous_queue,
+        # 'previous_queue':previous_queue,
     }
     return render(request, 'queues/queue.html', context)
 
