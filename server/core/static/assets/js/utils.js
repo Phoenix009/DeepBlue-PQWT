@@ -257,7 +257,7 @@ handleUpdate = (body)=>{
         if(!queue[i].completed_at) continue;
         tbody.innerHTML += `
             <tr>
-                <td>${ queue[i].id }</td>
+                <td>${ queue[i].patient_id }</td>
                 <td>${ queue[i].patient_name }</td>
                 <td>
                     <button onclick="handleComplete(${ queue[i].id }, ${ OUT_OF_SYSTEM })" class = "btn btn-sm btn-success">Complete</button>

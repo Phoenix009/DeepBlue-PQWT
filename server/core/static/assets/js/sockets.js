@@ -49,7 +49,7 @@ chatSocket.onmessage = function (e) {
             nextPatientIDVisualizer(queue);
             console.log(queue);
             try{
-                nextPatient = queue[0].id;
+                nextPatient = queue[0].patient_id   ;
             }catch(err){
                 console.log(err);
             }

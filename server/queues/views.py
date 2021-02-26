@@ -146,6 +146,7 @@ def complete_patient(request):
         vqueue = get_object_or_404(VirtualQueue, pk = vqueue_id)
         if type_ == OUT_OF_QUEUE:
             vqueue.completed_at = datetime.now()
+            send_update_notification(vqueue.queue.name)
         elif type_ == OUT_OF_SYSTEM:
             vqueue.treatment_completed_at = datetime.now()
             hospital = vqueue.queue.department.hospital 
