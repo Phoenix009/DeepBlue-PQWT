@@ -20,7 +20,11 @@ class Queue(models.Model):
 
     def __str__(self) -> str:
         return f"{self.name} -> {self.department.hospital}"
-    
+
+    @property
+    def get_queue_name(self):
+        return self.department.name
+
     @classmethod
     def get_queue_by_name(cls,name):
         queue = cls.objects.filter(name=name).first()
