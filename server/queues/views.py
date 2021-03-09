@@ -192,4 +192,7 @@ def token_visualizer(request, room_name):
     return render(request, 'queues/token_visualizer.html', context)
 
 
+# TODO: View patients based on the date range provided
+
+# TODO: SET privileges based on the new user class
 

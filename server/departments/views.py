@@ -63,5 +63,5 @@ def create_department(request):
             messages.success(request, "Department Created Successfully!")
             return redirect('departments:view_departments')
         else:
-            messages.danger(request, "Form Details Invalid")
+            messages.error(request, "Form Details Invalid")
     return render(request, "departments/department_creation.html", {"form": form})

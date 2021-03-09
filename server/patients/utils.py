@@ -37,5 +37,5 @@ def send_patient_verification_mail(patient, queue_link):
         fail_silently=False
     )
 
-def generate_otp():
-    return "".join(random.choices(string.ascii_uppercase, k=6))
+def generate_otp(k=6):
+    return "".join(random.choices(string.ascii_uppercase, k=k))

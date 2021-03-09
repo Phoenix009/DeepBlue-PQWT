@@ -11,6 +11,15 @@ class Hospital(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    def get_departments(self):
+        return list(self.department_set.all())
     
-
-
+    def get_staff(self):
+        dept_list = self.get_departments()
+        print(dept_list)
+        staff_list = []
+        for dept in dept_list:
+            staff_list.extend(list(dept.profile_set.all()))
+        print(staff_list)
+        return staff_list
