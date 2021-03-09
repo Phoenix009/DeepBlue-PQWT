@@ -65,3 +65,31 @@ def create_department(request):
         else:
             messages.danger(request, "Form Details Invalid")
     return render(request, "departments/department_creation.html", {"form": form})
+
+@login_required
+def update_department(request, pk):
+    department = get_object_or_404(Department , pk = pk)
+    form = DepartmentCreationForm(instance = department)
+    if request.method == 'POST':
+        form = DepartmentCreationForm(request.POST)
+        if form.is_valid():
+            department = get_object_or_404(Department , pk = pk)
+            department.name = form.cleaned_data.get('name')
+            department.description = form.cleaned_data.get('description')
+            department.save()
+            messages.success(request, "Department Updated Successfully!")
+            return redirect('departments:view_departments')
+        else:
+            messages.danger(request, "Form Details Invalid") 
+    context = {
+            "form": form,
+            "department" : department,
+        }
+    return render(request, "departments/update_department.html",context)
+
+@login_required
+def delete_department(request, pk):
+    if request.method == 'POST':
+        department = get_object_or_404(Department , pk = pk)
+        department.delete()
+        return redirect('departments:view_departments')

@@ -34,7 +34,7 @@
                     <span class="text">{{ dept.order }}. {{ dept.name|capfirst }}</span>
                     <!-- General tools such as edit or delete-->
                     <div class="tools">
-                    <i class="fas fa-edit"></i>
+                    <a href = "{% url 'departments:update_department' dept.pk %}"><i class="fas fa-edit"></i></a>
                     <i class="fas fa-trash-o"></i>
                     </div>
                 </li>
