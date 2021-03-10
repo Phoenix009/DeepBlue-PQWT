@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 
 from departments.models import Department
 from patients.models import Patient
+from .utils import predict_waittime
 
 class Queue(models.Model):
     name = models.CharField(max_length=500)
@@ -94,6 +95,26 @@ class VirtualQueue(models.Model):
     def wait_time(self):
         if not self.completed_at: return -1
         else: return (self.completed_at.hour*60 + self.completed_at.minute) - (self.joined_at.hour*60 + self.joined_at.minute)
+
+    @classmethod
+    def get_comparison(cls):
+        completion = 12
+        data = []
+        vqueue = cls.objects.all()
+        for vq in vqueue:
+            predicted_wait_time, completion = predict_waittime(vq, completion)
+            actual_wait_time = vq.wait_time()
+            if actual_wait_time == -1:
+                continue
+            data.append({
+                'id' : vq.id ,
+                "predicted_wait_time" : int(predicted_wait_time),
+                "actual_wait_time" : actual_wait_time, 
+            })
+        
+        return data 
+
+
 
     def get_patients_ahead(self):
         '''
