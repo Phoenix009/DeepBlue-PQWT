@@ -8,5 +8,5 @@ urlpatterns = [
     path('register/<str:room_name>',views.register_patient, name = 'register_patient'),
     path('verification-message/',views.verification_message, name = 'verification_message'),
     path('verify/', views.verify, name = 'verify_patient'),
-    path('view_patients/<int:pk>', views.view_patients, name='view_patients')
+    path('view_patients', views.view_patients, name='view_patients')
 ]

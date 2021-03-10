@@ -83,9 +83,10 @@
                           <li class="page-item"><a class="page-link" href="#">3</a></li>
                           <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
                         </ul> -->
+                        <a href="{% url 'patients:view_patients'%}" class="btn btn-dark btn-sm">Patients List</a>
                         <a href="{% url 'users:view_staff' department.hospital.pk %}" class="btn btn-dark btn-sm">Staff Details</a>
                         <a href = "{% url 'departments:view_departments' %}" class="btn btn-dark btn-sm">
-                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-edit"></i> Edit
                         </a>
                       </div>
                     </div>
@@ -97,8 +98,9 @@
                                     <th style="width: 10px">#</th>
                                     <th>Queue Name</th>
                                     <th >Status</th>
-                                    <th style="width: 40px">Open</th>
+                                    <th>Open</th>
                                     <th>QRCODE</th>
+                                    <th>Patients Screen</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -116,6 +118,9 @@
                                     </td>
                                     <td>
                                         <a class="badge badge-dark"  target="_blank" href="{% url 'queues:open_qrcode' queue.name %}">QRCODE</a>
+                                    </td>
+                                    <td>
+                                        <a class="badge badge-dark"  target="_blank" href="{% url 'queues:token_visualizer' queue.pk %}">View</a>
                                     </td>
                                 </tr>
                                 {% endfor %}

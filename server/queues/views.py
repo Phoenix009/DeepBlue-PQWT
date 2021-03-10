@@ -185,17 +185,27 @@ def test_ui(request):
     context = {}
     return render(request,'queues/view_wait.html', context)
 
-def token_visualizer(request, room_name):
+def token_visualizer(request, pk):
+    queue = get_object_or_404(Queue , pk = pk )
     context = {
-        'room_name' : room_name
+        'room_name' : queue.name
     }
     return render(request, 'queues/token_visualizer.html', context)
 
-
+@login_required
 def stats(request):
     queue_data = VirtualQueue.get_comparison()
+    hospital = request.user.profile.department.hospital 
+    departments = hospital.department_set.all()
+    queues = []
+    for department in departments:
+        queues.extend(list(department.queue_set.all()))
+    departments = {}
+    for queue in queues:
+        departments[queue.name] = VirtualQueue.get_comparison_by_department(queue)
     context = {
-        'queue_data' : queue_data
+        'queue_data' : queue_data,
+        'departments' : departments
     }
     return render(request, 'queues/stats.html', context)
 

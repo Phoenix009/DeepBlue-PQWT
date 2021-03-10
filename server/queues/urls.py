@@ -13,5 +13,5 @@ urlpatterns = [
     path('patients/wait-time/<str:token>/', views.view_wait_time, name = 'view_wait_time'),
     path('qrcode/<str:room_name>/', views.open_qrcode, name = 'open_qrcode'),
     path('test/page', views.test_ui, name= 'test_ui'),
-    path('token_visualizer/<str:room_name>', views.token_visualizer, name='token_visualizer'),
+    path('token_visualizer/<int:pk>', views.token_visualizer, name='token_visualizer'),
 ]

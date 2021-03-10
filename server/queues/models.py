@@ -113,6 +113,24 @@ class VirtualQueue(models.Model):
             })
         
         return data 
+    
+    @classmethod
+    def get_comparison_by_department(cls , queue):
+        completion = 12
+        data = []
+        vqueue = cls.objects.filter(queue = queue).all()
+        for vq in vqueue:
+            predicted_wait_time, completion = predict_waittime(vq, completion)
+            actual_wait_time = vq.wait_time()
+            if actual_wait_time == -1:
+                continue
+            data.append({
+                'id' : vq.id ,
+                "predicted_wait_time" : int(predicted_wait_time),
+                "actual_wait_time" : actual_wait_time, 
+            })
+        
+        return data
 
 
 

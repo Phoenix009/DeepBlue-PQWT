@@ -41,7 +41,7 @@ class Patient(models.Model):
 
     @classmethod
     def get_patients_today(cls):
-        return cls.objects.filter(joined_at__gte=datetime.date.today())
+        return cls.objects.filter(joined_at__gte=datetime.date.today()).order_by('-joined_at')
 
 
     def __str__(self) -> str:

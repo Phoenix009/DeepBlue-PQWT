@@ -1,5 +1,6 @@
 from datetime import datetime
 from django.shortcuts import get_object_or_404, render,redirect
+from django.contrib.auth.decorators import login_required
 
 
 from hospitals.models import Hospital
@@ -73,8 +74,9 @@ def verify(request):
     return render(request, 'patients/verify.html', context)
 
 
-def view_patients(request, pk):
-    hospital = get_object_or_404(Hospital, pk=pk)
+@login_required
+def view_patients(request):
+    hospital = request.user.profile.department.hospital
     patients = Patient.get_patients_today()
     context = {
         'patients': patients,
