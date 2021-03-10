@@ -1,5 +1,4 @@
-from datetime import datetime
-
+import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from .utils import generate_otp
@@ -14,7 +13,7 @@ class Patient(models.Model):
     age = models.IntegerField(null=True, blank=True)
     gender = models.CharField(null=True, blank=True, max_length=10)
     otp = models.CharField(max_length=20, default=generate_otp ,unique=True)
-    joined_at = models.DateTimeField(default=datetime.now)
+    joined_at = models.DateTimeField(default=datetime.datetime.now)
     verified = models.BooleanField(default=False)
     added_by = models.ForeignKey(User, default=None,null=True,blank=True, on_delete=models.CASCADE)
 
@@ -40,10 +39,11 @@ class Patient(models.Model):
         return len(cls.objects.all())
 
 
+    @classmethod
+    def get_patients_today(cls):
+        return cls.objects.filter(joined_at__gte=datetime.date.today())
+
 
     def __str__(self) -> str:
         return f"{self.id} {self.first_name} {self.last_name}"
     
-    # @classmethod
-    # def total_number_of_patients_today(cls):
-    #     return len(cls.objects.filter(jointed_at__gte=datetime.date.today()))

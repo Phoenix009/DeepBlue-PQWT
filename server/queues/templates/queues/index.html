@@ -83,6 +83,7 @@
                           <li class="page-item"><a class="page-link" href="#">3</a></li>
                           <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
                         </ul> -->
+                        <a href="{% url 'users:view_staff' department.hospital.pk %}" class="btn btn-dark btn-sm">Staff Details</a>
                         <a href = "{% url 'departments:view_departments' %}" class="btn btn-dark btn-sm">
                             <i class="fas fa-edit"></i>
                         </a>

@@ -1,6 +1,8 @@
+from datetime import datetime
 from django.shortcuts import get_object_or_404, render,redirect
 
 
+from hospitals.models import Hospital
 from queues.models import Queue, VirtualQueue
 from .forms import PatientRegistrationForm, VerificationForm
 from .models import Patient
@@ -70,3 +72,13 @@ def verify(request):
     context = {'form': form}
     return render(request, 'patients/verify.html', context)
 
+
+def view_patients(request, pk):
+    hospital = get_object_or_404(Hospital, pk=pk)
+    patients = Patient.get_patients_today()
+    context = {
+        'patients': patients,
+        'hopsital': hospital,
+    }
+
+    return render(request, 'patients/view_patients.html', context)

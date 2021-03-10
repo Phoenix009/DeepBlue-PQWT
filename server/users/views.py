@@ -1,27 +1,28 @@
 from django.contrib.auth.forms import UsernameField
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
+
 
 from patients.utils import generate_otp
 from hospitals.models import Hospital
 from users.forms import StaffCreationForm, ProfileCreationForm
 from users.models import Profile
 from departments.models import Department
-
+from users.utils import send_staff_registration_mail
 
 @login_required
 def view_staff(request, pk):
     hospital = get_object_or_404(Hospital, pk=pk)
     staff_list = hospital.get_staff()
     context = {
+        'hospital': hospital, 
         'staff_list': staff_list
     }
     return render(request, 'users/view_staff.html', context)
 
 def create_staff(request, pk):
-    
     hospital = get_object_or_404(Hospital, pk=pk)
     if request.method == 'GET':
         staff_creation_form = StaffCreationForm()
@@ -47,10 +48,11 @@ def create_staff(request, pk):
             user.profile.is_incharge = data.get('is_incharge')
             user.profile.is_superuser = data.get('is_superuser')
             user.profile.save()
+            send_staff_registration_mail(staff=user.profile, password=password, admin_email=request.user.email)
             messages.success(request, "Staff Created Successfully !")
-            return redirect(request, 'users:view_staff')
+            return redirect('users:view_staff', hospital.pk)
         else:
-            messages.error(request, "Staff CreationFailed !")
+            messages.error(request, "Staff Creation Failed !")
 
     context = {
         'staff_creation_form': staff_creation_form,
