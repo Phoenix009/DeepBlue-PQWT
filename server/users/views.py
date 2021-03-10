@@ -58,6 +58,3 @@ def create_staff(request, pk):
     }
 
     return render(request, 'users/staff_creation.html', context)
-
-
-# ZZPOVYVV

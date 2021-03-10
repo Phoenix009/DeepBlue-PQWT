@@ -32,9 +32,10 @@ ALLOWED_HOSTS = ["*",]
 # Application definition
 
 INSTALLED_APPS = [
-    'material.admin',
-    'material.admin.default',
-    # 'django.contrib.admin',
+    # 'material.admin',
+    # 'material.admin.default',
+        'jazzmin',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -134,6 +135,69 @@ MATERIAL_ADMIN_SITE = {
     'TRAY_REVERSE': True,  # Hide object-tools and additional-submit-line by default
     'NAVBAR_REVERSE': True,  # Hide side navbar by default
     'SHOW_COUNTS': True, # Show instances counts for each model
+}
+
+
+JAZZMIN_SETTINGS = {
+    # title of the window (Will default to current_admin_site.site_title if absent or None)
+    "site_title": "PredictQ Admin",
+
+    # Title on the brand, and login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    "site_header": "PerdictQ",
+
+    # square logo to use for your site, must be present in static files, used for favicon and brand on top left
+    "site_logo": "landingpage/assets/img/logo.png",
+
+    # Welcome text on the login screen
+    "welcome_sign": "Login as Admin",
+
+    # Copyright on the footer
+    "copyright": "PredictQ 2021",
+
+    # The model admin to search from the search bar, search bar omitted if excluded
+    "search_model": "auth.User",
+
+    # Field name on user model that contains avatar image
+    "user_avatar": None,
+
+     "topmenu_links": [
+
+        # Url that gets reversed (Permissions can be added)
+        {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
+        # model admin to link to (Permissions checked against model)
+        {"model": "auth.User"},
+
+        # App with dropdown menu to all its models pages (Permissions checked against models)
+        {"app": "books"},
+    ],
+        # Additional links to include in the user menu on the top right ("app" url type is not allowed)
+    "usermenu_links": [
+        {"model": "auth.user"}
+    ],
+
+        # Whether to display the side menu
+    "show_sidebar": True,
+
+    # Whether to aut expand the menu
+    "navigation_expanded": True,
+
+    "order_with_respect_to": ["auth", "patients", "queues", "departments" , "hospitals"],
+
+        # Use modals instead of popups
+    "related_modal_active": True,
+    # Render out the change view as a single form, or in tabs, current options are
+    # - single
+    # - horizontal_tabs (default)
+    # - vertical_tabs
+    # - collapsible
+    # - carousel
+
+    "changeform_format": "horizontal_tabs",
+
+
+
+
+    
 }
 
 
