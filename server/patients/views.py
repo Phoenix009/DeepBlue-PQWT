@@ -84,3 +84,13 @@ def view_patients(request):
     }
 
     return render(request, 'patients/view_patients.html', context)
+
+@login_required
+def view_patients_all(request):
+    hospital = request.user.profile.department.hospital
+    patients = Patient.objects.all().order_by('-joined_at')
+    context = {
+        'patients': patients,
+        'hopsital': hospital,
+    }
+    return render(request, 'patients/view_patients.html', context)

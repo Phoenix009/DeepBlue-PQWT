@@ -224,6 +224,15 @@ CHANNEL_LAYERS = {
         "BACKEND" : "channels.layers.InMemoryChannelLayer"
     }
 }
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [("localhost", 6379)],
+#         },
+#     },
+# }
+
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'queues:index'
 LOGOUT_REDIRECT_URL = 'landingpage'
