@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.core.exceptions import PermissionDenied
 
 
 from patients.utils import generate_otp
@@ -14,6 +15,8 @@ from users.utils import send_staff_registration_mail
 
 @login_required
 def view_staff(request, pk):
+    if not request.user.profile.is_superuser:
+        raise PermissionDenied
     hospital = get_object_or_404(Hospital, pk=pk)
     staff_list = hospital.get_staff()
     context = {
@@ -22,7 +25,10 @@ def view_staff(request, pk):
     }
     return render(request, 'users/view_staff.html', context)
 
+@login_required
 def create_staff(request, pk):
+    if not request.user.profile.is_superuser:
+        raise PermissionDenied
     hospital = get_object_or_404(Hospital, pk=pk)
     if request.method == 'GET':
         staff_creation_form = StaffCreationForm()
@@ -35,7 +41,7 @@ def create_staff(request, pk):
             department = get_object_or_404(Department, pk=int(data.get('department')))
             password = generate_otp(k=8)
             print('Password:', password)
-            user = User(
+            user = User.objects.create_user(
                 first_name=data.get('first_name'),
                 last_name=data.get('last_name'),
                 email=data.get('email'),

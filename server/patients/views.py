@@ -1,6 +1,7 @@
 from datetime import datetime
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 
 
 from hospitals.models import Hospital
@@ -76,6 +77,8 @@ def verify(request):
 
 @login_required
 def view_patients(request):
+    if not request.user.profile.is_superuser:
+        raise PermissionDenied
     hospital = request.user.profile.department.hospital
     patients = Patient.get_patients_today()
     context = {

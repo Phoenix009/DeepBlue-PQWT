@@ -83,11 +83,13 @@
                           <li class="page-item"><a class="page-link" href="#">3</a></li>
                           <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
                         </ul> -->
+                        {% if request.user.profile.is_superuser %}
                         <a href="{% url 'patients:view_patients'%}" class="btn btn-dark btn-sm">Patients List</a>
                         <a href="{% url 'users:view_staff' department.hospital.pk %}" class="btn btn-dark btn-sm">Staff Details</a>
                         <a href = "{% url 'departments:view_departments' %}" class="btn btn-dark btn-sm">
                             <i class="fas fa-edit"></i> Edit
                         </a>
+                        {% endif %}
                       </div>
                     </div>
                     <!-- /.card-header -->
@@ -114,7 +116,11 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <a class="badge badge-primary" href="{% url 'queues:room' queue.name %}">View</a>
+                                        {% if request.user.profile.is_superuser or  request.user.profile.department == queue.department %}
+                                            <a class="badge badge-primary" href="{% url 'queues:room' queue.name %}">View</a>
+                                        {% else %}
+                                            <a class="badge badge-secondary" style="color: white;" disabled>View</a>
+                                        {% endif %}
                                     </td>
                                     <td>
                                         <a class="badge badge-dark"  target="_blank" href="{% url 'queues:open_qrcode' queue.name %}">QRCODE</a>
