@@ -43,7 +43,7 @@ parseLunchTimeMessage = (body) => {
         <img class="direct-chat-img" src="http://localhost:8000/static/assets/template/img/admin.png" alt="message user image">
         <!-- /.direct-chat-img -->
         <div class="direct-chat-text bg-red">
-            <h5>Luch Time</h5>
+            <h5>Lunch Time</h5>
             <p>
                 Hey, the doctor is currently on a small lunch break.<br>
                 Hang in there, we will start the queue after the lunch time.
@@ -242,7 +242,7 @@ handleUpdate = (body)=>{
                     <button onclick="handleRemove(${ queue[i].id})" class="btn btn-sm btn-danger">Remove</button>
                 </td>
                 <td>
-                    <button onclick="handleComplete(${ queue[i].id }, ${ OUT_OF_QUEUE })" class = "btn btn-sm btn-success">Complete</button>
+                    <button onclick="handleComplete(${ queue[i].id }, ${ OUT_OF_QUEUE })" class = "btn btn-sm btn-success">Send</button>
                 </td>
             </tr>
         `;
