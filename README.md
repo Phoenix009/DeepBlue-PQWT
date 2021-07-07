@@ -12,8 +12,10 @@ pip install -r requirements.txt
 ```
 
 ## Screenshots 
-<img src="screenshots/home.PNG" width="600"/> <img src="screenshots/patients_view.PNG" width="200"/> 
-<img src="screenshots/queue_dashboard.PNG" width="400"/> <img src="screenshots/dashboard.PNG" width="400"/> 
+<img src="screenshots/home.PNG" width="800"/>
+<img src="screenshots/patients_view.PNG"/> 
+<img src="screenshots/queue_dashboard.PNG" width="800"/> 
+<img src="screenshots/dashboard.PNG" width="800"/> 
 
 
 ## Contributing
