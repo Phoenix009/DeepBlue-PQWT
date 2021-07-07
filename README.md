@@ -6,7 +6,7 @@ PredictQ is an all-inclusive queue management solution catering to both the pati
 
 ## Setup
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Use the package manager [pip](https://pip.pypa.io/en/stable/)
 
 ```bash
 pip install -r requirements.txt
