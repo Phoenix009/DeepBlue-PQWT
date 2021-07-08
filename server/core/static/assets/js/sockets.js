@@ -37,17 +37,23 @@ chatSocket.onmessage = function (e) {
     switch(data.type){
         case "MSG": 
             handleMessage(data.body);
+            scrollToBottom();
             break;
         case "NPMSG": 
             handleNextPatientMessage(data.body);
+            scrollToBottom();
             break;
         case "LTMSG": 
             handleLunchTimeMessage(data.body);
+            scrollToBottom();
             break;
         case "UPD":
             queue = data.body.queue;
-            nextPatientIDVisualizer(queue);
-            console.log(queue);
+            try{
+                nextPatientIDVisualizer(queue);
+            }catch(err){
+                console.log(err);
+            }
             try{
                 nextPatient = queue[0].patient_id   ;
             }catch(err){
@@ -62,7 +68,7 @@ chatSocket.onmessage = function (e) {
             }
             break;
     }
-    scrollToBottom();
+    
 }
 
 

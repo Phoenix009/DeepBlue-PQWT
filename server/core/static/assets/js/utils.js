@@ -43,7 +43,7 @@ parseLunchTimeMessage = (body) => {
         <img class="direct-chat-img" src="http://localhost:8000/static/assets/template/img/admin.png" alt="message user image">
         <!-- /.direct-chat-img -->
         <div class="direct-chat-text bg-red">
-            <h5>Luch Time</h5>
+            <h5>Lunch Time</h5>
             <p>
                 Hey, the doctor is currently on a small lunch break.<br>
                 Hang in there, we will start the queue after the lunch time.
@@ -242,7 +242,7 @@ handleUpdate = (body)=>{
                     <button onclick="handleRemove(${ queue[i].id})" class="btn btn-sm btn-danger">Remove</button>
                 </td>
                 <td>
-                    <button onclick="handleComplete(${ queue[i].id }, ${ OUT_OF_QUEUE })" class = "btn btn-sm btn-success">Complete</button>
+                    <button onclick="handleComplete(${ queue[i].id }, ${ OUT_OF_QUEUE })" class = "btn btn-sm btn-success">Send</button>
                 </td>
             </tr>
         `;
@@ -360,27 +360,31 @@ getDepartmentIcon = department => {
 }
 function nextPatientIDVisualizer(queue){
     try{
-        const nextPatient = document.getElementById('current_patient');
-        const nextPatient1 = document.getElementById('next_patient_1');
-        const nextPatient2 = document.getElementById('next_patient_2');
-    }catch(err){console.log(err);}
-
+        var nextPatient = document.getElementById('current_patient');
+        var nextPatient1 = document.getElementById('next_patient_1');
+        var nextPatient2 = document.getElementById('next_patient_2');
+    }
+    catch(err){
+        console.log(err);
+    }
+    console.log(nextPatient);
     try{
         nextPatient.innerText = queue[0].patient_id;
     }catch(err){
-        // nextPatient.innerText = "No Patient";
+        nextPatient.innerText = "No Patient";
         console.log(err);
     }
 
     try{
         nextPatient1.innerText = queue[1].patient_id;
     }catch(err){
-        // nextPatient1.innerText = "No Patient";
+        nextPatient1.innerText = "No Patient";
         console.log(err);
     }
     try{
-        nextPatient2.innerText = "No Patient";
+        nextPatient2.innerText = queue[2].patient_id;;
     }catch(err){
+        nextPatient2.innerText = "No Patient";
         console.log(err);
     }
 }

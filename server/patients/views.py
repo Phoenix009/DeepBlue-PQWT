@@ -1,6 +1,10 @@
+from datetime import datetime
 from django.shortcuts import get_object_or_404, render,redirect
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 
 
+from hospitals.models import Hospital
 from queues.models import Queue, VirtualQueue
 from .forms import PatientRegistrationForm, VerificationForm
 from .models import Patient
@@ -70,3 +74,26 @@ def verify(request):
     context = {'form': form}
     return render(request, 'patients/verify.html', context)
 
+
+@login_required
+def view_patients(request):
+    if not request.user.profile.is_superuser:
+        raise PermissionDenied
+    hospital = request.user.profile.department.hospital
+    patients = Patient.get_patients_today()
+    context = {
+        'patients': patients,
+        'hopsital': hospital,
+    }
+
+    return render(request, 'patients/view_patients.html', context)
+
+@login_required
+def view_patients_all(request):
+    hospital = request.user.profile.department.hospital
+    patients = Patient.objects.all().order_by('-joined_at')
+    context = {
+        'patients': patients,
+        'hopsital': hospital,
+    }
+    return render(request, 'patients/view_patients.html', context)

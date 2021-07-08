@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} Update {{ department }} {% endblock title %}
+{% block content %}
+<div class="mt-2 ml-lg-5 mr-lg-5">
+
+    <div class="row d-flex flex-row justify-content-center">
+        <div class="col-lg-6 col-sm-6">
+
+            <!-- general form elements -->
+            <div class="card card-dark">
+                <div class="card-header">
+                <h3 class="card-title">New Department for Hospital</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form" action="" method="POST">
+                <div class="card-body">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                </div>
+                <!-- /.card-body -->
+                <div class="float-right m-3">
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Delete</button>
+                </div>  
+                <div class="float-right m-3">
+                    <button type="submit" class="btn btn-dark">Submit</button>
+                </div>
+               
+                </form>
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete {{ department.name }} Department</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">    
+          <form id = "delete" action="{% url 'departments:delete_department' department.pk %}" method="post">
+              {% csrf_token %}
+          </form>
+          Do You Really Want To Delete {{ department.name }} Department?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-danger" onclick="javascript:{document.getElementById('delete').submit()}">Yes, Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

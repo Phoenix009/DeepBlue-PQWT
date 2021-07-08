@@ -15,3 +15,11 @@ def created_department(sender,instance,created,**kwargs):
             department=instance,
             created_by=instance.created_by,
         )
+    else:
+        queue_name = instance.name.split()
+        queue_name = "_".join(queue_name)
+        queue = instance.queue_set.first()
+        queue.name = queue_name
+        queue.save()
+
+    

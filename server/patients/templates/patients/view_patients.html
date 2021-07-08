@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}PQWT| {{ hopsital.name|capfirst }}{% endblock title %}
+{% block content %}
+
+    <div class="container">
+        <br><br>
+        <div class="card">
+            <div class="card-header">
+                <h3 class='float-left'> Patient List </h3>
+                <!-- <button class='btn btn-outline-dark float-right'>Print Patient List</button> -->
+            </div>
+            <table class="table">
+                <thead>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone No.</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>OTP</th>
+                    <th>Joined at</th>
+                    <th>Added By</th>
+                </thead>
+                <tbody>
+                    {% for patient in patients %}
+                    <tr>
+                        <td>{{ patient.id }}</td>
+                        <td>{{ patient.first_name }} {{ patient.last_name }}</td>
+                        <td>{{ patient.email }}</td>
+                        <td>{{ patient.phone_number }}</td>
+                        <td>{{ patient.age }}</td>
+                        <td>{{ patient.gender }}</td>
+                        <td><a href="{% url 'queues:view_wait_time' patient.otp %}">{{ patient.otp }}</a></td>
+                        <td>{{ patient.joined_at|date:"F d, Y"}}</td>
+                        <td>{{ patient.added_by.username }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+
+    
+{% endblock content %}

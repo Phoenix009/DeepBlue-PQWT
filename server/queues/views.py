@@ -6,6 +6,7 @@ from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render,get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
+from django.core.exceptions import PermissionDenied
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from qr_code.qrcode.utils import QRCodeOptions
@@ -52,6 +53,8 @@ def index(request):
 @login_required
 def room(request, room_name):
     queue = Queue.get_queue_by_name(name = room_name)
+    if (not request.user.profile.is_superuser) and  (not request.user.profile.department == queue.department ):
+        raise PermissionDenied
     if not queue:
         return HttpResponse('does no exist')
     # previous_queue = queue.get_previous_queue()
@@ -185,11 +188,29 @@ def test_ui(request):
     context = {}
     return render(request,'queues/view_wait.html', context)
 
-def token_visualizer(request, room_name):
+def token_visualizer(request, pk):
+    queue = get_object_or_404(Queue , pk = pk )
     context = {
-        'room_name' : room_name
+        'room_name' : queue.name
     }
     return render(request, 'queues/token_visualizer.html', context)
 
-
+@login_required
+def stats(request):
+    if not request.user.profile.is_superuser:
+        raise PermissionDenied
+    queue_data = VirtualQueue.get_comparison()
+    hospital = request.user.profile.department.hospital 
+    departments = hospital.department_set.all()
+    queues = []
+    for department in departments:
+        queues.extend(list(department.queue_set.all()))
+    departments = {}
+    for queue in queues:
+        departments[queue.name] = VirtualQueue.get_comparison_by_department(queue)
+    context = {
+        'queue_data' : queue_data,
+        'departments' : departments
+    }
+    return render(request, 'queues/stats.html', context)
 

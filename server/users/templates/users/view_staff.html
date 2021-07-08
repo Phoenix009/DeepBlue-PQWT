@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}PQWT| {{ hopsital.name|capfirst }}{% endblock title %}
+{% block content %}
+
+    <div class="container">
+        <br><br>
+        <div class="card">
+            <div class="card-header">
+                <h3 class='float-left'> Staff List </h3>
+                
+                <!-- <button class='btn btn-outline-dark float-right'>Print Staff List</button> -->
+                <a href="{% url 'users:create_staff' hospital.pk %}" class='btn btn-dark float-right mr-3'>Add Staff</a>
+            </div>
+            <table class="table">
+                <thead>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Department</th>
+                    <th>Incharge</th>
+                    <th>SuperUser</th>
+                </thead>
+                <tbody>
+                    {% for staff in staff_list %}
+                    <tr>
+                        <td>{{ staff.id }}</td>
+                        <td>{{ staff.user.first_name }} {{ staff.user.last_name }}</td>
+                        <td>{{ staff.user.email }}</td>
+                        <td>{{ staff.department.name }}</td>
+                        <td>
+                            {% if staff.is_incharge %}
+                                <i class="fas fa-check text-success"></i>
+                            {% else %}
+                                <i class="fas fa-times text-danger"></i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if staff.is_superuser %}
+                                <i class="fas fa-check text-success"></i>
+                            {% else %}
+                                <i class="fas fa-times text-danger"></i>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+
+    
+{% endblock content %}

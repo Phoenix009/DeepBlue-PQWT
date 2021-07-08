@@ -1,0 +1,310 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Wait-Time Stats{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <br>
+    <br>
+   
+    <div class="row">
+      <div class="col-12">
+        <h3>Stats about wait-time</h3>
+      </div>
+        <div class="col-6">
+            <div class="card m-2">  
+                <div class="card-header border-0">
+                    <div class="d-flex justify-content-between">
+                      <h3 class="card-title">Scatter Plot</h3>
+                      <!-- <a href="javascript:void(0);">View Report</a> -->
+                    </div>
+                  </div>
+                  <div class="card-body">
+                      <canvas id="scatter-chart"></canvas>
+                  </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card m-2">
+                <div class="card-header border-0">
+                  <div class="d-flex justify-content-between">
+                    <h3 class="card-title">Line Plot</h3>
+                    <!-- <a href="javascript:void(0);">View Report</a> -->
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="d-flex">
+                    <p class="d-flex flex-column">
+                      <!-- <span class="text-bold text-lg">qu</span> -->
+                      <span>Visitors Over Time</span>
+                    </p>
+                    <!-- <p class="ml-auto d-flex flex-column text-right">
+                      <span class="text-success">
+                        <i class="fas fa-arrow-up"></i> 12.5%
+                      </span>
+                      <span class="text-muted">Since last week</span>
+                    </p> -->
+                  </div>
+                  <!-- /.d-flex -->
+  
+                  <div class="position-relative">
+                    <canvas id="visitors-chart" height="200"></canvas>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card -->
+        </div>
+        {% for department in departments %}
+        <div class="col-6">
+            <div class="card m-2">
+                <div class="card-header border-0">
+                  <div class="d-flex justify-content-between">
+                    <h3 class="card-title">Line Plot</h3>
+                    <!-- <a href="javascript:void(0);">View Report</a> -->
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="d-flex">
+                    <p class="d-flex flex-column">
+                      <!-- <span class="text-bold text-lg">qu</span> -->
+                      <span>{{ department }}</span>
+                    </p>
+                    <!-- <p class="ml-auto d-flex flex-column text-right">
+                      <span class="text-success">
+                        <i class="fas fa-arrow-up"></i> 12.5%
+                      </span>
+                      <span class="text-muted">Since last week</span>
+                    </p> -->
+                  </div>
+                  <!-- /.d-flex -->
+  
+                  <div class="position-relative">
+                    <canvas id="{{ department }}" height="200"></canvas>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card -->
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% block extrascripts %}
+<!-- ChartJS -->
+<script src="{% static 'assets/template/plugins/chart.js/Chart.min.js' %}"></script>
+<script>
+var ctx = document.getElementById("scatter-chart").getContext('2d');
+// Define the data 
+var data = [
+    {% for data in queue_data %}
+        {
+            x : {{ data.predicted_wait_time }},
+            y : {{  data.actual_wait_time }},
+        },
+    {% endfor %}
+]; // Add data values to array
+// End Defining data
+var options = {responsive: true, // Instruct chart js to respond nicely.
+    maintainAspectRatio: true,
+    legend: {
+            display: false
+         }, // Add to prevent default behaviour of full-width/height 
+};
+
+// End Defining data
+var myChart = new Chart(ctx, {
+    type: 'scatter',
+    data: {
+        datasets: [{
+            label: 'Scatter plot', // Name the series
+            data: data, // Specify the data values array
+            borderColor: 'red', // Add custom color border            
+            backgroundColor: 'red', // Add custom color background (Points and Fill)
+            }]
+    },
+    options: options
+});
+
+var ticksStyle = {
+    fontColor: '#495057',
+    fontStyle: 'bold'
+  }
+
+var labels = [
+    {% for data in queue_data %}
+        {{ data.id }},
+    {% endfor %}
+]
+
+var actual_wait_time = [
+    {% for data in queue_data %}
+        {{ data.actual_wait_time }},
+    {% endfor %}
+]
+var predicted_wait_time = [
+    {% for data in queue_data %}
+        {{ data.predicted_wait_time }},
+    {% endfor %}
+]
+var mode      = 'index'
+var intersect = true
+var $visitorsChart = $('#visitors-chart')
+  var visitorsChart  = new Chart($visitorsChart, {
+    data   : {
+      labels  : labels,
+      datasets: [{
+        type                : 'line',
+        data                : actual_wait_time,
+        backgroundColor     : 'transparent',
+        borderColor         : '#007bff',
+        pointBorderColor    : '#007bff',
+        pointBackgroundColor: '#007bff',
+        fill                : false,
+        label : 'Actual Wait Time'
+        // pointHoverBackgroundColor: '#007bff',
+        // pointHoverBorderColor    : '#007bff'
+      },
+        {
+          type                : 'line',
+          data                : predicted_wait_time,
+          backgroundColor     : 'tansparent',
+          borderColor         : '#ced4da',
+          pointBorderColor    : '#ced4da',
+          pointBackgroundColor: '#ced4da',
+          fill                : false,
+          label : 'Predicted Wait Time'
+          // pointHoverBackgroundColor: '#ced4da',
+          // pointHoverBorderColor    : '#ced4da'
+        }]
+    },
+    options: {
+      
+      maintainAspectRatio: false,
+      tooltips           : {
+        mode     : mode,
+        intersect: intersect
+      },
+      hover              : {
+        mode     : mode,
+        intersect: intersect
+      },
+      legend             : {
+        display: true,
+      },
+      offsetGridLines : true,
+      scales             : {
+        yAxes: [{
+          // display: false,
+          gridLines: {
+            display      : true,
+            lineWidth    : '4px',
+            color        : 'rgba(0, 0, 0, .2)',
+            zeroLineColor: 'transparent'
+          },
+          ticks    : $.extend({
+            beginAtZero : true,
+            suggestedMax: 200
+          }, ticksStyle)
+        }],
+        xAxes: [{
+          display  : true,
+          gridLines: {
+            display: false
+          },
+          ticks    : ticksStyle
+        }]
+      }
+    }
+  })
+
+{% for department,value in departments.items %}
+  var labels = [
+      {% for data in value %}
+          {{ data.id }},
+      {% endfor %}
+  ]
+
+  var actual_wait_time = [
+      {% for data in value %}
+          {{ data.actual_wait_time }},
+      {% endfor %}
+  ]
+  var predicted_wait_time = [
+      {% for data in value %}
+          {{ data.predicted_wait_time }},
+      {% endfor %}
+  ]
+  var mode      = 'index'
+  var intersect = true
+  var $visitorsChart = $('#{{ department }}')
+    var visitorsChart  = new Chart($visitorsChart, {
+      data   : {
+        labels  : labels,
+        datasets: [{
+          type                : 'line',
+          data                : actual_wait_time,
+          backgroundColor     : 'transparent',
+          borderColor         : '#007bff',
+          pointBorderColor    : '#007bff',
+          pointBackgroundColor: '#007bff',
+          fill                : false,
+          label : 'Actual Wait Time'
+          // pointHoverBackgroundColor: '#007bff',
+          // pointHoverBorderColor    : '#007bff'
+        },
+          {
+            type                : 'line',
+            data                : predicted_wait_time,
+            backgroundColor     : 'tansparent',
+            borderColor         : '#ced4da',
+            pointBorderColor    : '#ced4da',
+            pointBackgroundColor: '#ced4da',
+            fill                : false,
+            label : 'Predicted Wait Time'
+            // pointHoverBackgroundColor: '#ced4da',
+            // pointHoverBorderColor    : '#ced4da'
+          }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        tooltips           : {
+          mode     : mode,
+          intersect: intersect
+        },
+        hover              : {
+          mode     : mode,
+          intersect: intersect
+        },
+        legend             : {
+          display: true
+        },
+        scales             : {
+          yAxes: [{
+            // display: false,
+            gridLines: {
+              display      : true,
+              lineWidth    : '4px',
+              color        : 'rgba(0, 0, 0, .2)',
+              zeroLineColor: 'transparent'
+            },
+            ticks    : $.extend({
+              beginAtZero : true,
+              suggestedMax: 200
+            }, ticksStyle)
+          }],
+          xAxes: [{
+            display  : true,
+            gridLines: {
+              display: false
+            },
+            ticks    : ticksStyle
+          }]
+        }
+      }
+    })
+{% endfor %}
+</script>
+{% endblock extrascripts %}
